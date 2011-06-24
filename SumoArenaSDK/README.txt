@@ -8,8 +8,8 @@ Non implémenté :
 - gestion de fin de partie
 
 Pour tester :
-- téléchargez le fichier SumoArena.air : c'est le jeu.   
-- téléchargez le contenu du répertoire HumanSumoClient.
+- téléchargez le fichier GameEngine/SumoArena.air : c'est le jeu.   
+- téléchargez le contenu du répertoire Clients/Javascript/JSHumanClient.
 
 Après installation du fichier SumoArena.air, executez-le. Cette application vous permet :
 - de lancer le serveur (il s'arrête quand on quitte SumoArena)
