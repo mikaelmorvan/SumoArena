@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableDataContainer 
+	width="{arena.width}" 
+	height="{arena.height}"
+	skinClass="view.components.ArenaSkin"
+	itemRendererFunction="createSphereRenderer"
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	xmlns:vo="model.vo.*">
+	<fx:Declarations>
+		<vo:Arena id="arena"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			private function createSphereRenderer(item:*):IFactory
+			{
+				return new ClassFactory(SphereRenderer);
+			}
+		]]>
+	</fx:Script>
+</s:SkinnableDataContainer>

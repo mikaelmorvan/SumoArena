@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  horizontalAlign="right">
+	<!--<s:HGroup
+		verticalAlign="middle">
+		<s:Label 
+			text="Host"
+			enabled="false"/>
+		<s:TextInput
+			id="host"
+			width="300"
+			enabled="false"
+			toolTip="The game server URL, when using a remote one."/>
+	</s:HGroup>-->
+	<s:HGroup
+		verticalAlign="middle">
+		<s:Label 
+			text="Port"/>
+		<s:TextInput
+			id="port"
+			text="9090"
+			width="300"
+			toolTip="The game server Port"/>
+	</s:HGroup>
+	<!--<s:HGroup
+		verticalAlign="middle">
+		<s:Label 
+			text="Password"/>
+		<s:TextInput
+			id="password"
+			width="300"
+			displayAsPassword="true"
+			enabled="false"
+			toolTip="The game server access password"/>
+	</s:HGroup>-->
+	<s:Button
+		id="startButton"
+		label="Start server"
+		toolTip="Run the local game server."
+		enabled="true"/>
+</s:VGroup>

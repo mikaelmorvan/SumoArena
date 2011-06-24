@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fxpProperties abbreviated="false" authoringTool="Flex Builder" parentProject="c6396533-bafd-4170-a0ed-5b4d52d1f01e" projectUUID="c6396533-bafd-4170-a0ed-5b4d52d1f01e" sdkVersion="4.1.0" uuid="b3bd727d-3195-4c7b-9857-9a81974d7cf2" version="4">
+  <projects/>
+  <src>
+    <linked isMain="false" location="${DOCUMENTS}/TrackEditor/libs/src/org" path="${DOCUMENTS}/TrackEditor/libs/src/org" position="0" uuid="b3bd727d-3195-4c7b-9857-9a81974d7cf2"/>
+  </src>
+  <swc>
+    <linked location="sdkPlaceHolder" path="sdkPlaceHolder" position="0" uuid="b3bd727d-3195-4c7b-9857-9a81974d7cf2"/>
+    <linked location="C:/AppWorkspace/SumoBotGameController/libs" path="/libs" position="1" uuid="b3bd727d-3195-4c7b-9857-9a81974d7cf2"/>
+  </swc>
+  <misc/>
+  <theme/>
+</fxpProperties>

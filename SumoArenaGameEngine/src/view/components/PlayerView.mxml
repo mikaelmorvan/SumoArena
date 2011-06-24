@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" 
+		  xmlns:components="view.components.*"
+		  verticalAlign="middle">
+	<s:VGroup>
+		<components:Title
+			label="Available Players"/>
+		<s:List
+			id="availablePlayers"
+			labelField="name"
+			height="500"
+			width="300"/>
+	</s:VGroup>
+
+	<s:VGroup
+		gap="20">
+		
+		<s:Button
+			id="selectButton"
+			toolTip="Add player to the list of selected players"
+			fontWeight="bold"
+			fontSize="24"
+			label="&gt;&gt;"
+			height="50"/>
+		<s:Button
+			id="unselectButton"
+			toolTip="Remove player from the list of selected players"
+			fontWeight="bold" 
+			fontSize="24"
+			label="&lt;&lt;"
+			height="50"/>
+	</s:VGroup>
+
+	<s:VGroup>
+		<components:Title
+			label="Selected Players"/>
+		<s:List
+			id="selectedPlayers"
+			labelField="name"
+			height="500"
+			width="300"/>
+	</s:VGroup>
+
+</s:HGroup>

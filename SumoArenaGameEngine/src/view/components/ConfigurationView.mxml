@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  xmlns:vo="model.vo.*"
+		  xmlns:components="view.components.*"
+		  horizontalAlign="right"
+		  gap="10" >
+	<fx:Declarations>
+		<vo:Arena id="arena" />
+		<vo:Game id="game" />
+		<vo:SphereConfiguration id="sphereConfiguration"/>
+	</fx:Declarations>
+	
+	<!-- ////////////// Ball configuration /////////// -->
+	<components:Title
+		label="Balls"/>
+	<s:HGroup
+		verticalAlign="middle"
+		toolTip="The size of the spheres representing the players.">
+		<s:Label 
+			text="ball radius (pixels)"
+			width="300"/>
+		<s:NumericStepper
+			id="sphereRadiusInput"
+			minimum="1"
+			maximum="100"
+			width="65"
+			value="{sphereConfiguration.radius}"/>
+	</s:HGroup>
+	<s:HGroup
+		verticalAlign="middle"
+		toolTip="The number of pixels of which the speed vector may be altered, at each turn.">
+		<s:Label 
+			text="maximum speed vector modification (pixels/round)"
+			width="300"/>
+		<s:NumericStepper
+			id="speedVariationInput"			
+			minimum="1"
+			maximum="100"
+			width="65"
+			value="{sphereConfiguration.speedVariation}"/>
+	</s:HGroup>
+	<s:HGroup
+		verticalAlign="middle"
+		toolTip="The initial position of the spheres in the arena, at the begining of each round, is defined by its distance from the arena center.">
+		<s:Label 
+			text="initial distance from arena center (pixels)"
+			width="300"/>
+		<s:NumericStepper
+			id="initialDistanceInput"
+			minimum="1"
+			maximum="1000"
+			width="65"
+			value="{sphereConfiguration.initialDistance}"/>
+	</s:HGroup>
+	
+	<!-- ////////////// Arena configuration /////////// -->
+	<components:Title
+		label="Arena"/>
+	<s:HGroup
+		verticalAlign="middle"
+		toolTip="The initial half-size of the arena, at the begining of each round.">
+		<s:Label 
+			text="arena initial radius (pixels)"
+			width="300"/>
+		<s:NumericStepper
+			id="arenaInitialRadiusInput"			
+			minimum="1"
+			maximum="1000"
+			width="65"
+			value="{arena.radius}"/>
+	</s:HGroup>
+	<s:HGroup
+		verticalAlign="middle"
+		toolTip="The number of ticks after which the arena's size begins to reduce. -1 means never.">
+		<s:Label 
+			text="shrinking start (ticks)"
+			width="300"/>
+		<s:NumericStepper
+			id="shrinkingStartInput"
+			minimum="-1"
+			maximum="1000"
+			width="65"
+			value="{arena.shrinkingStartTick}"/>
+	</s:HGroup>
+	<s:HGroup
+		verticalAlign="middle"
+		toolTip="The numer of ticks between two reductions of the size of the arena. -1 means there is no reduction during this game.">
+		<s:Label 
+			text="shrinking interval (ticks)"
+			width="300"/>
+		<s:NumericStepper
+			id="shrinkingIntervalInput"
+			minimum="-1"
+			maximum="100"
+			width="65"
+			value="{arena.shrinkingInterval}"/>
+	</s:HGroup>
+	<s:HGroup
+		verticalAlign="middle"
+		toolTip="The number of pixels the diameter of the arena is reduced each time.">
+		<s:Label 
+			text="reduction (pixels)"
+			width="300"/>
+		<s:NumericStepper
+			id="shrinkingInput"
+			minimum="1"
+			maximum="100"
+			width="65"
+			value="{arena.shrinking}"/>
+	</s:HGroup>
+	
+	<!-- ////////////// Game configuration /////////// -->
+	<components:Title
+		label="Game"/>
+	<s:HGroup
+		verticalAlign="middle"
+		toolTip="The interval of time between request to players.">
+		<s:Label 
+			text="turn Duration (ms)"
+			width="300"/>
+		<s:NumericStepper
+			id="turnDurationInput"
+			minimum="1"
+			maximum="1000"
+			width="65"
+			value="{game.turnDuration}"/>
+	</s:HGroup>
+	<s:HGroup
+		verticalAlign="middle"
+		toolTip="The maximum duration of a round, if no ball is out before the maximal arena shrinking.">
+		<s:Label 
+			text="max duration of a round (seconds)"
+			width="300"/>
+		<s:Label
+			id="roundDuration"
+			width="65"
+			text="{game.roundDuration}"/>
+	</s:HGroup>
+	<s:HGroup
+		verticalAlign="middle"
+		toolTip="The number of rounds to be won, in order to be declared the game winner.">
+		<s:Label 
+			text="number of victorious rounds required for game victory"
+			width="300"/>
+		<s:NumericStepper
+			id="winningRoundInput"
+			minimum="1"
+			maximum="10"
+			width="65"
+			value="{game.maxWinningRounds}"
+			/>
+	</s:HGroup>
+</s:VGroup>

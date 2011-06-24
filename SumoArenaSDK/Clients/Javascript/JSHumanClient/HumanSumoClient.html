@@ -1,0 +1,122 @@
+<html> 
+<head>
+<style type="text/css">
+embed.hidden,
+object.hidden {
+    height: 1px;
+    width: 1px;
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
+}
+</style>
+
+
+<head>
+<body>
+
+<div style="width: 200px; height: 200px;" onclick="click(this, event)">
+	<svg width="200px" height="200px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+		<circle cx="100" cy="100" r="100" fill="black"/>
+	</svg>
+</div>
+<br>Player name:&nbsp;
+<input type="text" id="name" value=""/>
+<button onclick="connect()">connect</button>
+<br>
+
+<textarea id="datapanel" style="width: 700px; height: 300px;">
+</textarea>
+
+<object
+    id="socket_bridge" class="hidden"
+    classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+    codebase="http://fpdownload.adobe.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0">
+    <param name="movie" value="socket_bridge.swf?onloadcallback=test" />
+    <param name="allowScriptAccess" value="always" />
+    <embed
+        class="hidden"
+        src="socket_bridge.swf?onloadcallback=test"
+        allowScriptAccess="always"
+        type="application/x-shockwave-flash"
+        pluginspage="http://www.adobe.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"> 
+    </embed>
+</object>
+
+
+
+
+
+<script type="text/javascript">
+
+messagesDiv = document.getElementById("datapanel");
+document.getElementById("name").value = "player " + Math.round(Math.random() * 100);
+
+var dVx = 0;
+var dVy = 0;
+
+function connect() {
+	clearLogs();
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'makefile.js';
+    document.getElementsByTagName("head")[0].appendChild(script);
+    
+    s = new FlashSocket({
+        on_data: function(data) {
+        	log("received: " + data);
+    		play();    	
+        },
+        on_io_error: function(msg) {
+        	log("error: " + msg);
+        },
+        on_security_error: function(msg) {
+        	log("error: " + msg);
+        },
+        on_close: function(msg) {
+        	log("socket closed");
+        },
+        on_connect: function() {
+        	log("connected");
+            var name  = document.getElementById("name").value;
+        	data = '{"action": "connectPlayer", "parameters": {"name": "' + name + '"}}';
+        	s.write(data);
+        	log("sent: " + data);
+        }
+    });
+    s.connect('localhost', 9090);
+}
+
+
+
+function play()
+{
+	data = '{"action": "updateVector", "parameters": {"dVx": ' + dVx + ', "dVy": ' + dVy + '}}';
+	s.write(data);
+	log("sent: " + data);	
+	dVx = 0;
+	dVy = 0;
+}
+
+function click(div, event)
+{
+	dVx = (event.x - 100)/10;
+	dVy = (event.y - 100)/10;
+}
+
+function clearLogs()
+{
+	messagesDiv.innerHTML = "";
+}
+
+function log(data)
+{
+	messagesDiv.innerHTML += "> " + data + "\n";
+}
+
+</script>
+
+
+
+</body>
+</html>

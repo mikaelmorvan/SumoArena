@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuite name="org.robotlegs.mvcs.SignalContextTests" tests="4" failures="0" errors="0" skipped="0" time="0.090" hostname="lindsey-fallows-macbook-pro.local" timestamp="2011-03-28T15:41:20">
+  <testcase classname="org.robotlegs.mvcs::SignalContextTests" name="contextView_roundtrips_through_constructor" time="0.080"/>
+  <testcase classname="org.robotlegs.mvcs::SignalContextTests" name="signal_is_injected_properly_into_injector_instantiated_class" time="0.008"/>
+  <testcase classname="org.robotlegs.mvcs::SignalContextTests" name="autoStartup_in_constructor_creates_listener_for_ADDED_TO_STAGE_on_contextView" time="0.001"/>
+  <testcase classname="org.robotlegs.mvcs::SignalContextTests" name="signal_context_has_SignalCommandMap" time="0.001"/>
+</testsuite>

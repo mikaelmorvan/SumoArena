@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false"
+				toolTip="{_sphere.player.name + ' ' + _sphere.x + ' ' + _sphere.y + ' ' + _sphere.xOffset + ' ' + _sphere.yOffset }">
+	
+	<fx:Script>
+		<![CDATA[
+			import model.vo.Sphere;
+			
+			[Bindable]
+			private var _sphere:Sphere;
+			
+			public override function set data(value:Object):void
+			{
+				super.data = value;
+				_sphere = Sphere(data);
+			}
+		]]>
+	</fx:Script>
+	<s:Ellipse
+		x="{_sphere.x + _sphere.xOffset}"
+		y="{_sphere.y + _sphere.yOffset}"
+		height="{_sphere.radius * 2}"
+		width="{_sphere.radius * 2}">
+		<s:fill>
+			<s:SolidColor
+				alpha="{_sphere.isInArena ? 1 : 0.5}"
+				color="{_sphere.player.color}"/>
+		</s:fill>
+	</s:Ellipse>
+</s:ItemRenderer>

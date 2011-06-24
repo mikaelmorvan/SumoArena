@@ -1,0 +1,36 @@
+couleurs
+temps constant
+interrogation à intervalles réguliers
+interdire plus d'une commande par tour
+réduction de l'arène
+vérifier le nom de l'action envoyée
+
+
+détecter fin de partie
+envoyer message de fin de partie
+ 
+play/pause
+nom des joueurs et couleurs dans l'écran de jeu
+
+bug lors de réduction
+écran controle : le rayon de l'arène diminue
+représenter le speed vector
+
+envoyer acknowledge
+
+	"action": "acknowledgeConnection"
+	"parameters": "yourName" : "..."
+	
+renvoyer le crossdomain.xml	
+
+envoyer message de fin de round :
+	"action": "finishRound"
+	"parameters": "currentRound" : 2
+	"winnerId" : ""     // chaine vide si pas de gagnant
+	
+si les deux derniers joueurs sortent en même temps, pas de gagant
+
+éliminer de la liste des joueurs ceux dont la socket est fermée
+	
+prévoir un nombre max de rounds
+

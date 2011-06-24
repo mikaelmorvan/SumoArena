@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuite name="org.robotlegs.base.GuardedSignalCommandMapTests" tests="17" failures="0" errors="0" skipped="0" time="0.059" hostname="lindsey-fallows-macbook-pro.local" timestamp="2011-03-28T15:41:20">
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="one_command_with_one_guard_fires_when_guard_gives_yes" time="0.012"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="mapping_signal_class_with_fallback_executes_fallback_if_guard_disapproves" time="0.002"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="GuardedSignalCommandMap_instance_is_IGuardedSignalCommandMap" time="0.011"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="mapping_with_fallback_executes_fallback_if_guard_disapproves" time="0.001"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="mapping_with_fallback_executes_first_choice_if_guard_approves" time="0.006"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="one_command_with_two_guards_fires_if_both_say_yes" time="0.002"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="one_command_with_one_guard_doesnt_fire_when_guard_gives_no" time="0.002"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="one_command_with_two_guards_doesnt_fire_if_one_says_no" time="0.001"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="mapping_signal_class_with_fallback_executes_first_choice_if_guard_approves" time="0.003"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="command_doesnt_fire_if_double_injected_guard_says_no" time="0.002"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="three_commands_with_different_guards_fire_correctly" time="0.001"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="error_thrown_if_non_guards_provided_in_guard_value_argument" time="0.002"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="error_thrown_if_non_guards_provided_in_guard_array_argument" time="0.002"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="signal_values_passed_to_guards" time="0.010"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="test_unmapping_stops_command_firing" time="0.000"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="test_unmapping_and_remapping_with_guards_works_fine" time="0.001"/>
+  <testcase classname="org.robotlegs.base::GuardedSignalCommandMapTests" name="mapping_as_class_works_same_as_value" time="0.001"/>
+</testsuite>
