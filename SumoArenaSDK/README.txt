@@ -9,7 +9,7 @@ Non implémenté :
 
 Pour tester :
 - téléchargez le fichier GameEngine/SumoArena.air : c'est le jeu.   
-- téléchargez le contenu du répertoire Clients/Javascript/JSHumanClient.
+- téléchargez le contenu du répertoire Clients/Javascript/JSHumanClient, c'est un client de test, pilotable manuellement.
 
 Après installation du fichier SumoArena.air, executez-le. Cette application vous permet :
 - de lancer le serveur (il s'arrête quand on quitte SumoArena)
@@ -20,7 +20,7 @@ Après installation du fichier SumoArena.air, executez-le. Cette application vou
  
 L'onglet "help" contient quelques instructions sur son utilisation.
 
-Dans HumanSumoClient, vous trouverez une page HTML qui permet de tester le jeu en simulant un client.
+Dans JSHumanClient, vous trouverez une page HTML qui permet de tester le jeu en pilotant manuellement un client.
 
 Utilisation : 
 - dans le jeu, lancer le serveur sur le port 9090
@@ -29,3 +29,5 @@ Utilisation :
 - dans le jeu, onglet "players", sélectionner les clients qui vont jouer
 - dans controls, cliquer sur "start round"
 - dans le client, cliquer sur le disque noir pour modifier la vitesse et la direction de votre sphère.
+
+Il ne vous reste qu'à développer un client qui joue automatiquement :)
