@@ -113,7 +113,8 @@ package service
 					//			serverSocket.addEventListener(Event.CLOSE, onClose);
 					serverSocket.bind(port);
 					serverSocket.listen();
-					log(">server listening on port " + port);
+					log(">server started, listening on port " + port);
+					
 				}
 				catch (error:Error) {
 					log("ERROR: " + error); 
@@ -130,16 +131,8 @@ package service
 			clientSocket.addEventListener(ProgressEvent.SOCKET_DATA, onData);
 			clientSocket.addEventListener(Event.CLOSE, onConnectionClosed);
 			
-			log(">new client connected");
+			log(">new client socket opened");
 			clientSockets.push(clientSocket);
-			
-			
-//			{
-//				"action": "acknowledgeConnection"
-//				"parameters": "yourName" : "..."
-//			}
-			
-			
 		}
 		
 		protected function onData(event:ProgressEvent):void
@@ -176,6 +169,7 @@ package service
 		
 		private function log(message:String):void
 		{
+			trace("call to log");
 			logSignal.dispatch(message);
 		}
 		
@@ -209,6 +203,11 @@ package service
 			player.name = data.name;
 			player.avatar = data.avatarUrl;
 			registerPlayerSignal.dispatch(player);
+			var response:Object = {
+					"action": "acknowledgeConnection",
+					"parameters": {	"yourName" : player.name }
+				};
+			send(player, response);
 		}
 		
 		public function updateVector(player:Player, data:Object):void

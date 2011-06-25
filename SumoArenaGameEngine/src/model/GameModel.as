@@ -212,32 +212,27 @@ package model
 		public function set arena(value:Arena):void
 		{
 			game.arena = value;
-			trace(game);
 		}
 
 		public function set currentTick(value:uint):void
 		{
 			game.currentTick = value;
-			trace(game);
 		}
 
 		public function set maxWinningRounds(value:int):void
 		{
 			game.maxWinningRounds = value;
-			trace(game);
 		}
 
 		public function set turnDuration(value:int):void
 		{
 			game.turnDuration = value;
 			game.stepByTurn = game.turnDuration / Game.REQUEST_INTERVAL;
-			trace(game);
 		}
 		
 		public function set roundDuration(value:int):void
 		{
 			game.roundDuration = value;
-			trace(game);
 		}
 		
 		public function getSphereByPlayer(player:Player):Sphere

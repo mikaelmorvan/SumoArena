@@ -69,7 +69,7 @@
 			minimum="1"
 			maximum="1000"
 			width="65"
-			value="{arena.radius}"/>
+			value="{arena.initialRadius}"/>
 	</s:HGroup>
 	<s:HGroup
 		verticalAlign="middle"

@@ -23,6 +23,7 @@ package model
 		
 		public function log(message:String):void 
 		{
+			trace("call to logmodel.log");
 			if(logs.length > MAX_LENGTH)
 			{
 				logs = logs.substring(message.length);

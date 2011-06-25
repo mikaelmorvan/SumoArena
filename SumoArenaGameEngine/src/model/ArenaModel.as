@@ -62,9 +62,8 @@ package model
 			if (arena.shrinkingStartTick >= 0 && tick >= arena.nextShrinkingTick && arena.radius > arena.minimalRadius) 
 			{
 				arena.radius -= arena.shrinking / stepByTurn;
+				arena.squareRadius = arena.radius * arena.radius;
 				arena.nextShrinkingTick += arena.shrinkingInterval / stepByTurn;
-//				trace(arena.toString());
-				trace(arena.shrinkingInterval / stepByTurn);
 			}
 		}
 		
