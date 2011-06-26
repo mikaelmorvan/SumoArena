@@ -1,6 +1,6 @@
 package view.mediators
 {
-	import controller.signals.ChangeArenaRadiusSignal;
+//	import controller.signals.ChangeArenaRadiusSignal;
 	import controller.signals.ChangeInitialDistanceSignal;
 	import controller.signals.ChangeShrinkingIntervalSignal;
 	import controller.signals.ChangeShrinkingSignal;
@@ -37,8 +37,8 @@ package view.mediators
 		[Inject]
 		public var changeInitialDistanceSignal:ChangeInitialDistanceSignal;		
 		
-		[Inject]
-		public var changeArenaRadiusSignal:ChangeArenaRadiusSignal;
+//		[Inject]
+//		public var changeArenaRadiusSignal:ChangeArenaRadiusSignal;
 		
 		[Inject]
 		public var changeShrinkingStartSignal:ChangeShrinkingStartSignal;
@@ -60,7 +60,7 @@ package view.mediators
 		private var speedVariationChangedSignal:NativeSignal;
 		private var initialDistanceChangedSignal:NativeSignal;
 		
-		private var arenaRadiusChangedSignal:NativeSignal;
+//		private var arenaRadiusChangedSignal:NativeSignal;
 		private var shrinkingStartChangedSignal:NativeSignal;
 		private var shrinkingIntervalChangedSignal:NativeSignal;
 		private var shrinkingChangedSignal:NativeSignal;
@@ -103,8 +103,8 @@ package view.mediators
 			initialDistanceChangedSignal = new NativeSignal(configurationView.initialDistanceInput, Event.CHANGE);
 			initialDistanceChangedSignal.add(initialDistanceChangedHandler);
 		
-			arenaRadiusChangedSignal = new NativeSignal(configurationView.arenaInitialRadiusInput, Event.CHANGE);
-			arenaRadiusChangedSignal.add(arenaRadiusChangedHandler);
+//			arenaRadiusChangedSignal = new NativeSignal(configurationView.arenaInitialRadiusInput, Event.CHANGE);
+//			arenaRadiusChangedSignal.add(arenaRadiusChangedHandler);
 		
 			shrinkingStartChangedSignal = new NativeSignal(configurationView.shrinkingStartInput, Event.CHANGE);
 			shrinkingStartChangedSignal.add(shrinkingStartChangedHandler);
@@ -115,7 +115,7 @@ package view.mediators
 			shrinkingChangedSignal = new NativeSignal(configurationView.shrinkingInput, Event.CHANGE);
 			shrinkingChangedSignal.add(shrinkingChangedHandler);
 		
-			turnDurationChangedSignal = new NativeSignal(configurationView.turnDurationInput, Event.CHANGE);
+			turnDurationChangedSignal = new NativeSignal(configurationView.requestIntervalInput, Event.CHANGE);
 			turnDurationChangedSignal.add(turnDurationChangedHandler);
 			
 			winningRoundsChangedSignal = new NativeSignal(configurationView.winningRoundInput, Event.CHANGE);
@@ -138,10 +138,10 @@ package view.mediators
 			changeInitialDistanceSignal.dispatch(configurationView.initialDistanceInput.value);
 		}
 		
-		private function arenaRadiusChangedHandler(event:Event):void 
-		{
-			changeArenaRadiusSignal.dispatch(configurationView.arenaInitialRadiusInput.value);
-		}
+//		private function arenaRadiusChangedHandler(event:Event):void 
+//		{
+//			changeArenaRadiusSignal.dispatch(configurationView.arenaInitialRadiusInput.value);
+//		}
 		private function shrinkingStartChangedHandler(event:Event):void
 		{
 			changeShrinkingStartSignal.dispatch(configurationView.shrinkingStartInput.value);
@@ -159,7 +159,7 @@ package view.mediators
 		
 		private function turnDurationChangedHandler(event:Event):void
 		{
-			changeTurnDurationSignal.dispatch(configurationView.turnDurationInput.value);
+			changeTurnDurationSignal.dispatch(configurationView.requestIntervalInput.value);
 		}
 		
 		private function winningRoundsChangedHandler(event:Event):void

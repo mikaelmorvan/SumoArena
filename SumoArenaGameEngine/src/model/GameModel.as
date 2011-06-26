@@ -94,8 +94,8 @@ package model
 						sphere.x = 0;
 						sphere.y = 0;
 					}
-					sphere.xOffset = game.arena.width / 2 - sphere.radius;
-					sphere.yOffset = game.arena.height / 2 - sphere.radius;
+//					sphere.xOffset = game.arena.width / 2 - sphere.radius;
+//					sphere.yOffset = game.arena.height / 2 - sphere.radius;
 				}
 		}
 		
@@ -168,7 +168,7 @@ package model
 			}			
 		}
 		
-		private function finishRound():void
+		public function finishRound():void
 		{
 			var roundWinnerId:int = -1;
 			var gameWinnerId:int = -1;
@@ -180,9 +180,8 @@ package model
 				winner.wonRounds++;
 				roundFinishedSignal.dispatch();
 				if(winner.wonRounds >= game.roundRequiredToWin){
-					game.currentRound = 0;
 					gameWinnerId = roundWinnerId;
-					gameFinishedSignal.dispatch();
+					finishGame();
 				}
 			}
 			var data:Object = {
@@ -195,6 +194,12 @@ package model
 					}
 			}
 			server.sendToPlayers(game.selectedPlayers, data);
+		}
+		
+		public function finishGame():void 
+		{
+			game.currentRound = 0;
+			gameFinishedSignal.dispatch();
 		}
 		
 		/**
@@ -276,8 +281,8 @@ package model
 
 		public function set turnDuration(value:int):void
 		{
-			game.turnDuration = value;
-			game.stepByTurn = game.turnDuration / Game.REQUEST_INTERVAL_IN_TICKS;
+			game.requestInterval = value;
+			game.stepByTurn = game.requestInterval / Game.REQUEST_INTERVAL_IN_TICKS;
 		}
 		
 		public function set roundDuration(value:int):void

@@ -14,25 +14,6 @@
 			width="300"/>
 	</s:VGroup>
 
-	<s:VGroup
-		gap="20">
-		
-		<s:Button
-			id="selectButton"
-			toolTip="Add player to the list of selected players"
-			fontWeight="bold"
-			fontSize="24"
-			label="&gt;&gt;"
-			height="50"/>
-		<s:Button
-			id="unselectButton"
-			toolTip="Remove player from the list of selected players"
-			fontWeight="bold" 
-			fontSize="24"
-			label="&lt;&lt;"
-			height="50"/>
-	</s:VGroup>
-
 	<s:VGroup>
 		<components:Title
 			label="Selected Players"/>

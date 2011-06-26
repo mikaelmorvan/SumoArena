@@ -1,21 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:SkinnableDataContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
-						  xmlns:s="library://ns.adobe.com/flex/spark" 
-						  xmlns:mx="library://ns.adobe.com/flex/mx" 
-						  xmlns:vo="model.vo.*"
-						  width="{arena.width}" 
-						  height="{arena.height}"
-						  skinClass="view.components.ArenaSkin"
-						  itemRendererFunction="createSphereRenderer">
-	<fx:Declarations>
-		<vo:Arena id="arena"/>
-	</fx:Declarations>
-	<fx:Script>
-		<![CDATA[
-			private function createSphereRenderer(item:*):IFactory
-			{
-				return new ClassFactory(SphereRenderer);
-			}
-		]]>
-	</fx:Script>
-</s:SkinnableDataContainer>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" 
+		  xmlns:components="view.components.*"
+		  gap="20"
+		  verticalAlign="middle">
+	<s:VGroup
+		horizontalAlign="right">
+		<components:Title
+			label="Current game results"/>
+		<s:List
+			id="players"
+			height="300"
+			width="200"
+			itemRenderer="view.components.PlayerRenderer"/>
+		<s:Button
+			id="validateResultButton"
+			label="Validate Results"
+			enabled="false"/>
+	</s:VGroup>
+	<components:ArenaView
+		id="arenaView"/>
+	
+	<s:VGroup
+		gap="15">
+		<components:Title
+			label="status"/>
+		<s:HGroup>
+			<s:Label
+				id="Round"
+				width="150"/>
+			<s:Label
+				id="currentRound"/>
+		</s:HGroup>
+		<s:HGroup>
+			<s:Label
+				id="Ticks"
+				width="150"/>
+			<s:Label
+				id="currentTick"/>
+		</s:HGroup>
+		<components:Title
+			label="controls"/>
+		<s:Button
+			id="startRoundButton"
+			width="150"
+			label="Start Round"/>
+		<s:Button
+			id="cancelRoundButton"
+			width="150"
+			label="Cancel Round"
+			enabled="false"/>
+		<s:Button
+			id="cancelGameButton"
+			width="150"
+			label="Cancel Game"
+			enabled="false"/>
+	</s:VGroup>
+</s:HGroup>

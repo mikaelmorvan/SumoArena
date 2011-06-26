@@ -11,7 +11,7 @@ package model.vo
 		public var width:int;
 		
 		
-		public var initialRadius:int = 250;
+		public const initialRadius:int = 250;
 		
 		public var minimalRadius:int = 0;
 		

@@ -47,9 +47,9 @@ package view.mediators
 			playerView.selectedPlayers.dataProvider = gameModel.game.selectedPlayers;
 			
 			//add view listeners
-			_selectButtonClicked = new NativeSignal(playerView.selectButton, MouseEvent.CLICK);
+			_selectButtonClicked = new NativeSignal(playerView.availablePlayers, MouseEvent.CLICK);
 			_selectButtonClicked.add(addPlayerClicked);
-			_unselectButtonClicked = new NativeSignal(playerView.unselectButton, MouseEvent.CLICK);
+			_unselectButtonClicked = new NativeSignal(playerView.selectedPlayers, MouseEvent.CLICK);
 			_unselectButtonClicked.add(removePlayerClicked);
 			
 		}

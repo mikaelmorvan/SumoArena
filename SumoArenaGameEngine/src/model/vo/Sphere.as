@@ -6,13 +6,14 @@ package model.vo
 	public class Sphere
 	{
 
-		public var x:Number;
+		public var x:Number = 0;
 		
-		public var y:Number;
 		
-		public var xOffset:int;
+		public var y:Number = 0;
 		
-		public var yOffset:int;
+		public const xOffset:int = 280; // arena.width/2 - sphere.radius
+		
+		public const yOffset:int = 280; // arena.height/2 - sphere.radius
 		
 		public var speedVector:Point;
 		

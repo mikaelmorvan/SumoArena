@@ -3,7 +3,7 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				autoDrawBackground="false"
-				toolTip="{_sphere.player.name + ' ' + _sphere.x + ' ' + _sphere.y + ' ' + _sphere.xOffset + ' ' + _sphere.yOffset }">
+				toolTip="{_sphere.player.name + ' x=' + _sphere.x + ' y=' + _sphere.y + ' xOffset=' + _sphere.xOffset + ' yOffset=' + _sphere.yOffset }">
 	
 	<fx:Script>
 		<![CDATA[

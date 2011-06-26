@@ -1,11 +1,12 @@
 package
 {
+	import controller.commands.CancelGameCommand;
+	import controller.commands.CancelRoundCommand;
 	import controller.commands.CreateSphereCommand;
 	import controller.commands.DestroySphereCommand;
 	import controller.commands.LogCommand;
 	import controller.commands.RegisterPlayerCommand;
 	import controller.commands.SelectPlayerCommand;
-	import controller.commands.SetArenaInitialRadiusCommand;
 	import controller.commands.SetInitialDistanceCommand;
 	import controller.commands.SetShrinkingCommand;
 	import controller.commands.SetShrinkingIntervalCommand;
@@ -16,12 +17,12 @@ package
 	import controller.commands.SetWinningRoundsCommand;
 	import controller.commands.StartRoundCommand;
 	import controller.commands.StartServerCommand;
-	import controller.commands.StopGameCommand;
 	import controller.commands.UnregisterPlayerCommand;
 	import controller.commands.UnselectPlayerCommand;
 	import controller.commands.UpdateCommand;
 	import controller.commands.UpdateSphereCommand;
-	import controller.signals.ChangeArenaRadiusSignal;
+	import controller.signals.CancelGameSignal;
+	import controller.signals.CancelRoundSignal;
 	import controller.signals.ChangeInitialDistanceSignal;
 	import controller.signals.ChangeShrinkingIntervalSignal;
 	import controller.signals.ChangeShrinkingSignal;
@@ -37,7 +38,6 @@ package
 	import controller.signals.SelectPlayerSignal;
 	import controller.signals.StartServerSignal;
 	import controller.signals.StartSignal;
-	import controller.signals.StopSignal;
 	import controller.signals.UnregisterPlayerSignal;
 	import controller.signals.UnselectPlayerSignal;
 	import controller.signals.UpdateSignal;
@@ -53,17 +53,14 @@ package
 	
 	import service.Server;
 	
-	import view.components.ArenaView;
 	import view.components.ConfigurationView;
-	import view.components.ControlView;
 	import view.components.GameView;
 	import view.components.LogView;
 	import view.components.PlayerView;
 	import view.components.ServerView;
 	import view.mediators.ApplicationMediator;
-	import view.mediators.ArenaViewMediator;
 	import view.mediators.ConfigurationViewMediator;
-	import view.mediators.ControlViewMediator;
+	import view.mediators.GameViewMediator;
 	import view.mediators.LogViewMediator;
 	import view.mediators.PlayerViewMediator;
 	import view.mediators.ServerViewMediator;
@@ -91,13 +88,11 @@ package
 		
 		private function mapViews():void
 		{
-			mediatorMap.mapView(SumoBotGameController, ApplicationMediator);
+			mediatorMap.mapView(SumoBotGameEngine, ApplicationMediator);
 			mediatorMap.mapView(ServerView, ServerViewMediator);
 			mediatorMap.mapView(PlayerView, PlayerViewMediator);
 			mediatorMap.mapView(ConfigurationView, ConfigurationViewMediator);
-			mediatorMap.mapView(ControlView, ControlViewMediator);
-//			mediatorMap.mapView(ArenaView, ArenaViewMediator);
-			mediatorMap.mapView(GameView, ArenaViewMediator);
+			mediatorMap.mapView(GameView, GameViewMediator);
 			mediatorMap.mapView(LogView, LogViewMediator);
 		}		
 		
@@ -121,7 +116,7 @@ package
 			signalCommandMap.mapSignalClass(UpdateSphereSignal, UpdateSphereCommand);
 			
 			//arena
-			signalCommandMap.mapSignalClass(ChangeArenaRadiusSignal, SetArenaInitialRadiusCommand);
+//			signalCommandMap.mapSignalClass(ChangeArenaRadiusSignal, SetArenaInitialRadiusCommand);
 			signalCommandMap.mapSignalClass(ChangeShrinkingStartSignal, SetShrinkingStartCommand);
 			signalCommandMap.mapSignalClass(ChangeShrinkingIntervalSignal, SetShrinkingIntervalCommand);
 			signalCommandMap.mapSignalClass(ChangeShrinkingSignal, SetShrinkingCommand);
@@ -130,7 +125,8 @@ package
 			signalCommandMap.mapSignalClass(ChangeTurnDurationSignal, SetTurnDurationCommand);
 			signalCommandMap.mapSignalClass(ChangeWinningRoundsSignal, SetWinningRoundsCommand);
 			signalCommandMap.mapSignalClass(StartSignal, StartRoundCommand);
-			signalCommandMap.mapSignalClass(StopSignal, StopGameCommand);
+			signalCommandMap.mapSignalClass(CancelRoundSignal, CancelRoundCommand);
+			signalCommandMap.mapSignalClass(CancelGameSignal, CancelGameCommand);
 			signalCommandMap.mapSignalClass(SelectPlayerSignal, SelectPlayerCommand);
 			signalCommandMap.mapSignalClass(UnselectPlayerSignal, UnselectPlayerCommand);
 			signalCommandMap.mapSignalClass(RegisterPlayerSignal, RegisterPlayerCommand);

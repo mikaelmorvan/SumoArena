@@ -26,7 +26,6 @@
 			minimum="1"
 			maximum="100"
 			width="65"
-			enabled="false"
 			value="{sphereConfiguration.radius}"/>
 	</s:HGroup>
 	<s:HGroup
@@ -59,7 +58,7 @@
 	<!-- ////////////// Arena configuration /////////// -->
 	<components:Title
 		label="Arena"/>
-	<s:HGroup
+<!--	<s:HGroup
 		verticalAlign="middle"
 		toolTip="The initial half-size of the arena, at the begining of each round.">
 		<s:Label 
@@ -71,7 +70,7 @@
 			maximum="1000"
 			width="65"
 			value="{arena.initialRadius}"/>
-	</s:HGroup>
+	</s:HGroup>-->
 	<s:HGroup
 		verticalAlign="middle"
 		toolTip="The number of ticks after which the arena's size begins to reduce. -1 means never.">
@@ -119,14 +118,14 @@
 		verticalAlign="middle"
 		toolTip="The interval of time between request to players.">
 		<s:Label 
-			text="turn Duration (ms)"
+			text="player request interval (ms)"
 			width="300"/>
 		<s:NumericStepper
-			id="turnDurationInput"
+			id="requestIntervalInput"
 			minimum="1"
 			maximum="1000"
 			width="65"
-			value="{game.turnDuration}"/>
+			value="{game.requestInterval}"/>
 	</s:HGroup>
 	<s:HGroup
 		verticalAlign="middle"

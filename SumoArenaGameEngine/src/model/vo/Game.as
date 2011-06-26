@@ -22,9 +22,9 @@ package model.vo
 		
 		public var roundRequiredToWin:int = 2;
 		
-		public var turnDuration:int = 1000;
+		public var requestInterval:int = 1000;
 		
-		public var stepByTurn:int = turnDuration / REQUEST_INTERVAL_IN_TICKS;
+		public var stepByTurn:int = requestInterval / REQUEST_INTERVAL_IN_TICKS;
 		
 		// The maximum duration of a round, if no ball is out before the maximal arena shrinking
 		public var roundDuration:int;
@@ -34,7 +34,7 @@ package model.vo
 
 		public function toString():String
 		{
-			return "Game{arena:" + arena + ", spheres:" + spheres + ", aliveSpheres:" + aliveSpheres + "currentTick:" + currentTick + ", maxWinningRounds:" + roundRequiredToWin + ", turnDuration:" + turnDuration + ", stepByTurn:" + stepByTurn + ", roundDuration:" + roundDuration + "}";
+			return "Game{arena:" + arena + ", spheres:" + spheres + ", aliveSpheres:" + aliveSpheres + "currentTick:" + currentTick + ", maxWinningRounds:" + roundRequiredToWin + ", turnDuration:" + requestInterval + ", stepByTurn:" + stepByTurn + ", roundDuration:" + roundDuration + "}";
 		}
 	}
 }

@@ -23,8 +23,10 @@ package model.vo
 		
 		public var socket:Socket;
 		
+		[Bindable]
 		public var sphere:Sphere;
 		
+		[Bindable]
 		public var wonRounds:int;
 	}
 }

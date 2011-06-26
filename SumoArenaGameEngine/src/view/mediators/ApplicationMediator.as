@@ -2,7 +2,7 @@ package view.mediators
 {
 	import controller.signals.CreateSphereSignal;
 	import controller.signals.StartSignal;
-	import controller.signals.StopSignal;
+	import controller.signals.CancelRoundSignal;
 	import controller.signals.UpdateSignal;
 	
 	import flash.events.Event;
@@ -16,13 +16,13 @@ package view.mediators
 	public class ApplicationMediator extends Mediator
 	{
 		[Inject]
-		public var applicationView:SumoBotGameController;
+		public var applicationView:SumoBotGameEngine;
 		
 		[Inject]
 		public var startSignal:StartSignal;
 
 		[Inject]
-		public var stopSignal:StopSignal;
+		public var stopSignal:CancelRoundSignal;
 		
 		[Inject]
 		public var updateSignal:UpdateSignal;
@@ -35,12 +35,11 @@ package view.mediators
 			startSignal.add(gameStartedHandler);
 			stopSignal.add(gameStoppedHandler);
 			gameModel.roundFinishedSignal.add(gameStoppedHandler);
+			gameModel.gameFinishedSignal.add(gameStoppedHandler);
 		}
 
 		private function gameStartedHandler():void 
 		{
-			applicationView.tabBar.selectedIndex = 4;
-			applicationView.viewStack.selectedIndex = 4;
 			addViewListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 

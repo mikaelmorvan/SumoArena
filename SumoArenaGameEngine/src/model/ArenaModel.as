@@ -14,13 +14,13 @@ package model
 			arena = new Arena();
 		}
 		
-		public function set initialRadius (value:int):void
-		{
-			arena.initialRadius = value;
-			arena.height = arena.initialRadius * 2 + 100;
-			arena.width = arena.height;
-			trace(arena.toString());
-		}
+//		public function set initialRadius (value:int):void
+//		{
+//			arena.initialRadius = value;
+//			arena.height = arena.initialRadius * 2 + 100;
+//			arena.width = arena.height;
+//			trace(arena.toString());
+//		}
 		
 		public function set radius (value:int):void
 		{

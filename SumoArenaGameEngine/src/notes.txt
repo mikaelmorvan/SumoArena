@@ -15,6 +15,21 @@ Nouvelles fonctionnalités :
 - gestion des rounds et parties
 - envoyer message de fin de round/ fin de partie (cf google doc)
  
+v0.3
+correction bug d'affichage des sphères quand la taille de l'arène varie 
+
+Fonctionnalités supprimées 
+- modification de la taille initiale de l'arène
+
+Nouvelles Fonctionnalités 
+- fusion des onglets contrôle et jeu
+- annulation round
+- annulation partie 
+- la (dé)sélection des joueurs se fait par un clic sur la liste ; plus de boutons
+ 
+------------------------------
+
+ 
 A faire
 play/pause
 nom des joueurs et couleurs dans l'écran de jeu
