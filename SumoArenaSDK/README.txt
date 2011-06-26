@@ -1,3 +1,19 @@
+Version 0.2
+
+Bugs corrigés :
+- lors de la réduction de l'arène : les balles n'étaient pas détectées comme étant en dehors de l'arène
+- écran controle : le rayon de l'arène diminue pendant le jeu
+
+Nouvelles fonctionnalités :
+- envoi acknowledge après connexion joueur (cf google doc)
+- gestion des rounds et parties
+- envoyer message de fin de round/ fin de partie (cf google doc)
+
+Bug connu: la modification de la taille initiale de l'arène provoque des problèmes d'affichage. 
+Par conséquent elle est désactivée dans cette version.
+
+-----------------------------------------------------------------------
+
 Version 0.1
 
 Bugs connu :
