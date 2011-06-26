@@ -78,19 +78,11 @@ package service
 		 * @param data the object to be serialized to json
 		 * @param expectResponse when true, the client should send a response
 		 */ 
-		public function sendToPlayers(players:ArrayList, data:Object, expectResponse:Boolean):void
+		public function sendToPlayers(players:ArrayList, data:Object, expectResponse:Boolean=false):void
 		{
 			for each (var player:Player in players.source) 
 			{
 				send(player, data, expectResponse);
-			}
-		}
-		
-		public function allowClientsToRespond():void
-		{
-			for each (var player:Player in clients) // TODO devrait être selected players
-			{
-				player.responseExpected = true;
 			}
 		}
 		
@@ -104,7 +96,8 @@ package service
 			}	
 		}	
 		
-		private function startSocketServer(port:int):void {
+		private function startSocketServer(port:int):void 
+		{
 			if(!serverSocket)
 			{
 				try {
@@ -169,7 +162,7 @@ package service
 		
 		private function log(message:String):void
 		{
-			trace("call to log");
+//			trace("call to log");
 			logSignal.dispatch(message);
 		}
 		

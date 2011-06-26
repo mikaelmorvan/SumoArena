@@ -6,6 +6,7 @@ package model
 	import model.vo.Sphere;
 	import model.vo.SphereConfiguration;
 	
+	import org.osflash.signals.Signal;
 	import org.robotlegs.mvcs.Actor;
 	
 	import service.Server;
@@ -15,47 +16,65 @@ package model
 		[Inject]
 		public var server:Server;
 		
-		public var game:Game;
-		
 		public const COLORS:Array = [0x000000, 0x8C1717, 0x385E0F, 0x236B8E, 0xFFCC11, 0x6600FF, 0xFF00AA];
+		
+		public var game:Game;
+
+		
+		public var roundStartedSignal:Signal;
+		
+		public var roundFinishedSignal:Signal;
+		
+		public var gameStartedSignal:Signal;
+		
+		public var gameFinishedSignal:Signal;
 		
 		public function GameModel()
 		{
 			game = new Game();
+			roundStartedSignal = new Signal();
+			roundFinishedSignal = new Signal();
+			gameStartedSignal = new Signal();
+			gameFinishedSignal = new Signal();
 		}
 
 		/**
 		 * Starts the game
 		 * sends game description to clients 
 		 */		
-		public function start(sphereConfiguration:SphereConfiguration):void
+		public function startRound(sphereConfiguration:SphereConfiguration):void
 		{
+			if(game.currentRound == 0) {
+				gameStartedSignal.dispatch();
+			}
+			game.currentRound++;
 			game.currentTick = 0;
 			_nextRequest = 0;
 			initAliveSphere();
 			
 			for (var i:int = 0; i < game.selectedPlayers.length; i++)
 			{
-			//TODO gérer les rounds
 				var player:Player = game.selectedPlayers.getItemAt(i) as Player;
-				player.id = "player" + (i + 1);
+				player.id = i;
 				var roundDescription:Object = {
 					"action": "prepare",
 					"parameters" : 
 					{
-						"yourId": player.id,
+						"yourIndex": player.id,
 						"playerCount": game.selectedPlayers.length,
 						"arenaInitialRadius": game.arena.initialRadius,
 						"sphereRadius": sphereConfiguration.radius,
 						"maxSpeedVariation": sphereConfiguration.speedVariation,
-						"currentRound": 1,
-						"roundForVictory": 1
+						"currentRound": game.currentRound,
+						"roundForVictory": game.roundRequiredToWin
 					}
 				}
+				
 				server.send(player, roundDescription);
 			}
+			roundStartedSignal.dispatch();
 		}
-
+		
 		/**
 		 * Places the spheres on the arena, according to their number
 		 */ 
@@ -89,7 +108,7 @@ package model
 			
 			if(game.currentTick >= _nextRequest)
 			{
-				_nextRequest = game.currentTick + Game.REQUEST_INTERVAL;
+				_nextRequest = game.currentTick + Game.REQUEST_INTERVAL_IN_TICKS;
 				requestPlayers();
 			}
 		}
@@ -106,10 +125,10 @@ package model
 				var player:Player = game.selectedPlayers.getItemAt(i) as Player;
 				players[i] = {
 					"id": player.id,
-					"x": player.sphere.x,
-					"y": player.sphere.y,
-					"vx": player.sphere.speedVector.x,
-					"vy": player.sphere.speedVector.y,
+					"x": Math.round(player.sphere.x),
+					"y": Math.round(player.sphere.y),
+					"vx": Math.round(player.sphere.speedVector.x),
+					"vy": Math.round(player.sphere.speedVector.y),
 					"inArena" : player.sphere.isInArena
 				}
 			}
@@ -138,13 +157,44 @@ package model
 				var sphere:Sphere = Sphere(game.aliveSpheres.getItemAt(i));
 				if (sphere.x*sphere.x + sphere.y*sphere.y > game.arena.squareRadius)
 				{
-					//TODO: dispatch a signal
 					sphere.isInArena = false;
 					game.aliveSpheres.removeItem(sphere);
+					if(game.aliveSpheres.length < 2){
+						finishRound();
+					}
 				} else {
 					i++;
 				}
 			}			
+		}
+		
+		private function finishRound():void
+		{
+			var roundWinnerId:int = -1;
+			var gameWinnerId:int = -1;
+			
+			if(game.aliveSpheres.length == 1)
+			{
+				var winner:Player = Sphere(game.aliveSpheres.getItemAt(0)).player;
+				roundWinnerId = winner.id;
+				winner.wonRounds++;
+				roundFinishedSignal.dispatch();
+				if(winner.wonRounds >= game.roundRequiredToWin){
+					game.currentRound = 0;
+					gameWinnerId = roundWinnerId;
+					gameFinishedSignal.dispatch();
+				}
+			}
+			var data:Object = {
+				"action" : "finishRound",
+				"parameters" :  
+					{
+						"currentRound" : game.currentRound,
+						"roundWinnerId" : roundWinnerId,
+						"gameWinnerId" : gameWinnerId
+					}
+			}
+			server.sendToPlayers(game.selectedPlayers, data);
 		}
 		
 		/**
@@ -221,13 +271,13 @@ package model
 
 		public function set maxWinningRounds(value:int):void
 		{
-			game.maxWinningRounds = value;
+			game.roundRequiredToWin = value;
 		}
 
 		public function set turnDuration(value:int):void
 		{
 			game.turnDuration = value;
-			game.stepByTurn = game.turnDuration / Game.REQUEST_INTERVAL;
+			game.stepByTurn = game.turnDuration / Game.REQUEST_INTERVAL_IN_TICKS;
 		}
 		
 		public function set roundDuration(value:int):void

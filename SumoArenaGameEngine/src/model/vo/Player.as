@@ -4,7 +4,7 @@ package model.vo
 
 	public class Player
 	{
-		public var id:String;
+		public var id:int;
 		
 		[Bindable]
 		public var name:String;
@@ -24,5 +24,7 @@ package model.vo
 		public var socket:Socket;
 		
 		public var sphere:Sphere;
+		
+		public var wonRounds:int;
 	}
 }

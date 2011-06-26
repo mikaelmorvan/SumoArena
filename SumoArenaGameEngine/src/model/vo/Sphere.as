@@ -22,14 +22,12 @@ package model.vo
 		
 		public var radius:int = 20;
 		
-		public var wonRounds:int;
-		
 		public var isInArena:Boolean;
 		
 		
 		public function toString():String
 		{
-			return "Sphere{x:" + x + ", y:" + y + ", xOffset:" + xOffset + ", yOffset:" + yOffset + ", speedVector:" + speedVector + ", maxSpeedVariation:" + maxSpeedVariation + ", player:" + player.name + ", radius:" + radius + ", wonRounds:" + wonRounds + ", isInArena:" + isInArena + "}";
+			return "Sphere{x:" + x + ", y:" + y + ", xOffset:" + xOffset + ", yOffset:" + yOffset + ", speedVector:" + speedVector + ", maxSpeedVariation:" + maxSpeedVariation + ", player:" + player.name + ", radius:" + radius + ", isInArena:" + isInArena + "}";
 		}
 
 

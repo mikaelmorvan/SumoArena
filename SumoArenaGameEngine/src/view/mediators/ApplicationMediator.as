@@ -8,6 +8,7 @@ package view.mediators
 	import flash.events.Event;
 	import flash.utils.getTimer;
 	
+	import model.GameModel;
 	import model.vo.Game;
 	
 	import org.robotlegs.mvcs.Mediator;
@@ -26,10 +27,14 @@ package view.mediators
 		[Inject]
 		public var updateSignal:UpdateSignal;
 		
+		[Inject]
+		public var gameModel:GameModel;
+		
 		public override function onRegister():void
 		{
 			startSignal.add(gameStartedHandler);
 			stopSignal.add(gameStoppedHandler);
+			gameModel.roundFinishedSignal.add(gameStoppedHandler);
 		}
 
 		private function gameStartedHandler():void 

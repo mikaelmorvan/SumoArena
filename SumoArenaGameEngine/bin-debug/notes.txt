@@ -6,30 +6,23 @@ réduction de l'arène
 vérifier le nom de l'action envoyée
 
 v0.2
-bug lors de réduction : les balles ne sont pas détectées comme étant en dehors de l'arène
-écran controle : le rayon de l'arène diminue
-envoyer acknowledge
+Bugs corrigés :
+- lors de réduction : les balles ne sont pas détectées comme étant en dehors de l'arène
+- écran controle : le rayon de l'arène diminue
 
-	"action": "acknowledgeConnection"
-	"parameters": {"yourName" : "..."}
-
-A faire
-détecter fin de partie
-envoyer message de fin de partie
+Nouvelles fonctionnalités :
+- envoi acknowledge après connexion joueur (cf google doc)
+- gestion des rounds et parties
+- envoyer message de fin de round/ fin de partie (cf google doc)
  
+A faire
 play/pause
 nom des joueurs et couleurs dans l'écran de jeu
 représenter le speed vector
 
 	
 renvoyer le crossdomain.xml	
-
-envoyer message de fin de round :
-	"action": "finishRound"
-	"parameters": "currentRound" : 2
-	"winnerId" : ""     // chaine vide si pas de gagnant
 	
-si les deux derniers joueurs sortent en même temps, pas de gagant
 
 éliminer de la liste des joueurs ceux dont la socket est fermée
 	

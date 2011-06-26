@@ -87,11 +87,6 @@ package model
 			sphere.radius = value;
 		}
 
-		public function setWonRounds(sphere:Sphere, value:int):void
-		{
-			sphere.wonRounds = value;
-		}
-
 		public function handleCollisions(aliveSpheres:ArrayList):void
 		{
 			var sphereNumber:int = aliveSpheres.length;
@@ -141,7 +136,5 @@ package model
 			otherSphere.speedVector.x += vectorX;
 			otherSphere.speedVector.y += vectorY;
 		}
-		
-		
 	}
 }

@@ -14,7 +14,7 @@ package
 	import controller.commands.SetSphereRadiusCommand;
 	import controller.commands.SetTurnDurationCommand;
 	import controller.commands.SetWinningRoundsCommand;
-	import controller.commands.StartGameCommand;
+	import controller.commands.StartRoundCommand;
 	import controller.commands.StartServerCommand;
 	import controller.commands.StopGameCommand;
 	import controller.commands.UnregisterPlayerCommand;
@@ -72,10 +72,10 @@ package
 	{
 		public override function startup():void
 		{
+			mapServices(); 
 			mapModels();
 			mapControllers();
 			mapViews();
-			mapServices(); 
 			super.startup();
 		}
 
@@ -129,7 +129,7 @@ package
 			//game
 			signalCommandMap.mapSignalClass(ChangeTurnDurationSignal, SetTurnDurationCommand);
 			signalCommandMap.mapSignalClass(ChangeWinningRoundsSignal, SetWinningRoundsCommand);
-			signalCommandMap.mapSignalClass(StartSignal, StartGameCommand);
+			signalCommandMap.mapSignalClass(StartSignal, StartRoundCommand);
 			signalCommandMap.mapSignalClass(StopSignal, StopGameCommand);
 			signalCommandMap.mapSignalClass(SelectPlayerSignal, SelectPlayerCommand);
 			signalCommandMap.mapSignalClass(UnselectPlayerSignal, UnselectPlayerCommand);

@@ -4,6 +4,8 @@ package view.mediators
 	
 	import flash.events.MouseEvent;
 	
+	import model.GameModel;
+	
 	import org.osflash.signals.natives.NativeSignal;
 	import org.robotlegs.mvcs.Mediator;
 	
@@ -17,17 +19,27 @@ package view.mediators
 		[Inject]
 		public var startSignal:StartSignal;
 		
+		[Inject]
+		public var gameModel:GameModel;
+		
 		public override function onRegister():void
 		{
 			var startRoundClickedSignal:NativeSignal = new NativeSignal(controlView.startRoundButton, MouseEvent.CLICK, MouseEvent);
 			startRoundClickedSignal.add(startRoundClicked);
+			
+			gameModel.roundFinishedSignal.add(roundEnded);
+			
 		}
 		
 		private function startRoundClicked(event:MouseEvent):void
 		{
 			startSignal.dispatch();
+			controlView.startRoundButton.enabled = false;
 		}
 
-		
+		private function roundEnded():void
+		{
+			controlView.startRoundButton.enabled = true;
+		}
 	}
 }
