@@ -90,27 +90,31 @@ class Player(object):
         #
         # Your are expected to return an (int, int)
         # tuple that gives (dVx, dVy) acceleration.
+
+        # TODO Add a example of all available information.
+
         return (10, 0)
 
     def on_round_finished(self, endInfo):
         
-        # Unused but existing field.
-        currentRound = endInfo.currentRound
+        # Get all the available information.
+        currentRound     = endInfo.currentRound
+        gameWinnerIndex  = endInfo.gameWinnerIndex
+        roundWinnerIndex = endInfo.roundWinnerIndex
 
         # Did I win the round?
-        if endInfo.roundWinnerIndex == self.ownIndex:
+        if roundWinnerIndex == self.ownIndex:
             print "Hey, I just won this round."
         else:
             print "Well, I did not win this round."
 
         # Is the game over?
-        winnerIdx = endInfo.gameWinnerIndex
-        if winnerIdx < 0:
+        if gameWinnerIndex < 0:
             print "I lost a round, but I dit not lose the game."
             return
 
         # If so, am I the king?
-        if winnerIdx == self.ownIndex:
+        if gameWinnerIndex == self.ownIndex:
             print "Hey, I also won this game, it seems."
         else:
             print "Kudos to the brilliant winner (not me, sadly)."
