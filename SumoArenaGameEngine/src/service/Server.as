@@ -31,9 +31,6 @@ package service
 		public var registerPlayerSignal:RegisterPlayerSignal;
 		
 		[Inject]
-		public var updateSphereSignal:UpdateSphereSignal;
-		
-		[Inject]
 		public var logSignal:LogSignal;
 		
 		// dispatched when a clients sockets is closed
@@ -215,7 +212,6 @@ package service
 				{
 					player.requestedDx = data.dVx;
 					player.requestedDy = data.dVy;
-					updateSphereSignal.dispatch(player);
 				}
 				player.responseExpected = false;
 					

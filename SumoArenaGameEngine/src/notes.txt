@@ -32,17 +32,17 @@ v0.4
 - arrêt du serveur avant sortie de l'application
 - ajout commande stop dans l'onglet serveur
 - gestion déconnexion clients
+- éliminer de la liste des joueurs ceux dont la socket est fermée
 - correction bug dans client JS : envoi d'un message en réponse au AcknowledgeConnect  
  
- 
+- v0.5
+- représenter le speed vector
+- mise à jour synchronisée des sphères
 ------------------------------
 
  
 A faire
 play/pause
-représenter le speed vector
-éliminer de la liste des joueurs ceux dont la socket est fermée
-corriger bug dans client JS : envoi de données dès la connexion
 
 afficher la durée max d'un round dans l'onglet controle
 renvoyer le crossdomain.xml	

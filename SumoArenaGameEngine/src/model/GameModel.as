@@ -1,5 +1,7 @@
 package model
 {
+	import controller.signals.UpdateSphereSignal;
+	
 	import model.vo.Arena;
 	import model.vo.Game;
 	import model.vo.Player;
@@ -15,6 +17,9 @@ package model
 	{
 		[Inject]
 		public var server:Server;
+		
+		[Inject]
+		public var updateSphereSignal:UpdateSphereSignal;
 		
 		public const COLORS:Array = [0x000000, 0x8C1717, 0x385E0F, 0x236B8E, 0xFFCC11, 0x6600FF, 0xFF00AA];
 		
@@ -127,6 +132,7 @@ package model
 			if(game.currentTick >= _nextRequest)
 			{
 				_nextRequest = game.currentTick + Game.REQUEST_INTERVAL_IN_TICKS;
+				
 				requestPlayers();
 			}
 		}
@@ -141,12 +147,13 @@ package model
 			for (var i:int = 0; i < game.selectedPlayers.length; i++)
 			{
 				var player:Player = game.selectedPlayers.getItemAt(i) as Player;
+				updateSphereSignal.dispatch(player);
 				players[i] = {
 					"id": player.id,
 					"x": Math.round(player.sphere.x),
 					"y": Math.round(player.sphere.y),
-					"vx": Math.round(player.sphere.speedVector.x),
-					"vy": Math.round(player.sphere.speedVector.y),
+					"vx": Math.round(player.sphere.speedVectorX),
+					"vy": Math.round(player.sphere.speedVectorY),
 					"inArena" : player.sphere.isInArena
 				}
 			}
@@ -176,6 +183,8 @@ package model
 				if (sphere.x*sphere.x + sphere.y*sphere.y > game.arena.squareRadius)
 				{
 					sphere.isInArena = false;
+					sphere.speedVectorX = 0;
+					sphere.speedVectorY = 0;
 					game.aliveSpheres.removeItem(sphere);
 					if(game.aliveSpheres.length < 2){
 						finishRound();
@@ -191,12 +200,12 @@ package model
 			var roundWinnerId:int = -1;
 			var gameWinnerId:int = -1;
 			
+			roundFinishedSignal.dispatch();
 			if(game.aliveSpheres.length == 1)
 			{
 				var winner:Player = Sphere(game.aliveSpheres.getItemAt(0)).player;
 				roundWinnerId = winner.id;
 				winner.wonRounds++;
-				roundFinishedSignal.dispatch();
 				if(winner.wonRounds >= game.roundRequiredToWin){
 					gameWinnerId = roundWinnerId;
 					finishGame();

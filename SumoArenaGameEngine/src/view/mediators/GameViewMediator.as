@@ -34,6 +34,7 @@ package view.mediators
 		[Inject]
 		public var arenaModel:ArenaModel;
 		
+		//TODO use states
 		public override function onRegister():void
 		{
 			var startRoundClickedSignal:NativeSignal = new NativeSignal(gameView.startRoundButton, MouseEvent.CLICK, MouseEvent);

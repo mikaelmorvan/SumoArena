@@ -49,8 +49,8 @@
 			width="300"/>
 		<s:NumericStepper
 			id="initialDistanceInput"
-			minimum="1"
-			maximum="1000"
+			minimum="0"
+			maximum="250"
 			width="65"
 			value="{sphereConfiguration.initialDistance}"/>
 	</s:HGroup>
@@ -122,8 +122,8 @@
 			width="300"/>
 		<s:NumericStepper
 			id="requestIntervalInput"
-			minimum="1"
-			maximum="1000"
+			minimum="20"
+			maximum="3000"
 			width="65"
 			value="{game.requestInterval}"/>
 	</s:HGroup>
