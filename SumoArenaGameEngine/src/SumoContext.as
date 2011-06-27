@@ -38,7 +38,7 @@ package
 	import controller.signals.RegisterPlayerSignal;
 	import controller.signals.SelectPlayerSignal;
 	import controller.signals.StartServerSignal;
-	import controller.signals.StartSignal;
+	import controller.signals.StartRoundSignal;
 	import controller.signals.StopServerSignal;
 	import controller.signals.UnregisterPlayerSignal;
 	import controller.signals.UnselectPlayerSignal;
@@ -127,7 +127,7 @@ package
 			//game
 			signalCommandMap.mapSignalClass(ChangeTurnDurationSignal, SetTurnDurationCommand);
 			signalCommandMap.mapSignalClass(ChangeWinningRoundsSignal, SetWinningRoundsCommand);
-			signalCommandMap.mapSignalClass(StartSignal, StartRoundCommand);
+			signalCommandMap.mapSignalClass(StartRoundSignal, StartRoundCommand);
 			signalCommandMap.mapSignalClass(CancelRoundSignal, CancelRoundCommand);
 			signalCommandMap.mapSignalClass(CancelGameSignal, CancelGameCommand);
 			signalCommandMap.mapSignalClass(SelectPlayerSignal, SelectPlayerCommand);

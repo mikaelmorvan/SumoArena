@@ -31,6 +31,8 @@ Nouvelles Fonctionnalités
 v0.4
 - arrêt du serveur avant sortie de l'application
 - ajout commande stop dans l'onglet serveur
+- gestion déconnexion clients
+- correction bug dans client JS : envoi d'un message en réponse au AcknowledgeConnect  
  
  
 ------------------------------

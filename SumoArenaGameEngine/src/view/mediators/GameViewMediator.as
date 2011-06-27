@@ -2,7 +2,7 @@ package view.mediators
 {
 	import controller.signals.CancelGameSignal;
 	import controller.signals.CancelRoundSignal;
-	import controller.signals.StartSignal;
+	import controller.signals.StartRoundSignal;
 	
 	import flash.events.MouseEvent;
 	
@@ -20,7 +20,7 @@ package view.mediators
 		public var gameView:GameView;
 		
 		[Inject]
-		public var startSignal:StartSignal;
+		public var startRoundSignal:StartRoundSignal;
 
 		[Inject]
 		public var cancelRoundSignal:CancelRoundSignal;
@@ -63,7 +63,7 @@ package view.mediators
 		
 		private function startRoundClicked(event:MouseEvent):void
 		{
-			startSignal.dispatch();
+			startRoundSignal.dispatch();
 			gameView.startRoundButton.enabled = false;
 			gameView.cancelRoundButton.enabled = true;
 			gameView.cancelGameButton.enabled = true;

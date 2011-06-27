@@ -2,7 +2,7 @@ package view.mediators
 {
 	import controller.signals.CancelRoundSignal;
 	import controller.signals.CreateSphereSignal;
-	import controller.signals.StartSignal;
+	import controller.signals.StartRoundSignal;
 	import controller.signals.StopServerSignal;
 	import controller.signals.UpdateSignal;
 	
@@ -20,7 +20,7 @@ package view.mediators
 		public var applicationView:SumoArenaGameEngine;
 		
 		[Inject]
-		public var startSignal:StartSignal;
+		public var startRoundSignal:StartRoundSignal;
 
 		[Inject]
 		public var cancelRoundSignal:CancelRoundSignal;
@@ -36,7 +36,7 @@ package view.mediators
 		
 		public override function onRegister():void
 		{
-			startSignal.add(gameStartedHandler);
+			startRoundSignal.add(gameStartedHandler);
 			cancelRoundSignal.add(gameStoppedHandler);
 			gameModel.roundFinishedSignal.add(gameStoppedHandler);
 			gameModel.gameFinishedSignal.add(gameStoppedHandler);

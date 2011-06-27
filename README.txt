@@ -1,5 +1,17 @@
 SumoArena is a game engine for a private coding contest.
 
+Release 0.4
+
+New Features
+- stop server before exiting application
+- added stop command in server tab
+- handle client disconnection
+
+Solved issues
+- corrected bug in JS demo client: unexpected message sent in response to AcknowledgeConnect
+
+-------------------------------------------
+
 Release 0.3 
 
 Removed features

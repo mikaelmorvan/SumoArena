@@ -21,6 +21,7 @@ package service
 	import mx.collections.IList;
 	
 	import org.robotlegs.mvcs.Actor;
+	import org.osflash.signals.Signal;
 		
 	public class Server extends Actor
 	{
@@ -35,11 +36,15 @@ package service
 		[Inject]
 		public var logSignal:LogSignal;
 		
+		// dispatched when a clients sockets is closed
+		public var clientDisconnected:Signal;
+		
 		///////////////////////////////////////////////////////////////
 		
 		public function Server()
 		{
 			clients = new Dictionary();
+			clientDisconnected = new Signal(Player);
 		}
 		
 		private var clients:Dictionary; // (name, User)
@@ -48,7 +53,6 @@ package service
 		
 		public function start(port:int):void
 		{
-//			close();
 			if (!serverSocket)
 			{
 				clientSockets = [];
@@ -103,7 +107,6 @@ package service
 				try {
 					serverSocket = new ServerSocket();
 					serverSocket.addEventListener(ServerSocketConnectEvent.CONNECT, onConnect);
-					//			serverSocket.addEventListener(Event.CLOSE, onClose);
 					serverSocket.bind(port);
 					serverSocket.listen();
 					log(">server started, listening on port " + port);
@@ -122,7 +125,7 @@ package service
 		{
 			var clientSocket:Socket = event.socket;
 			clientSocket.addEventListener(ProgressEvent.SOCKET_DATA, onData);
-			clientSocket.addEventListener(Event.CLOSE, onConnectionClosed);
+			clientSocket.addEventListener(Event.CLOSE, onClientConnectionClosed);
 			
 			log(">new client socket opened");
 			clientSockets.push(clientSocket);
@@ -148,14 +151,15 @@ package service
 			}
 		}
 		
-		protected function onConnectionClosed(event:Event):void
+		protected function onClientConnectionClosed(event:Event):void
 		{
 			var clientSocket:Socket = event.target as Socket;
 			var index:int = clientSockets.indexOf(clientSocket);
 			clientSockets.splice(index, 1);
 			
 			var player:Player = Player(clients[clientSocket]);
-			var playerName:String = player ? player.name : "unknown player"; 
+			var playerName:String = player ? player.name : "unknown player";
+			clientDisconnected.dispatch(player);
 			log(">client disconnected " + playerName);
 		}
 		

@@ -36,8 +36,26 @@ package model
 			roundFinishedSignal = new Signal();
 			gameStartedSignal = new Signal();
 			gameFinishedSignal = new Signal();
+			
 		}
-
+		
+		[PostConstruct]
+		public function addServiceListeners():void
+		{
+			server.clientDisconnected.add(onClientDisconnected);			
+		}
+		
+		private function onClientDisconnected(player:Player):void
+		{
+			var sphere:Sphere = getSphereByPlayer(player);
+			if(sphere)
+			{
+				removeSphere(sphere);
+			}
+			unselectPlayer(player);
+			removePlayer(player);
+		}
+		
 		/**
 		 * Starts the game
 		 * sends game description to clients 
