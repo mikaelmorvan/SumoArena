@@ -86,7 +86,7 @@ package service
 			}
 		}
 		
-		public function close():void
+		public function stop():void
 		{
 			if (serverSocket)
 			{

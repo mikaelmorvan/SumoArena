@@ -17,6 +17,7 @@ package
 	import controller.commands.SetWinningRoundsCommand;
 	import controller.commands.StartRoundCommand;
 	import controller.commands.StartServerCommand;
+	import controller.commands.StopServerCommand;
 	import controller.commands.UnregisterPlayerCommand;
 	import controller.commands.UnselectPlayerCommand;
 	import controller.commands.UpdateCommand;
@@ -38,6 +39,7 @@ package
 	import controller.signals.SelectPlayerSignal;
 	import controller.signals.StartServerSignal;
 	import controller.signals.StartSignal;
+	import controller.signals.StopServerSignal;
 	import controller.signals.UnregisterPlayerSignal;
 	import controller.signals.UnselectPlayerSignal;
 	import controller.signals.UpdateSignal;
@@ -88,7 +90,7 @@ package
 		
 		private function mapViews():void
 		{
-			mediatorMap.mapView(SumoBotGameEngine, ApplicationMediator);
+			mediatorMap.mapView(SumoArenaGameEngine, ApplicationMediator);
 			mediatorMap.mapView(ServerView, ServerViewMediator);
 			mediatorMap.mapView(PlayerView, PlayerViewMediator);
 			mediatorMap.mapView(ConfigurationView, ConfigurationViewMediator);
@@ -103,6 +105,7 @@ package
 			
 			//server
 			signalCommandMap.mapSignalClass(StartServerSignal, StartServerCommand);
+			signalCommandMap.mapSignalClass(StopServerSignal, StopServerCommand);
 			
 			//logs
 			signalCommandMap.mapSignalClass(LogSignal, LogCommand);
