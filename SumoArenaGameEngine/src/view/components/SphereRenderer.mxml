@@ -20,6 +20,7 @@
 		]]>
 	</fx:Script>
 	<s:Ellipse
+		id="ellipse"
 		x="{_sphere.x + _sphere.xOffset}"
 		y="{_sphere.y + _sphere.yOffset}"
 		height="{_sphere.radius * 2}"
@@ -30,4 +31,18 @@
 				color="{_sphere.player.color}"/>
 		</s:fill>
 	</s:Ellipse>
+	<s:Line
+		xFrom="{ellipse.x + _sphere.radius}"
+		yFrom="{ellipse.y + _sphere.radius}"
+		xTo="{ellipse.x + _sphere.speedVectorX + _sphere.radius}"
+		yTo="{ellipse.y + _sphere.speedVectorY + _sphere.radius}">
+		<s:stroke>
+			<s:SolidColorStroke
+				color="#666666"
+				alpha="0.5"
+				weight="2"/>
+		</s:stroke>
+	</s:Line>
+		
+	
 </s:ItemRenderer>

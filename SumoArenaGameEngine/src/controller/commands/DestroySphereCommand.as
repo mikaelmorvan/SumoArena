@@ -20,14 +20,8 @@ package controller.commands
 		public var player:Player;
 		
 		[Inject]
-		public var createSphereSignal:CreateSphereSignal;
-		
-		[Inject]
 		public var sphereModel:SphereModel;
 
-		[Inject]
-		public var sphereConfigurationModel:SphereConfigurationModel;
-		
 		[Inject]
 		public var gameModel:GameModel;
 		

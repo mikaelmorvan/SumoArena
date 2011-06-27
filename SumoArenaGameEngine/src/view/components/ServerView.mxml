@@ -3,6 +3,11 @@
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
 		  horizontalAlign="right">
+	
+	<s:states>
+		<s:State name="stopped"/>
+		<s:State name="running"/>
+	</s:states>
 	<!--<s:HGroup
 		verticalAlign="middle">
 		<s:Label 
@@ -38,6 +43,15 @@
 	<s:Button
 		id="startButton"
 		label="Start server"
+		enabled.running="false"
+		enabled.stopped="true"
 		toolTip="Run the local game server."
+		/>
+	<s:Button
+		id="stopButton"
+		label="Stop server"
+		enabled.running="true"
+		enabled.stopped="false"
+		toolTip="Stops the local game server."
 		enabled="true"/>
 </s:VGroup>

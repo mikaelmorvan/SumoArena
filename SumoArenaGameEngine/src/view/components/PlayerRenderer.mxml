@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="true">
+	
+	<fx:Script>
+		
+		<![CDATA[
+			import model.vo.Player;
+			
+			[Bindable]
+			private var _player:Player;
+		
+			public override function set data(value:Object):void
+			{
+				_player = value as Player;
+				trace(_player);
+			}
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:HorizontalLayout
+			verticalAlign="middle"/>
+	</s:layout>
+	<s:Ellipse
+		height="20"
+		width="20">
+		<s:fill>
+			<s:SolidColor
+				color="{_player.color}"
+				alpha="{_player.sphere.isInArena ? 1 : 0.5}"/>
+		</s:fill>
+	</s:Ellipse>		
+	<s:Label 
+		text="{_player.name}"
+		width="140"/>
+	<s:Label 
+		text="{_player.wonRounds}"
+		width="10"/>
+	
+</s:ItemRenderer>

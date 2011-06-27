@@ -63,10 +63,7 @@ function connect() {
     document.getElementsByTagName("head")[0].appendChild(script);
     
     s = new FlashSocket({
-        on_data: function(data) {
-        	log("received: " + data);
-    		play();    	
-        },
+        on_data: parseServerMessage,
         on_io_error: function(msg) {
         	log("error: " + msg);
         },
@@ -87,7 +84,14 @@ function connect() {
     s.connect('localhost', 9090);
 }
 
-
+function parseServerMessage(data) 
+{
+    log("received: " + data);
+    var serverMessage = JSON.parse(data);
+    if (serverMessage.action == 'play'){
+       play();
+    }
+}
 
 function play()
 {

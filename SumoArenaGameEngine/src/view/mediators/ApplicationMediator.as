@@ -1,8 +1,9 @@
 package view.mediators
 {
-	import controller.signals.CreateSphereSignal;
-	import controller.signals.StartSignal;
 	import controller.signals.CancelRoundSignal;
+	import controller.signals.CreateSphereSignal;
+	import controller.signals.StartRoundSignal;
+	import controller.signals.StopServerSignal;
 	import controller.signals.UpdateSignal;
 	
 	import flash.events.Event;
@@ -16,28 +17,37 @@ package view.mediators
 	public class ApplicationMediator extends Mediator
 	{
 		[Inject]
-		public var applicationView:SumoBotGameEngine;
+		public var applicationView:SumoArenaGameEngine;
 		
 		[Inject]
-		public var startSignal:StartSignal;
+		public var startRoundSignal:StartRoundSignal;
 
 		[Inject]
-		public var stopSignal:CancelRoundSignal;
+		public var cancelRoundSignal:CancelRoundSignal;
 		
 		[Inject]
 		public var updateSignal:UpdateSignal;
+		
+		[Inject]
+		public var stopServerSignal:StopServerSignal;
 		
 		[Inject]
 		public var gameModel:GameModel;
 		
 		public override function onRegister():void
 		{
-			startSignal.add(gameStartedHandler);
-			stopSignal.add(gameStoppedHandler);
+			startRoundSignal.add(gameStartedHandler);
+			cancelRoundSignal.add(gameStoppedHandler);
 			gameModel.roundFinishedSignal.add(gameStoppedHandler);
 			gameModel.gameFinishedSignal.add(gameStoppedHandler);
+			applicationView.addEventListener(Event.CLOSING, onClosingHandler);
 		}
-
+		
+		protected function onClosingHandler(event:Event):void
+		{
+			stopServerSignal.dispatch();
+		}
+		
 		private function gameStartedHandler():void 
 		{
 			addViewListener(Event.ENTER_FRAME, enterFrameHandler);
@@ -52,5 +62,6 @@ package view.mediators
 		{
 			updateSignal.dispatch();
 		}
+		
 	}
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="SumoBotGameEngine.mxml" projectUUID="c6396533-bafd-4170-a0ed-5b4d52d1f01e" version="10">
+<actionScriptProperties analytics="false" mainApplicationPath="SumoArenaGameEngine.mxml" projectUUID="c6396533-bafd-4170-a0ed-5b4d52d1f01e" version="10">
   <compiler additionalCompilerArguments="-locale fr_FR" autoRSLOrdering="true" copyDependentFiles="true" flexSDK="Flex 4.1" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
@@ -13,7 +13,7 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="SumoBotGameEngine.mxml">
+    <application path="SumoArenaGameEngine.mxml">
       <airExcludes/>
     </application>
   </applications>

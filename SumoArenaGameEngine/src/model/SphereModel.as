@@ -21,7 +21,6 @@ package model
 			var sphere:Sphere = new Sphere();
 			sphere.radius = radius;
 			sphere.player = player;
-			sphere.speedVector = new Point(0,0);
 			sphere.maxSpeedVariation = speedVariation;
 			return sphere;
 		}
@@ -30,16 +29,16 @@ package model
 			for (var i:int = 0; i < spheres.length; i++)
 			{
 				var sphere:Sphere = spheres.getItemAt(i) as Sphere;
-				sphere.speedVector.x = 0;
-				sphere.speedVector.y = 0;
+				sphere.speedVectorX = 0;
+				sphere.speedVectorY = 0;
 				sphere.isInArena = true;
 			}			
 		}
 		
 		public function setSpeed(sphere:Sphere, x:Number, y:Number):void
 		{
-			sphere.speedVector.x = x;
-			sphere.speedVector.y = y;
+			sphere.speedVectorX = x;
+			sphere.speedVectorY = y;
 		}
 		
 		public function setPosition(sphere:Sphere, x:Number, y:Number):void
@@ -53,8 +52,8 @@ package model
 			for (var i:int = 0; i < spheres.length; i++)
 			{
 				var sphere:Sphere = spheres.getItemAt(i) as Sphere;
-				sphere.y += sphere.speedVector.y / stepByTurn;
-				sphere.x += sphere.speedVector.x / stepByTurn; 
+				sphere.y += sphere.speedVectorY / stepByTurn;
+				sphere.x += sphere.speedVectorX / stepByTurn; 
 			}
 		}
 		
@@ -63,8 +62,8 @@ package model
 			var updated:Boolean;
 			if (dx * dx + dy * dy <= sphere.maxSpeedVariation * sphere.maxSpeedVariation)
 			{
-				sphere.speedVector.x += dx;
-				sphere.speedVector.y += dy;
+				sphere.speedVectorX += dx;
+				sphere.speedVectorY += dy;
 			}
 			else {
 				logSignal.dispatch("WARNING: " + sphere.player.name + " speed update values are out range. dx=" + dx + " dy=" + dy); 
@@ -127,14 +126,14 @@ package model
 			otherSphere.x = midpointX + normalX * otherSphere.radius;
 			otherSphere.y = midpointY + normalY * otherSphere.radius;
 			
-			var vector:Number = ((sphere.speedVector.x - otherSphere.speedVector.x) * normalX) + ((sphere.speedVector.y - otherSphere.speedVector.y) * normalY);
+			var vector:Number = ((sphere.speedVectorX - otherSphere.speedVectorX) * normalX) + ((sphere.speedVectorY - otherSphere.speedVectorY) * normalY);
 			var vectorX:Number = vector * normalX;
 			var vectorY:Number = vector * normalY;
 			
-			sphere.speedVector.x -= vectorX;
-			sphere.speedVector.y -= vectorY;
-			otherSphere.speedVector.x += vectorX;
-			otherSphere.speedVector.y += vectorY;
+			sphere.speedVectorX -= vectorX;
+			sphere.speedVectorY -= vectorY;
+			otherSphere.speedVectorX += vectorX;
+			otherSphere.speedVectorY += vectorY;
 		}
 	}
 }

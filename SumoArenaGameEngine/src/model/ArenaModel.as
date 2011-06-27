@@ -32,7 +32,6 @@ package model
 		public function set shrinkingStartTick(value:int):void
 		{
 			arena.shrinkingStartTick = value;
-			trace(arena.toString());
 		}
 		
 		/**
@@ -41,7 +40,6 @@ package model
 		public function set shrinking(value:int):void
 		{
 			arena.shrinking = value;
-			trace(arena.toString());
 		}
 		
 		/**
@@ -50,7 +48,6 @@ package model
 		public function set shrinkingInterval(value:int):void
 		{
 			arena.shrinkingInterval = value;
-			trace(arena.toString());
 		}		
 		
 		/**
