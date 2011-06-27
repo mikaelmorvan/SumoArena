@@ -112,19 +112,19 @@ class Player(object):
         if endInfo.roundWinnerIndex == self.ownIndex:
             print "Hey, I just won this round."
         else:
-            print "Well, I have lost this round."
+            print "Well, I did not win this round."
 
         # Is the game over?
         winnerIdx = endInfo.gameWinnerIndex
         if winnerIdx < 0:
-            print "I lost a battle, but I dit not lose the war."
+            print "I lost a round, but I dit not lose the game."
             return
 
         # If so, am I the king?
         if winnerIdx == self.ownIndex:
             print "Hey, I also won this game, it seems."
         else:
-            print "Kuddos to the brilliant winner (not me, sadly)."
+            print "Kudos to the brilliant winner (not me, sadly)."
 
 
 class GameClient(asyncore.dispatcher):
