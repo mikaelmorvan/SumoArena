@@ -29,8 +29,7 @@ class Sphere(object):
     
     def __init__(self, raw_data):
 
-        #self.index    = raw_data["index"]
-        self.index    = raw_data["id"] # XXX Differs from the doc.
+        self.index    = raw_data["index"]
         self.position = (raw_data["x"],  raw_data["y"])
         self.speed    = (raw_data["vx"], raw_data["vy"])
         self.inArena  = raw_data["inArena"]
@@ -51,10 +50,8 @@ class EndGameInfo(object):
         print raw_data
 
         self.currentRound     = raw_data["currentRound"]
-        self.roundWinnerIndex = raw_data["roundWinnerId"] # XXX Differs from the doc.
-        self.gameWinnerIndex  = raw_data["gameWinnerId"] # XXX Differs from the doc.
-        #self.roundWinnerIndex = raw_data["roundWinnerIndex"]
-        #self.gameWinnerIndex  = raw_data["gameWinnerIndex"]
+        self.roundWinnerIndex = raw_data["roundWinnerIndex"]
+        self.gameWinnerIndex  = raw_data["gameWinnerIndex"]
 
 
 class Player(object):
