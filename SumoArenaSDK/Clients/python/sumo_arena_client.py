@@ -91,7 +91,25 @@ class Player(object):
         # Your are expected to return an (int, int)
         # tuple that gives (dVx, dVy) acceleration.
 
-        # TODO Add a example of all available information.
+        # Here is the available information.
+        arenaRadius = playgroundInfo.arenaRadius
+
+        # This one is your sphere.
+        #
+        # Other sphere information is the same.
+        myself      = playgroundInfo.players[self.ownIndex]
+
+        # Position.
+        x           = myself.x
+        y           = myself.y
+
+        # Velocity.
+        vx          = myself.vx
+        vy          = myself.vy
+
+        # Other info.
+        index       = myself.index      # Sphere index in players list.
+        inArena     = myself.inArena    # Tell if game is over for this sphere.
 
         return (10, 0)
 
