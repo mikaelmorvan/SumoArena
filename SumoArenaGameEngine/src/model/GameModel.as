@@ -149,7 +149,7 @@ package model
 				var player:Player = game.selectedPlayers.getItemAt(i) as Player;
 				updateSphereSignal.dispatch(player);
 				players[i] = {
-					"id": player.id,
+					"index": player.id,
 					"x": Math.round(player.sphere.x),
 					"y": Math.round(player.sphere.y),
 					"vx": Math.round(player.sphere.speedVectorX),
@@ -216,8 +216,8 @@ package model
 				"parameters" :  
 					{
 						"currentRound" : game.currentRound,
-						"roundWinnerId" : roundWinnerId,
-						"gameWinnerId" : gameWinnerId
+						"roundWinnerIndex" : roundWinnerId,
+						"gameWinnerIndex" : gameWinnerId
 					}
 			}
 			server.sendToPlayers(game.selectedPlayers, data);
