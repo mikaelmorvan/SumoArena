@@ -155,6 +155,9 @@ class GameClient(asyncore.dispatcher):
         # Now we are connected, we need a brain.
         self._player = Player(self)
 
+    def writable(self):
+        return len(self._to_send) > 0
+
     def handle_write(self):
         # Send waiting data.
         sent = self.send(self._to_send)
