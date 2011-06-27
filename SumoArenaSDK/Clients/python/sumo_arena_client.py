@@ -15,24 +15,13 @@ GAME_SERVER_PORT = 9090
 class StartGameInfo(object):
 
     def __init__(self, raw_data):
-
-        self.ownIndex           = raw_data["yourIndex"]
-        self.playerCount        = raw_data["playerCount"]
-        self.arenaInitialRadius = raw_data["arenaInitialRadius"]
-        self.sphereRadius       = raw_data["sphereRadius"]
-        self.maxSpeedVariation  = raw_data["maxSpeedVariation"]
-        self.currentRound       = raw_data["currentRound"]
-        self.roundForVictory    = raw_data["roundForVictory"]
+        self.__dict__.update(raw_data)
 
 
 class Sphere(object):
     
     def __init__(self, raw_data):
-
-        self.index    = raw_data["index"]
-        self.position = (raw_data["x"],  raw_data["y"])
-        self.speed    = (raw_data["vx"], raw_data["vy"])
-        self.inArena  = raw_data["inArena"]
+        self.__dict__.update(raw_data)
 
 
 class PlaygroundInformation(object):
@@ -46,12 +35,7 @@ class PlaygroundInformation(object):
 class EndGameInfo(object):
 
     def __init__(self, raw_data):
-
-        print raw_data
-
-        self.currentRound     = raw_data["currentRound"]
-        self.roundWinnerIndex = raw_data["roundWinnerIndex"]
-        self.gameWinnerIndex  = raw_data["gameWinnerIndex"]
+        self.__dict__.update(raw_data)
 
 
 class Player(object):
@@ -62,12 +46,14 @@ class Player(object):
 
     def on_prepare_information(self, startInfo):
         
-        self._startInfo = startInfo
-
-        # Get a few useful data.
-        self.ownIndex  = startInfo.ownIndex
-        self.radius    = startInfo.sphereRadius
-        self.maxVar    = startInfo.maxSpeedVariation
+        # Get all the available information.
+        self.ownIndex           = startInfo.yourIndex
+        self.playerCount        = startInfo.playerCount
+        self.arenaInitialRadius = startInfo.arenaInitialRadius
+        self.radius             = startInfo.sphereRadius
+        self.maxVar             = startInfo.maxSpeedVariation
+        self.currentRound       = startInfo.currentRound
+        self.roundForVictory    = startInfo.roundForVictory
 
         print "Round is about to start."
         print "Now playing..."
@@ -108,6 +94,9 @@ class Player(object):
 
     def on_round_finished(self, endInfo):
         
+        # Unused but existing field.
+        currentRound = endInfo.currentRound
+
         # Did I win the round?
         if endInfo.roundWinnerIndex == self.ownIndex:
             print "Hey, I just won this round."
