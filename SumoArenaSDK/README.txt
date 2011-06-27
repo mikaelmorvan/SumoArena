@@ -1,3 +1,9 @@
+V0.6
+- corrections in protocol:
+ "id" replaced with "index"
+ "roundWinnerId" replaced with "roundWinnerIndex"
+ "gameWinnerId" replaced with "gameWinnerIndex"
+
 v0.5
 - spheres speed is updated synchronously:
 	* at t0: the server sends "play" request to clients

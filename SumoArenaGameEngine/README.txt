@@ -1,4 +1,12 @@
-v0.5
+-------------------------------------------
+Release 0.6
+- corrections in protocol:
+ "id" replaced with "index"
+ "roundWinnerId" replaced with "roundWinnerIndex"
+ "gameWinnerId" replaced with "gameWinnerIndex"
+
+-------------------------------------------
+release 0.5
 - spheres speed is updated synchronously:
 	* at t0: the server sends "play" request to clients
 	* between t0 and t0 + player request interval, the clients must respond
@@ -7,8 +15,8 @@ v0.5
 - display speed vectors in arena
 - corrected bug on round end with no player in arena
 
-
-v0.4
+-------------------------------------------
+release 0.4
 - stop server before exiting application
 - added stop command in server tab
 - handle client disconnection

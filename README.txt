@@ -1,5 +1,11 @@
 SumoArena is a game engine for a private coding contest.
 
+-------------------------------------------
+Release 0.6
+- corrections in protocol:
+ "id" replaced with "index"
+ "roundWinnerId" replaced with "roundWinnerIndex"
+ "gameWinnerId" replaced with "gameWinnerIndex"
 
 -------------------------------------------
 Release 0.5
