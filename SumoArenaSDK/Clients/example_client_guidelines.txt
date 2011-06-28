@@ -28,14 +28,14 @@ Code design
     should have the same name in all the implementations. But keep in mind
     that name case or notation may vary according to language specification
     and/or grammar.
-    
+
     Here are the various common parts of each clients:
 
     Client          This class handles the socket layer by connecting the
                     client to the game server and by providing events the
                     program is going to react upon (especially data
                     reception).
-                    
+
                     The Client object ensure the client stays connected, can
                     send and receive data. On data reception, Client object
                     parse the JSON message action and trigger a callback in
@@ -43,7 +43,7 @@ Code design
 
                     Because server connection is a one-shot procedure, Client
                     object deals with it during initialization.
-                    
+
                     Its construction parameters should be: game server
                     hostname and port, client name and possible avatar URL.
 
@@ -87,3 +87,67 @@ Code design
                     place he may use to put his own code.
 
 
+Here is the corresponding class diagram:
+
+ +--------------------------------------------+
+ |                 Player                     |
+ |--------------------------------------------|
+ |--------------------------------------------|
+ |+ on_round_start(RoundStartInfo)            |
+ |+ on_play_request(PlayingInfo): dVx, dVy    |
+ |+ on_round_stop(RoundStopInfo)              |
+ |# choose_acceleration(PlayingInfo): dVx, dVy|
+ +--------------------------------------------+
+                      ^
+                      |
+                      |
+                      | - player
+                      |
+                      |
+     +----------------------------------+
+     |           GameClient             |
+     |----------------------------------|
+     |----------------------------------|
+     |+ ctor(hostname, port, name, url) |
+     |+ on_connect()                    |
+     |+ on_data_received()              |
+     +----------------------------------+
+
+     +----------------------------------+
+     |          RoundStartInfo          |
+     |----------------------------------|
+     |+ yourIndex: int                  |
+     |+ playerCount: int                |
+     |+ arenaInitialRadius: int         |
+     |+ sphereRadius: int               |
+     |+ maxSpeedVariation: int          |
+     |+ currentRound: int               |
+     |+ roundForVictory: int            |
+     |----------------------------------|
+     |+ ctor(json_value)                |
+     +----------------------------------+
+
+     +---------------------+           +---------------------+
+     |   PlayingInfo       |           |        Sphere       |
+     |---------------------|      1..* |---------------------|
+     |+ arenaRadius: int   |---------->|+ index: int         |
+     |---------------------| +players  |+ x: int             |
+     |+ ctor(json_value)   |           |+ y: int             |
+     +---------------------+           |+ vx: int            |
+                                       |+ vy: int            |
+                                       |+ inArena: bool      |
+                                       +---------------------+
+                                       |+ ctor(json_value)   |
+                                       +---------------------+
+
+     +----------------------------------+
+     |           RoundEndInfo           |
+     |----------------------------------|
+     |+ currentRound: int               |
+     |+ gameWinnerIndex: int            |
+     |+ roundWinnerIndex: int           |
+     |----------------------------------|
+     |+ ctor(json_value)                |
+     +----------------------------------+
+
+Made with http://www.asciiflow.com/
