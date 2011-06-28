@@ -14,7 +14,7 @@ Functional concerns
     the client is required to perform two essential tasks: dealing with socket
     communication, and abstracting away JSON to language native structures.
     The code organisation tries to separate these concerns, so the reader can
-    easily find and change them if she needs to.
+    easily find and change them if he needs to.
 
     As the primary mission of clients are to react to server messages, it is
     relevant to build the client code on an event model. Except in cases it
@@ -78,12 +78,12 @@ Code design
 
                     on_play_request performs a few checks and delegate
                     acceleration decision to a dedicated method, so the reader
-                    can easily find where to put her code to write her own
+                    can easily find where to put his code to write his own
                     game strategy. This method name is:
 
                         (dVx, dVy) choose_acceleration(PlayingInfo);
 
                     Easy-to-spot comments can help the reader to find the
-                    place she may use to put her own code.
+                    place he may use to put his own code.
 
 
