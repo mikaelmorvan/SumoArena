@@ -8,4 +8,9 @@ void ExampleClient::playTurn( const RoundInfo & roundInfo, const TurnInfo & turn
 {
 	// Set a X acceleration of 10
 	out_dvX = 10;
+
+	const Player & me = turnInfo.getPlayer(roundInfo.getAlgoIndex());
+
+
+
 }

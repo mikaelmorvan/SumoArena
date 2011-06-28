@@ -16,7 +16,7 @@ TurnInfo::TurnInfo(Json::Value & msg)
 
 }
 
-const std::list<Player>& TurnInfo::getPlayerList() const
+const std::vector<Player>& TurnInfo::getPlayerList() const
 {
 	return m_playerList;
 }
@@ -25,3 +25,17 @@ int TurnInfo::getCurrentArenaRadius() const
 {
 	return m_currentArenaRadius;
 }
+
+const Player& TurnInfo::getPlayer(int index) const
+{
+	if( index < m_playerList.size() )
+	{
+		return m_playerList.at(index);
+	}
+	else
+	{
+		throw std::exception("Incorrect player index");
+	}
+}
+
+

@@ -5,7 +5,7 @@
 #ifndef TURN_INFO_H
 #define TURN_INFO_H
 
-#include <list>
+#include <vector>
 #include "Player.h"
 // Json management
 #include "json.h"
@@ -22,11 +22,16 @@ public:
 	*/
 	TurnInfo(Json::Value & msg);
 
-	const std::list<Player>& getPlayerList() const;
+	/**
+	* Return information for a specific player
+	*/
+	const Player& getPlayer(int index) const;
+
+	const std::vector<Player>& getPlayerList() const;
 	int getCurrentArenaRadius() const;
 
 protected:
-	std::list<Player> m_playerList;
+	std::vector<Player> m_playerList;
 	int m_currentArenaRadius;
 
 };
