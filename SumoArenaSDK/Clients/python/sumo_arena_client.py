@@ -1,5 +1,23 @@
 #! /usr/bin/python
 
+# This program is a simple example of SumoArena coding contest
+# client. It handles the socket and JSON layers.
+#
+# You can use this code to write your own SumoArena client.
+#
+# All you need is to put your AI code between this kind of tags
+# below in the source code.
+#
+#    #--------------------------------------------------------------
+#    # Your code ...
+#    #--------------------------------------------------------------
+#
+# This client does nothing more than going to the right as fast
+# as he can. It is unlikely to be the most clever strategy to
+# win the contest.
+#
+# Good luck.
+
 import sys
 
 import asyncore
@@ -111,7 +129,18 @@ class Player(object):
         index       = myself.index      # Sphere index in players list.
         inArena     = myself.inArena    # Tell if game is over for this sphere.
 
-        return (10, 0)
+        #--------------------------------------------------------------
+        # Your code starts here.
+        #--------------------------------------------------------------
+
+        # Replace with more clever decision.
+        wanted_acceleration = self.maxVar, 0
+
+        #--------------------------------------------------------------
+        # Your code ends here.
+        #--------------------------------------------------------------
+
+        return wanted_acceleration
 
     def on_round_finished(self, endInfo):
         
