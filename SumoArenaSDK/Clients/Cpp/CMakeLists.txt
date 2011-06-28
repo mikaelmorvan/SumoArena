@@ -16,6 +16,14 @@ FILE(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/Build)
 FILE(MAKE_DIRECTORY ${EXECUTABLE_OUTPUT_PATH})
 FILE(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH})
 
+
+#External dependencies inclue and library paths
+INCLUDE_DIRECTORIES ( C:/Dev/Library/boost_1_46_1/ )
+
+LINK_DIRECTORIES( C:/Dev/Library/boost_1_46_1/stage/lib/ )
+LINK_DIRECTORIES( C:/Dev/Library/boost_1_46_1/ibs/ )
+
+
 # Don't build anything unless the version of CMake is high enough.
 # The matching ELSE/ENDIF should be the last lines in the file.
 IF("${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}" GREATER 2.7)
@@ -72,12 +80,6 @@ IF(XANDROS)
 	ADD_DEFINITIONS(-DXANDROS)
 ENDIF()
 
-#Includes
-INCLUDE_DIRECTORIES ( C:/Dev/Library/jsoncpp-src-amalgamation0.6.0-rc2/	)
-INCLUDE_DIRECTORIES ( C:/Dev/Library/boost_1_46_1/ )
-
-LINK_DIRECTORIES( C:/Dev/Library/boost_1_46_1/stage/lib/ )
-LINK_DIRECTORIES( C:/Dev/Library/boost_1_46_1/ibs/ )
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Sub-Directories 
 ADD_SUBDIRECTORY( 

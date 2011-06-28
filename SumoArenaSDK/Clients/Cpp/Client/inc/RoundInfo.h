@@ -7,7 +7,7 @@
 
 #include <list>
 // Json management
-#include "json/json.h"
+#include "json.h"
 
 /**
 * Represent information sent to the player to compute a round
@@ -18,6 +18,15 @@ class RoundInfo
 public:
 	RoundInfo();
 	RoundInfo( Json::Value & msg );
+
+	int getAlgoIndex() const;
+	int getPlayerCount() const;
+	int getSphereRadius() const;
+	int getMaxSpeedVariation() const;
+	int getArenaInitialRadius() const;
+	int getCurrentRound() const;
+	int getRoundForVictory() const;
+
 protected:
 	int m_index;
 	int m_playerCount;
@@ -25,7 +34,7 @@ protected:
 	int m_maxSpeedVariation;
 	int m_arenaInitialRadius;
 	int m_currentRound;
-	int m_roundForVistory;
+	int m_roundForVictory;
 };
 
 /**
@@ -36,6 +45,11 @@ class EndRoundInfo
 public:
 	EndRoundInfo();
 	EndRoundInfo( Json::Value & msg );
+
+	int getCurrentRound() const;
+	int getRoundWinnerIndex() const;
+	int getGameWinnerIndex() const;
+
 protected:
 	int m_currentRound;
 	int m_roundWinnerIndex;

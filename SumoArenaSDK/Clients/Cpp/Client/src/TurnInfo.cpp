@@ -1,7 +1,7 @@
 #include "TurnInfo.h"
 
 // Json management
-#include "json/json.h"
+#include "json.h"
 
 TurnInfo::TurnInfo(Json::Value & msg)
 {
@@ -14,4 +14,14 @@ TurnInfo::TurnInfo(Json::Value & msg)
 		m_playerList.push_back( Player( players[i] ) );
 	}
 
+}
+
+const std::list<Player>& TurnInfo::getPlayerList() const
+{
+	return m_playerList;
+}
+
+int TurnInfo::getCurrentArenaRadius() const
+{
+	return m_currentArenaRadius;
 }

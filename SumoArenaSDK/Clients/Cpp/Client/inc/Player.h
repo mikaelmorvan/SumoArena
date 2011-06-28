@@ -6,7 +6,7 @@
 #define PLAYER_H
 
 // Json management
-#include "json/json.h"
+#include "json.h"
 
 /**
 * Represents a player in the arena.
@@ -20,6 +20,14 @@ public:
 	* @param playerMsg internal player specific infor from the Json message
 	*/
 	Player(const Json::Value & playerMsg);
+
+	// Accessors
+	int getIndex() const;
+	int getX() const;
+	int getY() const;
+	int getvX() const;
+	int getvY() const;
+	bool isInArena() const;
 protected:
 	int m_index; ///< index of the player
 	int m_x; ///< x position of the player

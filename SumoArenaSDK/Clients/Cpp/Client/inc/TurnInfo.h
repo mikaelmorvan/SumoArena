@@ -8,7 +8,7 @@
 #include <list>
 #include "Player.h"
 // Json management
-#include "json/json.h"
+#include "json.h"
 
 /**
 * Represent information sent to the player to compute a round
@@ -21,6 +21,10 @@ public:
 	* Initialize the object from a Json message
 	*/
 	TurnInfo(Json::Value & msg);
+
+	const std::list<Player>& getPlayerList() const;
+	int getCurrentArenaRadius() const;
+
 protected:
 	std::list<Player> m_playerList;
 	int m_currentArenaRadius;

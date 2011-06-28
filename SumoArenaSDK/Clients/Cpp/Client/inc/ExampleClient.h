@@ -6,8 +6,9 @@
 #include "IAlgoClient.h"
 
 /**
-* Client interface from the GameManager.
-* Called each turn to ask algorithm for its next move
+* Example of a client algorithm implementation
+*
+* The implementation must implement playTurn() method to play.
 *
 */
 class ExampleClient : public IAlgoClient

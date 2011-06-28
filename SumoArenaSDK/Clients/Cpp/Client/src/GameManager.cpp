@@ -3,7 +3,7 @@
 #include "IAlgoClient.h"
 #include <iostream>
 // Json management
-#include "json/json.h"
+#include "json.h"
 
 // Boos is used for socket i/o operations
 #include <boost/array.hpp>
