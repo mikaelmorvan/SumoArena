@@ -65,7 +65,7 @@ Code design
                     structure member names should match protocol field names.
                     This structure construction deals with JSON parsing.
 
-    Player          This class is a high level interface that contains several
+    Player          This class is a higher level object that provides several
                     callbacks related to game events. The callbacks and their
                     arguments are:
 
