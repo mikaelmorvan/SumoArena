@@ -1,0 +1,153 @@
+This file is intended at coders who write example clients.
+
+Several example clients are provided in this SDK. To help players to implement
+their own clients, we (example coders) try to be consistent across programming
+languages, so examples are more clear.
+
+This file lists the guidelines the example coders should use when they want to
+provide a new client example.
+
+
+Functional concerns
+
+    In addition to choose an acceleration for its sphere at each game step,
+    the client is required to perform two essential tasks: dealing with socket
+    communication, and abstracting away JSON to language native structures.
+    The code organisation tries to separate these concerns, so the reader can
+    easily find and change them if he needs to.
+
+    As the primary mission of clients are to react to server messages, it is
+    relevant to build the client code on an event model. Except in cases it
+    would make the code harder to read, all example clients should be based on
+    this execution model.
+
+
+Code design
+
+    To ease code reading across the various programming languages, objects
+    should have the same name in all the implementations. But keep in mind
+    that name case or notation may vary according to language specification
+    and/or grammar.
+
+    Here are the various common parts of each clients:
+
+    Client          This class handles the socket layer by connecting the
+                    client to the game server and by providing events the
+                    program is going to react upon (especially data
+                    reception).
+
+                    The Client object ensure the client stays connected, can
+                    send and receive data. On data reception, Client object
+                    parses the JSON message action and triggers a callback in
+                    its Player object, see below.
+
+                    Because server connection is a one-shot procedure, Client
+                    object deals with it during initialization.
+
+                    Its construction parameters should be: game server
+                    hostname and port, client name and possible avatar URL.
+
+    RoundStartInfo  Structure that contains the information provided by the
+                    server when a round is about to start. All provided
+                    information should be accessible with this object. This
+                    structure member names should match protocol field names.
+                    This structure construction deals with JSON parsing.
+
+    PlayingInfo     Structure that contains the information provided by the
+                    server at each playing steps. All provided information
+                    should be accessible with this object. This structure
+                    member names should match protocol field names. This
+                    structure construction deals with JSON parsing.
+
+    RoundStopInfo   Structure that contains the information provided by the
+                    server when a round has come to its end. All provided
+                    information should be accessible with this object. This
+                    structure member names should match protocol field names.
+                    This structure construction deals with JSON parsing.
+
+    Player          This class is a higher level object that provides several
+                    callbacks related to game events. The callbacks and their
+                    arguments are:
+
+                        void on_round_start(RoundStartInfo);
+                        (dVx, dVy) on_play_request(PlayingInfo);
+                        void on_round_stop(RoundStopInfo);
+
+                    These callbacks are called by Client object when the
+                    suitable server message is received.
+
+                    on_play_request performs a few checks and delegates
+                    acceleration decision to a dedicated method, so the reader
+                    can easily find where to put his code to write his own
+                    game strategy. This method name is:
+
+                        (dVx, dVy) choose_acceleration(PlayingInfo);
+
+                    Easy-to-spot comments can help the reader to find the
+                    place he may use to put his own code.
+
+
+Here is the corresponding class diagram:
+
+ +--------------------------------------------+
+ |                 Player                     |
+ |--------------------------------------------|
+ |--------------------------------------------|
+ |+ on_round_start(RoundStartInfo)            |
+ |+ on_play_request(PlayingInfo): dVx, dVy    |
+ |+ on_round_stop(RoundStopInfo)              |
+ |# choose_acceleration(PlayingInfo): dVx, dVy|
+ +--------------------------------------------+
+                      ^
+                      |
+                      |
+                      | - player
+                      |
+                      |
+     +----------------------------------+
+     |           GameClient             |
+     |----------------------------------|
+     |----------------------------------|
+     |+ ctor(hostname, port, name, url) |
+     |+ on_connect()                    |
+     |+ on_data_received()              |
+     +----------------------------------+
+
+     +----------------------------------+
+     |          RoundStartInfo          |
+     |----------------------------------|
+     |+ yourIndex: int                  |
+     |+ playerCount: int                |
+     |+ arenaInitialRadius: int         |
+     |+ sphereRadius: int               |
+     |+ maxSpeedVariation: int          |
+     |+ currentRound: int               |
+     |+ roundForVictory: int            |
+     |----------------------------------|
+     |+ ctor(json_value)                |
+     +----------------------------------+
+
+     +---------------------+           +---------------------+
+     |   PlayingInfo       |           |        Sphere       |
+     |---------------------|      1..* |---------------------|
+     |+ arenaRadius: int   |---------->|+ index: int         |
+     |---------------------| +players  |+ x: int             |
+     |+ ctor(json_value)   |           |+ y: int             |
+     +---------------------+           |+ vx: int            |
+                                       |+ vy: int            |
+                                       |+ inArena: bool      |
+                                       +---------------------+
+                                       |+ ctor(json_value)   |
+                                       +---------------------+
+
+     +----------------------------------+
+     |           RoundEndInfo           |
+     |----------------------------------|
+     |+ currentRound: int               |
+     |+ gameWinnerIndex: int            |
+     |+ roundWinnerIndex: int           |
+     |----------------------------------|
+     |+ ctor(json_value)                |
+     +----------------------------------+
+
+Made with http://www.asciiflow.com/
