@@ -38,7 +38,7 @@ Code design
 
                     The Client object ensure the client stays connected, can
                     send and receive data. On data reception, Client object
-                    parse the JSON message action and trigger a callback in
+                    parses the JSON message action and triggers a callback in
                     its Player object, see below.
 
                     Because server connection is a one-shot procedure, Client
@@ -76,7 +76,7 @@ Code design
                     These callbacks are called by Client object when the
                     suitable server message is received.
 
-                    on_play_request performs a few checks and delegate
+                    on_play_request performs a few checks and delegates
                     acceleration decision to a dedicated method, so the reader
                     can easily find where to put his code to write his own
                     game strategy. This method name is:
