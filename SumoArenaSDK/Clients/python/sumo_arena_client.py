@@ -47,8 +47,9 @@ import socket
 import json
 
 
-GAME_SERVER_NAME = 'localhost'
-GAME_SERVER_PORT = 9090
+# Command-line specified host and port may be missing.
+DEFAULT_GAME_SERVER_HOST = 'localhost'
+DEFAULT_GAME_SERVER_PORT = 9090
 
 
 class StartGameInfo(object):
@@ -290,16 +291,29 @@ class GameClient(asyncore.dispatcher):
             }
             self._to_send = json.dumps(data)
 
-    def _on_finish_round(self, params):
-        info = EndGameInfo(params)
+    def _on_finish_round(self, json_params):
+        info = EndGameInfo(json_params)
         self._player.on_round_finished(info)
 
 
 def main(argv=None):
-    name = "Python example client"
+
+    # Parse server host and port on command-line.
+    server_host = DEFAULT_GAME_SERVER_HOST
+    server_port = DEFAULT_GAME_SERVER_PORT
     if len(argv) > 1:
-        name = argv[1]
-    client = GameClient( (GAME_SERVER_NAME, GAME_SERVER_PORT) , name)
+        args = argv[1].split(':')
+        if len(args) == 1:
+            server_host = argv[1]
+        if len(args) == 2:
+            server_host, port = args
+            server_port = int(port)
+
+    # Create and start client.
+    client = GameClient(
+                (server_host, server_port),
+                CLIENT_NAME,
+                AVATAR_URL)
     asyncore.loop()
 
 
