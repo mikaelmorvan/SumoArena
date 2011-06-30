@@ -244,6 +244,11 @@ class GameClient(asyncore.dispatcher):
         print "Connection closed."
         self.close()
 
+    def handle_error(self):
+        # Give uncondensed traceback.
+        import traceback
+        traceback.print_exc()
+
     def _parse_server_request(self, data):
 
         # Check JSON validity.
