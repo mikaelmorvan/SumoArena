@@ -6,15 +6,36 @@
 # You can use this code to write your own SumoArena client.
 #
 # All you need is to put your AI code between this kind of tags
-# below in the source code.
+# below in the source code :
 #
 #    #--------------------------------------------------------------
-#    # Your code ...
+#    # Your code begins here
 #    #--------------------------------------------------------------
 #
+# and
+#
+#    #--------------------------------------------------------------
+#    # Your code ends here.
+#    #--------------------------------------------------------------
+#
+# You may also want to change this information before joining the
+# contest:
+
+CLIENT_NAME     = 'Python Dummy Client' # <-- Put your own client name here.
+AVATAR_URL      = ''                    # <-- Put a picture URL (PNG), if any.
+
 # This client does nothing more than going to the right as fast
 # as he can. It is unlikely to be the most clever strategy to
 # win the contest.
+#
+# This code accepts command line arguments:
+#
+#           sumo_arena_client.py <hostname>:<port>
+#
+# where
+#
+#           <host_name> is the game server hostname (default: localhost)
+#           <port_name> is the game server port (default: 9090)
 #
 # Good luck.
 
@@ -130,7 +151,7 @@ class Player(object):
         inArena     = myself.inArena    # Tell if game is over for this sphere.
 
         #--------------------------------------------------------------
-        # Your code starts here.
+        # Your code begins here.
         #--------------------------------------------------------------
 
         # Replace with more clever decision.
