@@ -54,28 +54,28 @@ DEFAULT_GAME_SERVER_PORT = 9090
 
 class StartGameInfo(object):
 
-    def __init__(self, raw_data):
-        self.__dict__.update(raw_data)
+    def __init__(self, json_dict):
+        self.__dict__.update(json_dict)
 
 
 class Sphere(object):
     
-    def __init__(self, raw_data):
-        self.__dict__.update(raw_data)
+    def __init__(self, json_dict):
+        self.__dict__.update(json_dict)
 
 
 class PlaygroundInformation(object):
 
-    def __init__(self, raw_data):
+    def __init__(self, json_dict):
 
-        self.arenaRadius = raw_data["arenaRadius"]
-        self.players = [Sphere(data) for data in raw_data["players"]]
+        self.arenaRadius = json_dict["arenaRadius"]
+        self.players = [Sphere(data) for data in json_dict["players"]]
 
 
 class EndGameInfo(object):
 
-    def __init__(self, raw_data):
-        self.__dict__.update(raw_data)
+    def __init__(self, json_dict):
+        self.__dict__.update(json_dict)
 
 
 class Player(object):
@@ -230,9 +230,9 @@ class GameClient(asyncore.dispatcher):
         self._received += data
 
         # Parse what we received.
-        valid, action, params = self._parse_server_request(self._received)
+        valid, action, json_params = self._parse_server_request(self._received)
         if valid:
-            self._callbacks[action](params)
+            self._callbacks[action](json_params)
         else:
             print action, self._received
         self._received = '' # FIXME Could have problem with partial requests.
@@ -267,15 +267,15 @@ class GameClient(asyncore.dispatcher):
 
         return True, action, parameters
 
-    def _on_connection_ack(self, params):
-        print "I'm connected as '%s'" % params["yourName"]
+    def _on_connection_ack(self, json_params):
+        print "I'm connected as '%s'" % json_params["yourName"]
 
-    def _on_prepare(self, params):
-        info = StartGameInfo(params)
+    def _on_prepare(self, json_params):
+        info = StartGameInfo(json_params)
         self._player.on_prepare_information(info)
 
-    def _on_play(self, params):
-        info = PlaygroundInformation(params)
+    def _on_play(self, json_params):
+        info = PlaygroundInformation(json_params)
         result = self._player.on_play_request(info)
         if result:
             data = {
