@@ -80,10 +80,6 @@ class EndGameInfo(object):
 
 class Player(object):
 
-    def __init__(self, client):
-        
-        self._client = client
-
     def on_prepare_information(self, startInfo):
         
         # Get all the available information.
@@ -215,7 +211,7 @@ class GameClient(asyncore.dispatcher):
 
     def handle_connect(self):
         # Now we are connected, we need a brain.
-        self._player = Player(self)
+        self._player = Player()
 
     def writable(self):
         return len(self._to_send) > 0
