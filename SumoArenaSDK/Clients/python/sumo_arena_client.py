@@ -6,15 +6,36 @@
 # You can use this code to write your own SumoArena client.
 #
 # All you need is to put your AI code between this kind of tags
-# below in the source code.
+# below in the source code :
 #
 #    #--------------------------------------------------------------
-#    # Your code ...
+#    # Your code begins here
 #    #--------------------------------------------------------------
 #
+# and
+#
+#    #--------------------------------------------------------------
+#    # Your code ends here.
+#    #--------------------------------------------------------------
+#
+# You may also want to change this information before joining the
+# contest:
+
+CLIENT_NAME     = 'Python Dummy Client' # <-- Put your own client name here.
+AVATAR_URL      = ''                    # <-- Put a picture URL (PNG), if any.
+
 # This client does nothing more than going to the right as fast
 # as he can. It is unlikely to be the most clever strategy to
 # win the contest.
+#
+# This code accepts command line arguments:
+#
+#           sumo_arena_client.py <hostname>:<port>
+#
+# where
+#
+#           <host_name> is the game server hostname (default: localhost)
+#           <port_name> is the game server port (default: 9090)
 #
 # Good luck.
 
@@ -26,41 +47,38 @@ import socket
 import json
 
 
-GAME_SERVER_NAME = 'localhost'
-GAME_SERVER_PORT = 9090
+# Command-line specified host and port may be missing.
+DEFAULT_GAME_SERVER_HOST = 'localhost'
+DEFAULT_GAME_SERVER_PORT = 9090
 
 
 class StartGameInfo(object):
 
-    def __init__(self, raw_data):
-        self.__dict__.update(raw_data)
+    def __init__(self, json_dict):
+        self.__dict__.update(json_dict)
 
 
 class Sphere(object):
     
-    def __init__(self, raw_data):
-        self.__dict__.update(raw_data)
+    def __init__(self, json_dict):
+        self.__dict__.update(json_dict)
 
 
 class PlaygroundInformation(object):
 
-    def __init__(self, raw_data):
+    def __init__(self, json_dict):
 
-        self.arenaRadius = raw_data["arenaRadius"]
-        self.players = [Sphere(data) for data in raw_data["players"]]
+        self.arenaRadius = json_dict["arenaRadius"]
+        self.players = [Sphere(data) for data in json_dict["players"]]
 
 
 class EndGameInfo(object):
 
-    def __init__(self, raw_data):
-        self.__dict__.update(raw_data)
+    def __init__(self, json_dict):
+        self.__dict__.update(json_dict)
 
 
 class Player(object):
-
-    def __init__(self, client):
-        
-        self._client = client
 
     def on_prepare_information(self, startInfo):
         
@@ -130,7 +148,7 @@ class Player(object):
         inArena     = myself.inArena    # Tell if game is over for this sphere.
 
         #--------------------------------------------------------------
-        # Your code starts here.
+        # Your code begins here.
         #--------------------------------------------------------------
 
         # Replace with more clever decision.
@@ -193,7 +211,7 @@ class GameClient(asyncore.dispatcher):
 
     def handle_connect(self):
         # Now we are connected, we need a brain.
-        self._player = Player(self)
+        self._player = Player()
 
     def writable(self):
         return len(self._to_send) > 0
@@ -212,9 +230,9 @@ class GameClient(asyncore.dispatcher):
         self._received += data
 
         # Parse what we received.
-        valid, action, params = self._parse_server_request(self._received)
+        valid, action, json_params = self._parse_server_request(self._received)
         if valid:
-            self._callbacks[action](params)
+            self._callbacks[action](json_params)
         else:
             print action, self._received
         self._received = '' # FIXME Could have problem with partial requests.
@@ -222,6 +240,11 @@ class GameClient(asyncore.dispatcher):
     def handle_close(self):
         print "Connection closed."
         self.close()
+
+    def handle_error(self):
+        # Give uncondensed traceback.
+        import traceback
+        traceback.print_exc()
 
     def _parse_server_request(self, data):
 
@@ -244,15 +267,15 @@ class GameClient(asyncore.dispatcher):
 
         return True, action, parameters
 
-    def _on_connection_ack(self, params):
-        print "I'm connected as '%s'" % params["yourName"]
+    def _on_connection_ack(self, json_params):
+        print "I'm connected as '%s'" % json_params["yourName"]
 
-    def _on_prepare(self, params):
-        info = StartGameInfo(params)
+    def _on_prepare(self, json_params):
+        info = StartGameInfo(json_params)
         self._player.on_prepare_information(info)
 
-    def _on_play(self, params):
-        info = PlaygroundInformation(params)
+    def _on_play(self, json_params):
+        info = PlaygroundInformation(json_params)
         result = self._player.on_play_request(info)
         if result:
             data = {
@@ -264,16 +287,29 @@ class GameClient(asyncore.dispatcher):
             }
             self._to_send = json.dumps(data)
 
-    def _on_finish_round(self, params):
-        info = EndGameInfo(params)
+    def _on_finish_round(self, json_params):
+        info = EndGameInfo(json_params)
         self._player.on_round_finished(info)
 
 
 def main(argv=None):
-    name = "Python example client"
+
+    # Parse server host and port on command-line.
+    server_host = DEFAULT_GAME_SERVER_HOST
+    server_port = DEFAULT_GAME_SERVER_PORT
     if len(argv) > 1:
-        name = argv[1]
-    client = GameClient( (GAME_SERVER_NAME, GAME_SERVER_PORT) , name)
+        args = argv[1].split(':')
+        if len(args) == 1:
+            server_host = argv[1]
+        if len(args) == 2:
+            server_host, port = args
+            server_port = int(port)
+
+    # Create and start client.
+    client = GameClient(
+                (server_host, server_port),
+                CLIENT_NAME,
+                AVATAR_URL)
     asyncore.loop()
 
 

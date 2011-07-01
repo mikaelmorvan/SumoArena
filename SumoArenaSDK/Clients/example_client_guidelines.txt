@@ -4,11 +4,87 @@ Several example clients are provided in this SDK. To help players to implement
 their own clients, we (example coders) try to be consistent across programming
 languages, so examples are more clear.
 
-This file lists the guidelines the example coders should use when they want to
-provide a new client example.
+This file lists the guidelines the example coders should try to follow when
+they want to provide a new client example.
 
 
-Functional concerns
+Main objective
+
+    Client examples are the most simple piece of code that may be used as a
+    functional SumoArena client. "Simple" means that there as little code as
+    necessary, but also that the code is easy to read and understand.
+
+
+Executive summary
+
+    Here is a possible class diagram of the client. See below for more details
+    about the technical choices:
+
+         +--------------------------------------------+
+         |                 Player                     |
+         |--------------------------------------------|
+         |--------------------------------------------|
+         |+ on_round_start(RoundStartInfo)            |
+         |+ on_play_request(PlayingInfo): dVx, dVy    |
+         |+ on_round_stop(RoundStopInfo)              |
+         |# choose_acceleration(PlayingInfo): dVx, dVy|
+         +--------------------------------------------+
+                              ^
+                              |
+                              |
+                              | - player
+                              |
+                              |
+             +----------------------------------+
+             |           GameClient             |
+             |----------------------------------|
+             |----------------------------------|
+             |+ ctor(hostname, port, name, url) |
+             |+ on_connect()                    |
+             |+ on_data_received()              |
+             +----------------------------------+
+
+             +----------------------------------+
+             |          RoundStartInfo          |
+             |----------------------------------|
+             |+ yourIndex: int                  |
+             |+ playerCount: int                |
+             |+ arenaInitialRadius: int         |
+             |+ sphereRadius: int               |
+             |+ maxSpeedVariation: int          |
+             |+ currentRound: int               |
+             |+ roundForVictory: int            |
+             |----------------------------------|
+             |+ ctor(json_value)                |
+             +----------------------------------+
+
+             +---------------------+           +---------------------+
+             |   PlayingInfo       |           |        Sphere       |
+             |---------------------|      1..* |---------------------|
+             |+ arenaRadius: int   |---------->|+ index: int         |
+             |---------------------| +players  |+ x: int             |
+             |+ ctor(json_value)   |           |+ y: int             |
+             +---------------------+           |+ vx: int            |
+                                               |+ vy: int            |
+                                               |+ inArena: bool      |
+                                               +---------------------+
+                                               |+ ctor(json_value)   |
+                                               +---------------------+
+
+             +----------------------------------+
+             |           RoundEndInfo           |
+             |----------------------------------|
+             |+ currentRound: int               |
+             |+ gameWinnerIndex: int            |
+             |+ roundWinnerIndex: int           |
+             |----------------------------------|
+             |+ ctor(json_value)                |
+             +----------------------------------+
+
+    This diagram was made with http://www.asciiflow.com/
+
+
+Functional Concerns
 
     In addition to choose an acceleration for its sphere at each game step,
     the client is required to perform two essential tasks: dealing with socket
@@ -18,18 +94,18 @@ Functional concerns
 
     As the primary mission of clients are to react to server messages, it is
     relevant to build the client code on an event model. Except in cases it
-    would make the code harder to read, all example clients should be based on
-    this execution model.
+    would make the code harder to read, example clients should try to
+    implement this execution model.
 
 
-Code design
+Code Design
 
     To ease code reading across the various programming languages, objects
     should have the same name in all the implementations. But keep in mind
     that name case or notation may vary according to language specification
     and/or grammar.
 
-    Here are the various common parts of each clients:
+    Here are the possible common parts of each clients:
 
     Client          This class handles the socket layer by connecting the
                     client to the game server and by providing events the
@@ -39,10 +115,10 @@ Code design
                     The Client object ensure the client stays connected, can
                     send and receive data. On data reception, Client object
                     parses the JSON message action and triggers a callback in
-                    its Player object, see below.
+                    the Player object, see below.
 
                     Because server connection is a one-shot procedure, Client
-                    object deals with it during initialization.
+                    object may deal with it during its own initialization.
 
                     Its construction parameters should be: game server
                     hostname and port, client name and possible avatar URL.
@@ -51,23 +127,23 @@ Code design
                     server when a round is about to start. All provided
                     information should be accessible with this object. This
                     structure member names should match protocol field names.
-                    This structure construction deals with JSON parsing.
+                    This structure construction could deal with JSON parsing.
 
     PlayingInfo     Structure that contains the information provided by the
                     server at each playing steps. All provided information
                     should be accessible with this object. This structure
                     member names should match protocol field names. This
-                    structure construction deals with JSON parsing.
+                    structure construction could deal with JSON parsing.
 
     RoundStopInfo   Structure that contains the information provided by the
                     server when a round has come to its end. All provided
                     information should be accessible with this object. This
                     structure member names should match protocol field names.
-                    This structure construction deals with JSON parsing.
+                    This structure construction could deal with JSON parsing.
 
     Player          This class is a higher level object that provides several
                     callbacks related to game events. The callbacks and their
-                    arguments are:
+                    arguments should be:
 
                         void on_round_start(RoundStartInfo);
                         (dVx, dVy) on_play_request(PlayingInfo);
@@ -87,67 +163,30 @@ Code design
                     place he may use to put his own code.
 
 
-Here is the corresponding class diagram:
+User Interface
 
- +--------------------------------------------+
- |                 Player                     |
- |--------------------------------------------|
- |--------------------------------------------|
- |+ on_round_start(RoundStartInfo)            |
- |+ on_play_request(PlayingInfo): dVx, dVy    |
- |+ on_round_stop(RoundStopInfo)              |
- |# choose_acceleration(PlayingInfo): dVx, dVy|
- +--------------------------------------------+
-                      ^
-                      |
-                      |
-                      | - player
-                      |
-                      |
-     +----------------------------------+
-     |           GameClient             |
-     |----------------------------------|
-     |----------------------------------|
-     |+ ctor(hostname, port, name, url) |
-     |+ on_connect()                    |
-     |+ on_data_received()              |
-     +----------------------------------+
+    Example should provide a simple way to change the game server hostname and
+    port, so they may be updated on the contest day, without requiring
+    compilation. According to the client language and environment, these two
+    parameters may be given as command-line argument (e.g. for console
+    clients) or text input field (e.g. for browser embedded clients).
 
-     +----------------------------------+
-     |          RoundStartInfo          |
-     |----------------------------------|
-     |+ yourIndex: int                  |
-     |+ playerCount: int                |
-     |+ arenaInitialRadius: int         |
-     |+ sphereRadius: int               |
-     |+ maxSpeedVariation: int          |
-     |+ currentRound: int               |
-     |+ roundForVictory: int            |
-     |----------------------------------|
-     |+ ctor(json_value)                |
-     +----------------------------------+
 
-     +---------------------+           +---------------------+
-     |   PlayingInfo       |           |        Sphere       |
-     |---------------------|      1..* |---------------------|
-     |+ arenaRadius: int   |---------->|+ index: int         |
-     |---------------------| +players  |+ x: int             |
-     |+ ctor(json_value)   |           |+ y: int             |
-     +---------------------+           |+ vx: int            |
-                                       |+ vy: int            |
-                                       |+ inArena: bool      |
-                                       +---------------------+
-                                       |+ ctor(json_value)   |
-                                       +---------------------+
+User Information
 
-     +----------------------------------+
-     |           RoundEndInfo           |
-     |----------------------------------|
-     |+ currentRound: int               |
-     |+ gameWinnerIndex: int            |
-     |+ roundWinnerIndex: int           |
-     |----------------------------------|
-     |+ ctor(json_value)                |
-     +----------------------------------+
+    Example client should provide a README file with the following
+    information:
 
-Made with http://www.asciiflow.com/
+      - The client language.
+
+      - Required additional dependencies, for example a library that is
+        provided neither by the language standard distribution, nor the
+        example client code.
+
+      - How a user can use the code to make his own client: what to change or
+        add, where to change it and/or add it. Tags in comment are a possible
+        way to help the user.
+
+      - How to provide the game server hostname and port without requiring an
+        explicit compilation phase.
+
