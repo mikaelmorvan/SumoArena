@@ -83,7 +83,7 @@ ENDIF()
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Sub-Directories 
 ADD_SUBDIRECTORY( 
-	Client
+	src
 	)
 
 # If the version of CMake was too old, complain and build nothing.
