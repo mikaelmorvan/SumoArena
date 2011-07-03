@@ -3,7 +3,7 @@
 
 #include <string>
 
-class IAlgoClient;
+class IPlayer;
 
 /**
 * Main class managing game loop.
@@ -27,7 +27,7 @@ public:
 	* @param playerName name of the player sent to the server
 	* @param algo instance of the algorithm used for the game
 	*/
-	void startLoop( const std::string & playerName, IAlgoClient & algo );
+	void startLoop( const std::string & playerName, IPlayer & algo );
 
 private:
 	std::string m_serverName;

@@ -18,6 +18,7 @@ FILE(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH})
 
 
 #External dependencies inclue and library paths
+# You can add your own libray paths here
 INCLUDE_DIRECTORIES ( C:/Dev/Library/boost_1_46_1/ )
 
 LINK_DIRECTORIES( C:/Dev/Library/boost_1_46_1/stage/lib/ )

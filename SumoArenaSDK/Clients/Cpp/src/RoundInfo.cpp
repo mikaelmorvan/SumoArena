@@ -1,7 +1,7 @@
 #include "RoundInfo.h"
 
 
-RoundInfo::RoundInfo():
+RoundStartInfo::RoundStartInfo():
 m_index(0),
 m_playerCount(0),
 m_sphereRadius(0),
@@ -12,7 +12,7 @@ m_roundForVictory(0)
 {
 }
 
-RoundInfo::RoundInfo( Json::Value & msg)
+RoundStartInfo::RoundStartInfo( Json::Value & msg)
 {
 	m_index = msg["parameters"]["yourIndex"].asInt();
 	m_playerCount = msg["parameters"]["playerCount"].asInt();
@@ -23,52 +23,52 @@ RoundInfo::RoundInfo( Json::Value & msg)
 	m_roundForVictory = msg["parameters"]["roundForVictory"].asInt();
 }
 
-int RoundInfo::getAlgoIndex() const
+int RoundStartInfo::getAlgoIndex() const
 {
 	return m_index;
 }
 
-int RoundInfo::getPlayerCount() const
+int RoundStartInfo::getPlayerCount() const
 {
 	return m_playerCount;
 }
 
-int RoundInfo::getSphereRadius() const
+int RoundStartInfo::getSphereRadius() const
 {
 	return m_sphereRadius;
 }
 
-int RoundInfo::getMaxSpeedVariation() const
+int RoundStartInfo::getMaxSpeedVariation() const
 {
 	return m_maxSpeedVariation;
 }
 
-int RoundInfo::getArenaInitialRadius() const
+int RoundStartInfo::getArenaInitialRadius() const
 {
 	return m_arenaInitialRadius;
 }
 
-int RoundInfo::getCurrentRound() const
+int RoundStartInfo::getCurrentRound() const
 {
 	return m_currentRound;
 }
 
-int RoundInfo::getRoundForVictory() const
+int RoundStartInfo::getRoundForVictory() const
 {
 	return m_roundForVictory;
 }
 
 ///////////////////////////////////////////////////////
-// EndRoundInfo
+// RoundEndInfo
 ///////////////////////////////////////////////////////
-EndRoundInfo::EndRoundInfo():
+RoundEndInfo::RoundEndInfo():
 m_currentRound(0),
 m_roundWinnerIndex(0),
 m_gameWinnerIndex(0)
 {
 }
 
-EndRoundInfo::EndRoundInfo( Json::Value & msg)
+RoundEndInfo::RoundEndInfo( Json::Value & msg)
 {
 	m_currentRound = msg["parameters"]["currentRound"].asInt();
 	m_roundWinnerIndex = msg["parameters"]["roundWinnerIndex"].asInt();
@@ -76,17 +76,17 @@ EndRoundInfo::EndRoundInfo( Json::Value & msg)
 
 }
 
-int EndRoundInfo::getCurrentRound() const
+int RoundEndInfo::getCurrentRound() const
 {
 	return m_currentRound;
 }
 
-int EndRoundInfo::getRoundWinnerIndex() const
+int RoundEndInfo::getRoundWinnerIndex() const
 {
 	return m_roundWinnerIndex;
 }
 
-int EndRoundInfo::getGameWinnerIndex() const
+int RoundEndInfo::getGameWinnerIndex() const
 {
 	return m_gameWinnerIndex;
 }

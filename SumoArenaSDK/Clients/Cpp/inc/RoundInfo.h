@@ -13,11 +13,11 @@
 * Represent information sent to the player to compute a round
 * 
 */
-class RoundInfo
+class RoundStartInfo
 {
 public:
-	RoundInfo();
-	RoundInfo( Json::Value & msg );
+	RoundStartInfo();
+	RoundStartInfo( Json::Value & msg );
 
 	int getAlgoIndex() const;
 	int getPlayerCount() const;
@@ -40,11 +40,11 @@ protected:
 /**
 * Information received at the end of a round
 */
-class EndRoundInfo
+class RoundEndInfo
 {
 public:
-	EndRoundInfo();
-	EndRoundInfo( Json::Value & msg );
+	RoundEndInfo();
+	RoundEndInfo( Json::Value & msg );
 
 	int getCurrentRound() const;
 	int getRoundWinnerIndex() const;

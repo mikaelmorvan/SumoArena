@@ -1,6 +1,6 @@
 #include "GameManager.h"
 
-#include "IAlgoClient.h"
+#include "IPlayer.h"
 #include <iostream>
 // Json management
 #include "json.h"
@@ -20,7 +20,7 @@ GameManager::~GameManager()
 {
 }
 
-void GameManager::startLoop( const std::string & playerName, IAlgoClient & algo )
+void GameManager::startLoop( const std::string & playerName, IPlayer & player )
 {
 	// Try to use boost::asio to connect to the server
 	boost::asio::io_service io_service;
@@ -56,8 +56,6 @@ void GameManager::startLoop( const std::string & playerName, IAlgoClient & algo 
 	// wait for the server ack
 	boost::array<char, 2048> buf;
 
-	RoundInfo roundInfo;
-
 	bool keepGoing(true);
 	while( keepGoing )
 	{
@@ -72,7 +70,7 @@ void GameManager::startLoop( const std::string & playerName, IAlgoClient & algo 
 		Json::Value msg;
 		bool res = reader.parse( buf.c_array() , msg ); 
 
-		if (res && !msg.isNull() )
+		if (res && !msg.isNull() && !msg["action"].isNull() )
 		{
 			// Interpret action
 
@@ -82,7 +80,7 @@ void GameManager::startLoop( const std::string & playerName, IAlgoClient & algo 
 				int dY(0);
 
 				// Call the playAction
-				algo.playTurn( roundInfo, TurnInfo(msg), dX, dY );
+				player.playRequest( PlayingInfo(msg), dX, dY );
 
 				// Playing round, modify vector by sending an "updateVector" message
 				Json::Value playValue;
@@ -105,12 +103,15 @@ void GameManager::startLoop( const std::string & playerName, IAlgoClient & algo 
 				std::cout << "Received round prepare message" << std::endl;
 
 				// Initialize round information
-				roundInfo = RoundInfo(msg);
+				player.onRoundStart( RoundStartInfo(msg) );
 			
 			}
 			else if( msg["action"].asString() == "finishRound" )
 			{
-				EndRoundInfo info(msg);
+				RoundEndInfo info(msg);
+
+				player.onRoundStop(info);
+								
 				std::cout << "Round finished." << std::endl;
 				std::cout << "- Round winner is " << msg["parameters"]["roundWinnerindex"] << std::endl;
 				std::cout << "- Game winner is " << msg["parameters"]["gameWinnerindex"] << std::endl;
@@ -121,6 +122,10 @@ void GameManager::startLoop( const std::string & playerName, IAlgoClient & algo 
 				std::cout << "Unhandled action (" << msg["action"].asString() << "). Ignoring action" << std::endl;
 			}
 
+		}
+		else
+		{
+			std::cout << "Incorrect message received" << std::endl;
 		}
 
 		int round = msg["parameters"]["currentRound"].asInt();

@@ -2,11 +2,11 @@
 * Round information
 *  Object  transmitted to client to compute its algorithm
 */
-#ifndef TURN_INFO_H
-#define TURN_INFO_H
+#ifndef PLAYING_INFO_H
+#define PLAYING_INFO_H
 
 #include <vector>
-#include "Player.h"
+#include "Sphere.h"
 // Json management
 #include "json.h"
 
@@ -14,27 +14,27 @@
 * Represent information sent to the player to compute a round
 * 
 */
-class TurnInfo
+class PlayingInfo
 {
 public:
 	/**
 	* Initialize the object from a Json message
 	*/
-	TurnInfo(Json::Value & msg);
+	PlayingInfo(Json::Value & msg);
 
 	/**
-	* Return information for a specific player
+	* Return information for a specific sphere
 	*/
-	const Player& getPlayer(int index) const;
+	const Sphere& getSphere(int index) const;
 
-	const std::vector<Player>& getPlayerList() const;
+	const std::vector<Sphere>& getSphereList() const;
 	int getCurrentArenaRadius() const;
 
 protected:
-	std::vector<Player> m_playerList;
+	std::vector<Sphere> m_sphereList;
 	int m_currentArenaRadius;
 
 };
 
-#endif // TURN_INFO_H
+#endif // PLAYING_INFO_H
 

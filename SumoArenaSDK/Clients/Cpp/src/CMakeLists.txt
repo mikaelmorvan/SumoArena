@@ -14,21 +14,21 @@ ADD_DEFINITIONS(-DBOOST_REGEX_NO_LIB )
 
 SET( SumoArenaClient_HEADERS 
 	${PROJECT_SOURCE_DIR}/inc/GameManager.h
-	${PROJECT_SOURCE_DIR}/inc/IAlgoClient.h
+	${PROJECT_SOURCE_DIR}/inc/IPlayer.h
 	${PROJECT_SOURCE_DIR}/inc/ExampleClient.h
-	${PROJECT_SOURCE_DIR}/inc/TurnInfo.h
+	${PROJECT_SOURCE_DIR}/inc/PlayingInfo.h
 	${PROJECT_SOURCE_DIR}/inc/RoundInfo.h
-	${PROJECT_SOURCE_DIR}/inc/Player.h
+	${PROJECT_SOURCE_DIR}/inc/Sphere.h
 )
 
 SET(SumoArenaClient_SOURCES
 	main.cpp
 	jsoncpp.cpp
 	GameManager.cpp
-	TurnInfo.cpp
+	PlayingInfo.cpp
 	RoundInfo.cpp
 	ExampleClient.cpp
-	Player.cpp
+	Sphere.cpp
 	
 )
 

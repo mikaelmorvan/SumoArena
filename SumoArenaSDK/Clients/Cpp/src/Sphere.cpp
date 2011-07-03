@@ -1,7 +1,7 @@
-#include "Player.h"
+#include "Sphere.h"
 
 
-Player::Player( const Json::Value & msg)
+Sphere::Sphere( const Json::Value & msg)
 {
 	m_index = msg["index"].asInt();
 	m_x = msg["x"].asInt();
@@ -11,32 +11,32 @@ Player::Player( const Json::Value & msg)
 	m_inArena = msg["inArena"].asBool();
 }
 
-int Player::getIndex() const
+int Sphere::getIndex() const
 {
 	return m_index;
 }
 
-int Player::getX() const
+int Sphere::getX() const
 {
 	return m_x;
 }
 
-int Player::getY() const
+int Sphere::getY() const
 {
 	return m_y;
 }
 
-int Player::getvX() const
+int Sphere::getvX() const
 {
 	return m_vx;
 }
 
-int Player::getvY() const
+int Sphere::getvY() const
 {
 	return m_vy;
 }
 
-bool Player::isInArena() const
+bool Sphere::isInArena() const
 {
 	return m_inArena;
 }

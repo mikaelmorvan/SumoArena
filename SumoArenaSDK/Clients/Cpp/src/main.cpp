@@ -21,7 +21,11 @@ int main(int argc, char argv[])
 
 	try {
 
+		// Concrete client algorithm implementation type
+		// Replace ExampleClient by your own implementation class
+		////////////////////////////
 		ExampleClient algo;
+		////////////////////////////
 
 		GameManager game( serverName, serverPort);
 

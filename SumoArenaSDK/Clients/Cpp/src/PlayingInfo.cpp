@@ -1,9 +1,9 @@
-#include "TurnInfo.h"
+#include "PlayingInfo.h"
 
 // Json management
 #include "json.h"
 
-TurnInfo::TurnInfo(Json::Value & msg)
+PlayingInfo::PlayingInfo(Json::Value & msg)
 {
 	// Retrieve current arena value
 	m_currentArenaRadius = msg["parameters"]["arenaRadius"].asInt();
@@ -11,26 +11,26 @@ TurnInfo::TurnInfo(Json::Value & msg)
 	const Json::Value players = msg["parameters"]["players"];
 	for( unsigned int i = 0 ; i<players.size() ; ++i )
 	{
-		m_playerList.push_back( Player( players[i] ) );
+		m_sphereList.push_back( Sphere( players[i] ) );
 	}
 
 }
 
-const std::vector<Player>& TurnInfo::getPlayerList() const
+const std::vector<Sphere>& PlayingInfo::getSphereList() const
 {
-	return m_playerList;
+	return m_sphereList;
 }
 
-int TurnInfo::getCurrentArenaRadius() const
+int PlayingInfo::getCurrentArenaRadius() const
 {
 	return m_currentArenaRadius;
 }
 
-const Player& TurnInfo::getPlayer(int index) const
+const Sphere& PlayingInfo::getSphere(int index) const
 {
-	if( index < m_playerList.size() )
+	if( index < m_sphereList.size() )
 	{
-		return m_playerList.at(index);
+		return m_sphereList.at(index);
 	}
 	else
 	{
