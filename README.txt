@@ -1,5 +1,14 @@
 SumoArena is a game engine for a private coding contest.
 
+
+-------------------------------------------
+
+Release 0.7
+- avatar images are used -instead of colored disks to represent spheres
+- corrected the bug which made two players may have the same graphical representation
+- added configuration procedure to JS client
+
+
 -------------------------------------------
 Release 0.6
 - corrections in protocol:

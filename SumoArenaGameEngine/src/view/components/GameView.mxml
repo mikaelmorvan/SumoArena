@@ -14,18 +14,18 @@
 			height="300"
 			width="200"
 			itemRenderer="view.components.PlayerRenderer"/>
-		<s:Button
+<!--		<s:Button
 			id="validateResultButton"
 			label="Validate Results"
-			enabled="false"/>
+			enabled="false"/>-->
 	</s:VGroup>
 	<components:ArenaView
 		id="arenaView"/>
 	
 	<s:VGroup
 		gap="15">
-		<components:Title
-			label="status"/>
+<!--		<components:Title
+			label="status"/>-->
 		<s:HGroup>
 			<s:Label
 				id="Round"

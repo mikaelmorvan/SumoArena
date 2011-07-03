@@ -6,12 +6,10 @@
 		<s:text>Usage: 
 			- run server 
 			- connect clients 
-			- Configure the game 
-			- Select Players 
-			- Start round (in controls) 
+			- configure the game 
+			- select Players 
+			- start round (in the game view) 
 			- then follow the game in the game view.
-			
-			Clicking "start round" again will restart the current game.
 		</s:text>
 		
 	</s:Label>
