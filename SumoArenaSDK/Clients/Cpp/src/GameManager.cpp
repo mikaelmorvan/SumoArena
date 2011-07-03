@@ -56,6 +56,7 @@ void GameManager::startLoop( const std::string & playerName, IPlayer & player )
 	// wait for the server ack
 	boost::array<char, 2048> buf;
 
+	// Loop on listening to socket messages
 	bool keepGoing(true);
 	while( keepGoing )
 	{
@@ -73,7 +74,6 @@ void GameManager::startLoop( const std::string & playerName, IPlayer & player )
 		if (res && !msg.isNull() && !msg["action"].isNull() )
 		{
 			// Interpret action
-
 			if( msg["action"].asString() == "play" )
 			{
 				int dX(0);
@@ -92,7 +92,6 @@ void GameManager::startLoop( const std::string & playerName, IPlayer & player )
 
 				// send message to server
 				boost::asio::write( socket, boost::asio::buffer(text.c_str(), text.size()+1) );
-
 			}
 			else if( msg["action"].asString() == "acknowledgeConnection" )
 			{
@@ -100,22 +99,12 @@ void GameManager::startLoop( const std::string & playerName, IPlayer & player )
 			}
 			else if( msg["action"].asString() == "prepare" )
 			{
-				std::cout << "Received round prepare message" << std::endl;
-
 				// Initialize round information
 				player.onRoundStart( RoundStartInfo(msg) );
-			
 			}
 			else if( msg["action"].asString() == "finishRound" )
 			{
-				RoundEndInfo info(msg);
-
-				player.onRoundStop(info);
-								
-				std::cout << "Round finished." << std::endl;
-				std::cout << "- Round winner is " << msg["parameters"]["roundWinnerindex"] << std::endl;
-				std::cout << "- Game winner is " << msg["parameters"]["gameWinnerindex"] << std::endl;
-
+				player.onRoundStop(RoundEndInfo(msg) );
 			}
 			else
 			{
@@ -128,7 +117,6 @@ void GameManager::startLoop( const std::string & playerName, IPlayer & player )
 			std::cout << "Incorrect message received" << std::endl;
 		}
 
-		int round = msg["parameters"]["currentRound"].asInt();
 	}
 }
 

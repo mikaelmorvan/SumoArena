@@ -10,6 +10,9 @@
 // Json management
 #include "json.h"
 
+// Type 
+typedef std::vector<Sphere> t_SphereList;
+
 /**
 * Represent information sent to the player to compute a round
 * 
@@ -27,11 +30,11 @@ public:
 	*/
 	const Sphere& getSphere(int index) const;
 
-	const std::vector<Sphere>& getSphereList() const;
+	const t_SphereList& getSphereList() const;
 	int getCurrentArenaRadius() const;
 
 protected:
-	std::vector<Sphere> m_sphereList;
+	t_SphereList m_sphereList;
 	int m_currentArenaRadius;
 
 };

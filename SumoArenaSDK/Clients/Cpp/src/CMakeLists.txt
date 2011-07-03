@@ -37,10 +37,10 @@ SOURCE_GROUP(Sources FILES ${SumoArenaClient_SOURCES})
 
 	 
 # Executable creation	
-ADD_EXECUTABLE (SumoArenaClient 
+ADD_EXECUTABLE (SumoArenaCppClient 
 	${SumoArenaClient_HEADERS}	
 	${SumoArenaClient_SOURCES}
 )
 
-TARGET_LINK_LIBRARIES (SumoArenaClient Ws2_32 )
+TARGET_LINK_LIBRARIES (SumoArenaCppClient Ws2_32 )
 

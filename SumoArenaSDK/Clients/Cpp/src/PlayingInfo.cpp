@@ -16,7 +16,7 @@ PlayingInfo::PlayingInfo(Json::Value & msg)
 
 }
 
-const std::vector<Sphere>& PlayingInfo::getSphereList() const
+const t_SphereList& PlayingInfo::getSphereList() const
 {
 	return m_sphereList;
 }
