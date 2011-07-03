@@ -86,7 +86,6 @@ package org.swiftsuspenders.injectionpoints
 			}
 			catch (error : Error)
 			{
-				trace(error);
 			}
 			constructorNode.setChildren(describeType(clazz).factory.constructor[0].children());
 		}

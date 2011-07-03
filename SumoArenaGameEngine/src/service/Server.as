@@ -163,7 +163,6 @@ package service
 		
 		private function log(message:String):void
 		{
-//			trace("call to log");
 			logSignal.dispatch(message);
 		}
 		

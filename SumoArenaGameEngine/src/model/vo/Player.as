@@ -19,6 +19,7 @@ package model.vo
 		public var responseExpected:Boolean;
 		
 		// url of the avatar
+		[Bindable]
 		public var avatar:String;
 		
 		public var socket:Socket;
@@ -28,5 +29,13 @@ package model.vo
 		
 		[Bindable]
 		public var wonRounds:int;
+		
+		
+		public function toString():String
+		{
+			return "Player{id:" + id + ", name:\"" + name + "\", color:" + color + ", requestedDx:" + requestedDx + ", requestedDy:" + requestedDy + ", responseExpected:" + responseExpected + ", avatar:\"" + avatar + "\", socket:" + socket + ", wonRounds:" + wonRounds + "}";
+		}
+
+
 	}
 }

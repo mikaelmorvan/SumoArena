@@ -15,7 +15,6 @@
 			public override function set data(value:Object):void
 			{
 				_player = value as Player;
-				trace(_player);
 			}
 		]]>
 	</fx:Script>

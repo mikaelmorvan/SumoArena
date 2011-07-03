@@ -2,12 +2,14 @@ package model
 {
 	import controller.signals.LogSignal;
 	
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	
 	import model.vo.Player;
 	import model.vo.Sphere;
 	
 	import mx.collections.ArrayList;
+	import mx.controls.Image;
 	
 	import org.robotlegs.mvcs.Actor;
 	
@@ -22,6 +24,10 @@ package model
 			sphere.radius = radius;
 			sphere.player = player;
 			sphere.maxSpeedVariation = speedVariation;
+			sphere.image = new Image();
+			sphere.image.source = player.avatar;
+			sphere.image.width = radius * 2;
+			sphere.image.height = radius * 2;
 			return sphere;
 		}
 		
@@ -29,6 +35,8 @@ package model
 			for (var i:int = 0; i < spheres.length; i++)
 			{
 				var sphere:Sphere = spheres.getItemAt(i) as Sphere;
+				sphere.x = 300;
+				sphere.y = 300;
 				sphere.speedVectorX = 0;
 				sphere.speedVectorY = 0;
 				sphere.isInArena = true;
@@ -46,20 +54,38 @@ package model
 			sphere.x = x;
 			sphere.y = y;
 		}
+
 		
 		public function updateAllPositions(spheres:ArrayList, stepByTurn:uint):void
 		{
 			for (var i:int = 0; i < spheres.length; i++)
 			{
 				var sphere:Sphere = spheres.getItemAt(i) as Sphere;
+				sphere.x += sphere.speedVectorX / stepByTurn;
 				sphere.y += sphere.speedVectorY / stepByTurn;
-				sphere.x += sphere.speedVectorX / stepByTurn; 
+				if(sphere.speedVectorX 
+					|| sphere.speedVectorY)
+				{
+					updateImageRotation(sphere);
+				}
 			}
 		}
+
+		private function updateImageRotation(sphere:Sphere):void
+		{
+			var rotation:Number = Math.atan2(sphere.speedVectorY, sphere.speedVectorX);
+			
+		    var matrix:Matrix = new Matrix();
+		    matrix.translate(- sphere.image.x, -sphere.image.y);
+		    matrix.rotate(rotation);
+		    matrix.translate(sphere.image.x, sphere.image.y);
+//		    matrix.concat(sphere.image.transform.matrix);
+			sphere.image.transform.matrix = matrix;
+		}
+
 		
 		public function updateSpeed(sphere:Sphere, dx:Number, dy:Number):void
 		{
-			var updated:Boolean;
 			if (dx * dx + dy * dy <= sphere.maxSpeedVariation * sphere.maxSpeedVariation)
 			{
 				sphere.speedVectorX += dx;

@@ -14,12 +14,20 @@ object.hidden {
 
 <head>
 <body>
-
+<div style="width: 200px; height: 200px; float:right; color:#666666">
+    Premi&egrave;re utilisation : <br/>
+    - aller sur une appli flash quelconque (n'importe quel jeu par exemple) ;<br/>
+    - faire un clic droit ;<br/>
+    - s&eacute;lectionner &quot;param&egrave;tres globaux&quot; ;<br/>
+    - dans l'onglet avanc&eacute;, cliquer sur &quot;param&egrave;tres de l'emplacement approuv&eacute;&quot;<br/>
+    - s&eacute;lectionner le r&eacute;pertoire o&ugrave; se trouve cette page HTML.
+</div>
 <div style="width: 200px; height: 200px;" onclick="click(this, event)">
 	<svg width="200px" height="200px" version="1.1" xmlns="http://www.w3.org/2000/svg">
 		<circle cx="100" cy="100" r="100" fill="black"/>
 	</svg>
 </div>
+
 <br>Player name:&nbsp;
 <input type="text" id="name" value=""/>
 <button onclick="connect()">connect</button>
@@ -76,7 +84,7 @@ function connect() {
         on_connect: function() {
         	log("connected");
             var name  = document.getElementById("name").value;
-        	data = '{"action": "connectPlayer", "parameters": {"name": "' + name + '"}}';
+        	data = '{"action": "connectPlayer", "parameters": {"name": "' + name + '", "avatarUrl": "http://localhost/sumo/blue.png"}}';
         	s.write(data);
         	log("sent: " + data);
         }
