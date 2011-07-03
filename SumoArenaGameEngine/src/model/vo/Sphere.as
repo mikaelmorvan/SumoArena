@@ -1,5 +1,6 @@
 package model.vo
 {
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	
 	import mx.controls.Image;
@@ -8,16 +9,44 @@ package model.vo
 	public class Sphere
 	{
 
-		private var _x:Number = 0;
 		
+		public var x:Number = 0;
 		
-		private var _y:Number = 0;
+		public var y:Number = 0;
 		
-		public var speedVectorX:int = 0;
+		public var offset:int = 300;
+		
 
-		public var speedVectorY:int = 0;
-		
-		public var rotation:Number=0.0;
+		public function get speedVectorX():int
+		{
+			return _speedVectorX;
+		}
+
+		public function set speedVectorX(value:int):void
+		{
+			_speedVectorX = value;
+		}
+
+		public function get speedVectorY():int
+		{
+			return _speedVectorY;
+		}
+
+		public function set speedVectorY(value:int):void
+		{
+			_speedVectorY = value;
+			
+			var rotation:Number = Math.atan2(speedVectorY, speedVectorX);
+			var matrix:Matrix = new Matrix();
+			matrix.translate(-radius, -radius);
+			matrix.rotate(rotation);
+			image.transform.matrix = matrix;
+			
+		}
+
+		private var _speedVectorX:int = 0;
+
+		private var _speedVectorY:int = 0;
 		
 		public var maxSpeedVariation:Number;
 		
@@ -28,30 +57,6 @@ package model.vo
 		private var _isInArena:Boolean;
 		
 		public var image:Image;
-		
-
-
-		public function get x():Number
-		{
-			return _x;
-		}
-
-		public function set x(value:Number):void
-		{
-			_x = value;
-			image.x = _x - radius; 
-		}
-
-		public function get y():Number
-		{
-			return _y;
-		}
-
-		public function set y(value:Number):void
-		{
-			_y = value;
-			image.y = _y - radius;
-		}
 
 		public function get isInArena():Boolean
 		{
@@ -74,7 +79,6 @@ package model.vo
 			return "Sphere{x:" + x + ", y:" + y 
 					+ "image.x:" + image.x + ", image.y:" + image.y 
 					+ ", speedVectorX:" + speedVectorX +  ", speedVectorY:" + speedVectorY
-					+ ", rotation:"  + rotation
 					+ ", maxSpeedVariation:" + maxSpeedVariation 
 					+ ", player:" + player.name 
 					+ ", radius:" + radius 

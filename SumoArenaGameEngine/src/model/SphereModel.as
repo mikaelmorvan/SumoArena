@@ -10,6 +10,7 @@ package model
 	
 	import mx.collections.ArrayList;
 	import mx.controls.Image;
+	import mx.core.BitmapAsset;
 	
 	import org.robotlegs.mvcs.Actor;
 	
@@ -18,6 +19,34 @@ package model
 		[Inject]
 		public var logSignal:LogSignal;
 		
+		[Embed(source="assets/blue.png")]
+		public var blueImageClass:Class;
+		
+		[Embed(source="assets/green.png")]
+		public var greenImageClass:Class;
+
+		[Embed(source="assets/yellow.png")]
+		public var yellowImageClass:Class;
+
+		[Embed(source="assets/red.png")]
+		public var redImageClass:Class;
+
+		private var _blueImage:BitmapAsset;
+		private var _greenImage:BitmapAsset;
+		private var _yellowImage:BitmapAsset;
+		private var _redImage:BitmapAsset;
+		private var _availableImages:Array;
+		
+		public function SphereModel()
+		{
+			_blueImage = new blueImageClass() as BitmapAsset;
+			_redImage = new redImageClass() as BitmapAsset;
+			_greenImage = new greenImageClass() as BitmapAsset;
+			_yellowImage = new yellowImageClass() as BitmapAsset;
+			_availableImages = [_yellowImage, _blueImage, _redImage, _greenImage];
+		}
+		
+		
 		public function create(player:Player, radius:uint, speedVariation:uint):Sphere
 		{
 			var sphere:Sphere = new Sphere();
@@ -25,21 +54,42 @@ package model
 			sphere.player = player;
 			sphere.maxSpeedVariation = speedVariation;
 			sphere.image = new Image();
-			sphere.image.source = player.avatar;
+			if(player.avatar)
+			{
+				sphere.image.source = player.avatar;
+			}
+			else 
+			{
+				sphere.image.source = _availableImages.pop();
+			}
 			sphere.image.width = radius * 2;
 			sphere.image.height = radius * 2;
+			sphere.image.x = -radius;
+			sphere.image.y = -radius;
 			return sphere;
 		}
+
+		public function destroy(sphere:Sphere):void
+		{
+			if(!sphere.player.avatar)
+			{
+				_availableImages.push(sphere.image);
+			}
+			sphere.image = null;
+			sphere.player = null;
+		}		
 		
 		public function resetSpheres(spheres:ArrayList):void{
 			for (var i:int = 0; i < spheres.length; i++)
 			{
 				var sphere:Sphere = spheres.getItemAt(i) as Sphere;
-				sphere.x = 300;
-				sphere.y = 300;
+				sphere.x = sphere.offset;
+				sphere.y = sphere.offset;
 				sphere.speedVectorX = 0;
 				sphere.speedVectorY = 0;
 				sphere.isInArena = true;
+				sphere.player.requestedDx = 0;
+				sphere.player.requestedDy = 0;
 			}			
 		}
 		
@@ -63,27 +113,9 @@ package model
 				var sphere:Sphere = spheres.getItemAt(i) as Sphere;
 				sphere.x += sphere.speedVectorX / stepByTurn;
 				sphere.y += sphere.speedVectorY / stepByTurn;
-				if(sphere.speedVectorX 
-					|| sphere.speedVectorY)
-				{
-					updateImageRotation(sphere);
-				}
 			}
 		}
 
-		private function updateImageRotation(sphere:Sphere):void
-		{
-			var rotation:Number = Math.atan2(sphere.speedVectorY, sphere.speedVectorX);
-			
-		    var matrix:Matrix = new Matrix();
-		    matrix.translate(- sphere.image.x, -sphere.image.y);
-		    matrix.rotate(rotation);
-		    matrix.translate(sphere.image.x, sphere.image.y);
-//		    matrix.concat(sphere.image.transform.matrix);
-			sphere.image.transform.matrix = matrix;
-		}
-
-		
 		public function updateSpeed(sphere:Sphere, dx:Number, dy:Number):void
 		{
 			if (dx * dx + dy * dy <= sphere.maxSpeedVariation * sphere.maxSpeedVariation)

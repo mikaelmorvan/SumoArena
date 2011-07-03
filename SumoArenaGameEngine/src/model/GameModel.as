@@ -15,7 +15,7 @@ package model
 	
 	public class GameModel extends Actor
 	{
-		public static const MAX_PLAYER_COUNT:int = 7;
+		public static const MAX_PLAYER_COUNT:int = 4;
 		public static const OFFSET:int = 300;
 		
 		[Inject]
@@ -23,8 +23,6 @@ package model
 		
 		[Inject]
 		public var updateSphereSignal:UpdateSphereSignal;
-		
-		private var _availableColors:Array;
 		
 		public var game:Game;
 
@@ -46,7 +44,6 @@ package model
 			roundFinishedSignal = new Signal();
 			gameStartedSignal = new Signal();
 			gameFinishedSignal = new Signal();
-			_availableColors = [0x000000, 0x8C1717, 0x385E0F, 0x236B8E, 0xFFCC11, 0x6600FF, 0xFF00AA];		
 		}
 		
 		[PostConstruct]
@@ -120,6 +117,7 @@ package model
 			for (var i:int = 0; i < game.spheres.length; i++)
 			{
 				var sphere:Sphere = game.spheres.getItemAt(i) as Sphere;
+				sphere.offset = OFFSET;
 				if (sphereNumber > 1)
 				{
 					sphere.x = OFFSET + Math.round(distanceFromCenter * Math.cos(angle * i));
@@ -294,7 +292,6 @@ package model
 			{
 				game.availablePlayers.removeItem(player);
 				game.selectedPlayers.addItem(player);
-				player.color = _availableColors.pop() as int;
 			}
 		}
 		
@@ -304,7 +301,6 @@ package model
 			{
 				game.availablePlayers.addItem(player);
 				game.selectedPlayers.removeItem(player);
-				_availableColors.push(player.color);
 			}
 		}		
 		

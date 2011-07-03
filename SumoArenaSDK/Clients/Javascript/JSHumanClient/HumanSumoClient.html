@@ -84,7 +84,7 @@ function connect() {
         on_connect: function() {
         	log("connected");
             var name  = document.getElementById("name").value;
-        	data = '{"action": "connectPlayer", "parameters": {"name": "' + name + '", "avatarUrl": "http://localhost/sumo/blue.png"}}';
+        	data = '{"action": "connectPlayer", "parameters": {"name": "' + name + '", "avatarUrl": null}}';
         	s.write(data);
         	log("sent: " + data);
         }
