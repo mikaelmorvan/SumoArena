@@ -238,8 +238,8 @@ public class GameClient : TcpClient {
         // Default client argument values.
         const String DEFAULT_GAME_SERVER_HOST = "127.0.0.1";
         const UInt16 DEFAULT_GAME_SERVER_PORT = 9090;
-        const String clientName = "Dummy C# client";
-        const String avatarUrl  = "";
+        const String clientName = "C# Dummy client"; // <-- Put your client name here. 
+	const String avatarUrl  = "";                // <-- Put a URL (PNG), if any.
 
         // Read information from command-line.
         String serverName = DEFAULT_GAME_SERVER_HOST;
