@@ -1,5 +1,6 @@
 This file is intended at coders who write example clients.
 
+
 Several example clients are provided in this SDK. To help players to implement
 their own clients, we (example coders) try to be consistent across programming
 languages, so examples are more clear.
@@ -95,7 +96,9 @@ Functional Concerns
     As the primary mission of clients are to react to server messages, it is
     relevant to build the client code on an event model. Except in cases it
     would make the code harder to read, example clients should try to
-    implement this execution model.
+    implement this execution model. Synchronous code should be prefered if it
+    makes the code easier to read. Conversely, you can choose asynchronous
+    code if the language you use makes it simpler.
 
 
 Code Design
