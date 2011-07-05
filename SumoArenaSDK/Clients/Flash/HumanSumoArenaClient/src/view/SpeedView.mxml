@@ -6,6 +6,8 @@
 		 x="{sphere.x}"
 		 y="{sphere.y}"
 		 alpha="{sphere.isInArena ? 1 : 0.2}"
+		 depth.player="10"
+		 depth.normal="1"
 		 >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -36,22 +38,25 @@
 			
 			[Bindable]
 			public var sphere:Sphere;
-
+			
+			protected function clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new UpdateSphereEvent(UpdateSphereEvent.UPDATE, event.localX, event.localY, true));
+			}
 			
 		]]>
 	</fx:Script>
-	<s:Ellipse width="{sphere.radius*2}" height="{sphere.radius*2}" x="{-sphere.radius}" y="{-sphere.radius}">
-		<s:stroke>
-			<s:SolidColorStroke color="#0000FF" color.player="#FF5500"/>
-		</s:stroke>
-		<s:fill>
-			<s:SolidColor color="#0000FF" color.player="#FF5500" alpha="0.4"/>
-		</s:fill>
-	</s:Ellipse>
-	<s:Line xFrom="0" yFrom="0" xTo="{sphere.xSpeed}" yTo="{sphere.ySpeed}" visible="{sphere.isInArena}">
-		<s:stroke>
-			<s:SolidColorStroke color="#0000FF" color.player="#FF5500" weight="3" alpha="0.8"/>
-		</s:stroke>
-	</s:Line>
-
+	<s:Group x="{sphere.xSpeed}" y="{sphere.ySpeed}" visible="{sphere.isInArena}"
+			 click.player="clickHandler(event)"
+			 buttonMode.player="true"
+			 visible.normal="false">
+		<s:Ellipse width="{sphere.maxSpeedVariation*2}" height="{sphere.maxSpeedVariation*2}" x="{-sphere.maxSpeedVariation}" y="{-sphere.maxSpeedVariation}">
+			<s:stroke>
+				<s:SolidColorStroke color="#FF0000" color.player="#00FF00"/>
+			</s:stroke>
+			<s:fill>
+				<s:SolidColor color="#FF0000" color.player="#00FF00" alpha="0.2"/>
+			</s:fill>
+		</s:Ellipse>
+	</s:Group>
 </s:Group>

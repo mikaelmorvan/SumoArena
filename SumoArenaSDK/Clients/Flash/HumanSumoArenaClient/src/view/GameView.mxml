@@ -38,6 +38,7 @@
 			{
 				client.connectToServer();
 				currentState = "connected";
+				logText.text = "";
 			}
 			
 			protected function onUpdate(event:UpdateSphereEvent):void
@@ -55,27 +56,29 @@
 	<s:Group width="600" height="600">
 		<s:Group x="300" y="300">
 			<view:ArenaView arena="{game.arena}"/>
-			<s:DataGroup id="spheresView" 
-				dataProvider="{game.spheres}" itemRenderer="{new ClassFactory(SphereView)}"
-				creationComplete="addEventListener(UpdateSphereEvent.UPDATE, onUpdate)"/>
+			<s:DataGroup 
+				dataProvider="{game.spheres}" itemRenderer="{new ClassFactory(SphereView)}"/>
+			<s:DataGroup 
+						 dataProvider="{game.spheres}" itemRenderer="{new ClassFactory(SpeedView)}"
+						 creationComplete="addEventListener(UpdateSphereEvent.UPDATE, onUpdate)"/>
 		</s:Group>
 	</s:Group>
 	<s:VGroup>
-		<s:HGroup enabled.connected="false">
+		<s:HGroup>
 			<mx:FormItem label="host">
-				<s:TextInput id="hostInput" width="150" text="localhost"/>
+				<s:TextInput id="hostInput" width="150" text="r-wxp-wfdn8563"/>
 			</mx:FormItem>
 			<mx:FormItem label="port">
 				<s:TextInput id="portInput" width="50" restrict="0-9" text="9090"/>
 			</mx:FormItem>
 		</s:HGroup>
-		<s:HGroup verticalAlign="middle" enabled.connected="false">
+		<s:HGroup verticalAlign="middle">
 			<mx:FormItem label="name">
 				<s:TextInput id="nameInput" text="player" width="150"/>
 			</mx:FormItem>
 			<s:Button label="connect" click="connect_clickHandler(event)"/>
 		</s:HGroup>
-		<s:TextArea width="400" height="600" id="logText"/>
+		<mx:TextArea width="400" height="600" id="logText"/>
 	</s:VGroup>
 		
 </s:Group>
