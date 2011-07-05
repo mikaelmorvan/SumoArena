@@ -20,7 +20,7 @@ GameManager::~GameManager()
 {
 }
 
-void GameManager::startLoop( const std::string & playerName, IPlayer & player )
+void GameManager::startLoop( IPlayer & player, const std::string & playerName, const std::string & avatarUrl /* = "" */ )
 {
 	// Try to use boost::asio to connect to the server
 	boost::asio::io_service io_service;
@@ -48,6 +48,7 @@ void GameManager::startLoop( const std::string & playerName, IPlayer & player )
 	Json::Value connectValue;
 	connectValue["action"] = "connectPlayer";
 	connectValue["parameters"]["name"] = playerName;
+	connectValue["parameters"]["avatarUrl"] = avatarUrl;
 	std::string text = connectValue.toStyledString();
 
 	// Send welcome message

@@ -24,10 +24,11 @@ public:
 	/**
 	* Starts the game loop, and only returns when the game is over
 	* Synchronous method that runs the game loop (listen to server/ send command)
+	* @param player instance of the algorithm used for the game
 	* @param playerName name of the player sent to the server
-	* @param algo instance of the algorithm used for the game
+	* @param avatarUrl url where the player avatar can be downloaded
 	*/
-	void startLoop( const std::string & playerName, IPlayer & algo );
+	void startLoop( IPlayer & player, const std::string & playerName, const std::string & avatarUrl = "" );
 
 private:
 	std::string m_serverName;
