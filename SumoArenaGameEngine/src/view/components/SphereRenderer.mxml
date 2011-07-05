@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 				xmlns:s="library://ns.adobe.com/flex/spark" 
-				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				x="{_sphere.x}"
+				y="{_sphere.y}"
 				autoDrawBackground="false"
-				toolTip="{_sphere.player.name + ' x=' + _sphere.x + ' y=' + _sphere.y + ' xOffset=' + _sphere.xOffset + ' yOffset=' + _sphere.yOffset }">
+				toolTip="{_sphere.toString()}">
 	
 	<fx:Script>
 		<![CDATA[
@@ -16,33 +18,23 @@
 			{
 				super.data = value;
 				_sphere = Sphere(data);
+				if(_sphere){
+					addElementAt(_sphere.image, 0);
+				}
 			}
 		]]>
 	</fx:Script>
-	<s:Ellipse
-		id="ellipse"
-		x="{_sphere.x + _sphere.xOffset}"
-		y="{_sphere.y + _sphere.yOffset}"
-		height="{_sphere.radius * 2}"
-		width="{_sphere.radius * 2}">
-		<s:fill>
-			<s:SolidColor
-				alpha="{_sphere.isInArena ? 1 : 0.5}"
-				color="{_sphere.player.color}"/>
-		</s:fill>
-	</s:Ellipse>
 	<s:Line
-		xFrom="{ellipse.x + _sphere.radius}"
-		yFrom="{ellipse.y + _sphere.radius}"
-		xTo="{ellipse.x + _sphere.speedVectorX + _sphere.radius}"
-		yTo="{ellipse.y + _sphere.speedVectorY + _sphere.radius}">
+		id="vector"
+		xFrom="0"
+		yFrom="0"
+		xTo="{_sphere.speedVectorX}"
+		yTo="{_sphere.speedVectorY}">
 		<s:stroke>
 			<s:SolidColorStroke
-				color="#666666"
-				alpha="0.5"
+				color="#FF0000"
+				alpha="0.75"
 				weight="2"/>
 		</s:stroke>
 	</s:Line>
-		
-	
 </s:ItemRenderer>

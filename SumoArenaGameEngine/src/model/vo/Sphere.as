@@ -1,23 +1,49 @@
 package model.vo
 {
+	import flash.geom.Matrix;
 	import flash.geom.Point;
+	
+	import mx.controls.Image;
 
 	[Bindable]
 	public class Sphere
 	{
 
-		public var x:Number = 0;
 		
+		public var x:Number = 0;
 		
 		public var y:Number = 0;
 		
-		public const xOffset:int = 280; // arena.width/2 - sphere.radius
-		
-		public const yOffset:int = 280; // arena.height/2 - sphere.radius
-		
-		public var speedVectorX:int = 0;
+		public function get speedVectorX():int
+		{
+			return _speedVectorX;
+		}
 
-		public var speedVectorY:int = 0;
+		public function set speedVectorX(value:int):void
+		{
+			_speedVectorX = value;
+		}
+
+		public function get speedVectorY():int
+		{
+			return _speedVectorY;
+		}
+
+		public function set speedVectorY(value:int):void
+		{
+			_speedVectorY = value;
+			
+			var rotation:Number = Math.atan2(speedVectorY, speedVectorX);
+			var matrix:Matrix = new Matrix();
+			matrix.translate(-radius, -radius);
+			matrix.rotate(rotation);
+			image.transform.matrix = matrix;
+			
+		}
+
+		private var _speedVectorX:int = 0;
+
+		private var _speedVectorY:int = 0;
 		
 		public var maxSpeedVariation:Number;
 		
@@ -25,12 +51,35 @@ package model.vo
 		
 		public var radius:int = 20;
 		
-		public var isInArena:Boolean;
+		private var _isInArena:Boolean;
 		
-		
+		public var image:Image;
+
+		public function get isInArena():Boolean
+		{
+			return _isInArena;
+		}
+
+		public function set isInArena(value:Boolean):void
+		{
+			_isInArena = value;
+			if(_isInArena) {
+				image.alpha = 1.0;
+			}
+			else {
+				image.alpha = 0.5;
+			}
+		}
+
 		public function toString():String
 		{
-			return "Sphere{x:" + x + ", y:" + y + ", xOffset:" + xOffset + ", yOffset:" + yOffset + ", speedVectorX:" + speedVectorX +  ", speedVectorY:" + speedVectorY + ", maxSpeedVariation:" + maxSpeedVariation + ", player:" + player.name + ", radius:" + radius + ", isInArena:" + isInArena + "}";
+			return "Sphere{x:" + x + ", y:" + y 
+					+ "image.x:" + image.x + ", image.y:" + image.y 
+					+ ", speedVectorX:" + speedVectorX +  ", speedVectorY:" + speedVectorY
+					+ ", maxSpeedVariation:" + maxSpeedVariation 
+					+ ", player:" + player.name 
+					+ ", radius:" + radius 
+					+ ", isInArena:" + isInArena + "}";
 		}
 
 

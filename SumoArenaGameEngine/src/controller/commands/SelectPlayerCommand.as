@@ -21,9 +21,8 @@ package controller.commands
 		
 		public override function execute():void
 		{
-			if(gameModel.game.selectedPlayers.length < gameModel.COLORS.length)
+			if(gameModel.game.selectedPlayers.length < GameModel.MAX_PLAYER_COUNT)
 			{
-				player.color = gameModel.COLORS[gameModel.game.selectedPlayers.length];
 				gameModel.selectPlayer(player);
 				createSphereSignal.dispatch(player);
 			}

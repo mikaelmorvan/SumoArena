@@ -2,12 +2,15 @@ package model
 {
 	import controller.signals.LogSignal;
 	
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	
 	import model.vo.Player;
 	import model.vo.Sphere;
 	
 	import mx.collections.ArrayList;
+	import mx.controls.Image;
+	import mx.core.BitmapAsset;
 	
 	import org.robotlegs.mvcs.Actor;
 	
@@ -16,22 +19,77 @@ package model
 		[Inject]
 		public var logSignal:LogSignal;
 		
+		[Embed(source="assets/blue.png")]
+		public var blueImageClass:Class;
+		
+		[Embed(source="assets/green.png")]
+		public var greenImageClass:Class;
+
+		[Embed(source="assets/yellow.png")]
+		public var yellowImageClass:Class;
+
+		[Embed(source="assets/red.png")]
+		public var redImageClass:Class;
+
+		private var _blueImage:BitmapAsset;
+		private var _greenImage:BitmapAsset;
+		private var _yellowImage:BitmapAsset;
+		private var _redImage:BitmapAsset;
+		private var _availableImages:Array;
+		
+		public function SphereModel()
+		{
+			_blueImage = new blueImageClass() as BitmapAsset;
+			_redImage = new redImageClass() as BitmapAsset;
+			_greenImage = new greenImageClass() as BitmapAsset;
+			_yellowImage = new yellowImageClass() as BitmapAsset;
+			_availableImages = [_yellowImage, _blueImage, _redImage, _greenImage];
+		}
+		
+		
 		public function create(player:Player, radius:uint, speedVariation:uint):Sphere
 		{
 			var sphere:Sphere = new Sphere();
 			sphere.radius = radius;
 			sphere.player = player;
 			sphere.maxSpeedVariation = speedVariation;
+			sphere.image = new Image();
+			if(player.avatar)
+			{
+				sphere.image.source = player.avatar;
+			}
+			else 
+			{
+				sphere.image.source = _availableImages.pop();
+			}
+			sphere.image.width = radius * 2;
+			sphere.image.height = radius * 2;
+			sphere.image.x = -radius;
+			sphere.image.y = -radius;
 			return sphere;
 		}
+
+		public function destroy(sphere:Sphere):void
+		{
+			if(!sphere.player.avatar)
+			{
+				_availableImages.push(sphere.image);
+			}
+			sphere.image = null;
+			sphere.player = null;
+		}		
 		
 		public function resetSpheres(spheres:ArrayList):void{
 			for (var i:int = 0; i < spheres.length; i++)
 			{
 				var sphere:Sphere = spheres.getItemAt(i) as Sphere;
+				sphere.x = 0;
+				sphere.y = 0;
 				sphere.speedVectorX = 0;
 				sphere.speedVectorY = 0;
 				sphere.isInArena = true;
+				sphere.player.requestedDx = 0;
+				sphere.player.requestedDy = 0;
 			}			
 		}
 		
@@ -46,20 +104,20 @@ package model
 			sphere.x = x;
 			sphere.y = y;
 		}
+
 		
 		public function updateAllPositions(spheres:ArrayList, stepByTurn:uint):void
 		{
 			for (var i:int = 0; i < spheres.length; i++)
 			{
 				var sphere:Sphere = spheres.getItemAt(i) as Sphere;
+				sphere.x += sphere.speedVectorX / stepByTurn;
 				sphere.y += sphere.speedVectorY / stepByTurn;
-				sphere.x += sphere.speedVectorX / stepByTurn; 
 			}
 		}
-		
+
 		public function updateSpeed(sphere:Sphere, dx:Number, dy:Number):void
 		{
-			var updated:Boolean;
 			if (dx * dx + dy * dy <= sphere.maxSpeedVariation * sphere.maxSpeedVariation)
 			{
 				sphere.speedVectorX += dx;

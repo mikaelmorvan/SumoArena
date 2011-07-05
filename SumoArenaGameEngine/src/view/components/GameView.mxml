@@ -14,18 +14,34 @@
 			height="300"
 			width="200"
 			itemRenderer="view.components.PlayerRenderer"/>
-		<s:Button
+<!--		<s:Button
 			id="validateResultButton"
 			label="Validate Results"
-			enabled="false"/>
+			enabled="false"/>-->
 	</s:VGroup>
-	<components:ArenaView
-		id="arenaView"/>
+	<s:Group width="600" height="600">
+		<s:Rect
+			left="0"
+			top="0"
+			right="0"
+			bottom="0">
+			<s:stroke>
+				<s:SolidColorStroke
+					color="#666666"
+					weight="1"/>
+			</s:stroke>
+		</s:Rect>
+		
+		<s:Group x="300" y="300">
+			<components:ArenaView 
+				id="arenaView"/>
+		</s:Group>	
+	</s:Group>
 	
 	<s:VGroup
 		gap="15">
-		<components:Title
-			label="status"/>
+<!--		<components:Title
+			label="status"/>-->
 		<s:HGroup>
 			<s:Label
 				id="Round"

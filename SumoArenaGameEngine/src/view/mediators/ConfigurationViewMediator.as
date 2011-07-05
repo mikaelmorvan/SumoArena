@@ -94,8 +94,8 @@ package view.mediators
 		private function registerViewEventListeners():void
 		{
 			// listen to view events
-			sphereRadiusChangedSignal = new NativeSignal(configurationView.sphereRadiusInput, Event.CHANGE);
-			sphereRadiusChangedSignal.add(sphereRadiusChangedHandler);
+//			sphereRadiusChangedSignal = new NativeSignal(configurationView.sphereRadiusInput, Event.CHANGE);
+//			sphereRadiusChangedSignal.add(sphereRadiusChangedHandler);
 		
 			speedVariationChangedSignal = new NativeSignal(configurationView.speedVariationInput, Event.CHANGE);
 			speedVariationChangedSignal.add(speedVariationChangedHandler);
@@ -123,10 +123,10 @@ package view.mediators
 		}
 
 
-		private function sphereRadiusChangedHandler(event:Event):void 
-		{
-			changeSphereRadiusSignal.dispatch(configurationView.sphereRadiusInput.value);
-		}
+//		private function sphereRadiusChangedHandler(event:Event):void 
+//		{
+//			changeSphereRadiusSignal.dispatch(configurationView.sphereRadiusInput.value);
+//		}
 		
 		private function speedVariationChangedHandler(event:Event):void 
 		{

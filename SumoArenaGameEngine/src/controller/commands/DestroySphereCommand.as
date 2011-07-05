@@ -31,6 +31,7 @@ package controller.commands
 			if(sphere)
 			{
 				gameModel.removeSphere(sphere);
+				sphereModel.destroy(sphere);
 			}
 		}
 	}

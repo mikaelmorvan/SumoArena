@@ -9,9 +9,6 @@ package model.vo
 		[Bindable]
 		public var name:String;
 		
-		[Bindable]
-		public var color:uint = 0x000000;
-		
 		public var requestedDx:Number;
 		
 		public var requestedDy:Number;
@@ -19,6 +16,7 @@ package model.vo
 		public var responseExpected:Boolean;
 		
 		// url of the avatar
+		[Bindable]
 		public var avatar:String;
 		
 		public var socket:Socket;
@@ -28,5 +26,13 @@ package model.vo
 		
 		[Bindable]
 		public var wonRounds:int;
+		
+		
+		public function toString():String
+		{
+			return "Player{id:" + id + ", name:\"" + name + "\", requestedDx:" + requestedDx + ", requestedDy:" + requestedDy + ", responseExpected:" + responseExpected + ", avatar:\"" + avatar + "\", socket:" + socket + ", wonRounds:" + wonRounds + "}";
+		}
+
+
 	}
 }

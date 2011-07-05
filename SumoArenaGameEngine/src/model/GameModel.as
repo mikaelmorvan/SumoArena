@@ -15,17 +15,16 @@ package model
 	
 	public class GameModel extends Actor
 	{
+		public static const MAX_PLAYER_COUNT:int = 4;
+		
 		[Inject]
 		public var server:Server;
 		
 		[Inject]
 		public var updateSphereSignal:UpdateSphereSignal;
 		
-		public const COLORS:Array = [0x000000, 0x8C1717, 0x385E0F, 0x236B8E, 0xFFCC11, 0x6600FF, 0xFF00AA];
-		
 		public var game:Game;
 
-		
 		public var roundStartedSignal:Signal;
 		
 		public var roundFinishedSignal:Signal;
@@ -34,6 +33,9 @@ package model
 		
 		public var gameFinishedSignal:Signal;
 		
+		/**
+		 * Contructor
+		 */ 
 		public function GameModel()
 		{
 			game = new Game();
@@ -41,15 +43,21 @@ package model
 			roundFinishedSignal = new Signal();
 			gameStartedSignal = new Signal();
 			gameFinishedSignal = new Signal();
-			
 		}
 		
 		[PostConstruct]
+		/**
+		 * Add listeners to server event
+		 */ 
 		public function addServiceListeners():void
 		{
 			server.clientDisconnected.add(onClientDisconnected);			
 		}
 		
+		/**
+		 * Called when a player closes its socket
+		 * @param player the disconnected player
+		 */ 
 		private function onClientDisconnected(player:Player):void
 		{
 			var sphere:Sphere = getSphereByPlayer(player);
@@ -105,21 +113,19 @@ package model
 		{
 			var sphereNumber:int = game.spheres.length;
 			const angle:Number = 2 * Math.PI / sphereNumber;
-				for (var i:int = 0; i < game.spheres.length; i++)
+			for (var i:int = 0; i < game.spheres.length; i++)
+			{
+				var sphere:Sphere = game.spheres.getItemAt(i) as Sphere;
+				if (sphereNumber > 1)
 				{
-					var sphere:Sphere = game.spheres.getItemAt(i) as Sphere;
-					if (sphereNumber > 1)
-					{
-						sphere.x = Math.round(distanceFromCenter * Math.cos(angle * i));
-						sphere.y = Math.round(distanceFromCenter * Math.sin(angle * i));
-					}
-					else  {
-						sphere.x = 0;
-						sphere.y = 0;
-					}
-//					sphere.xOffset = game.arena.width / 2 - sphere.radius;
-//					sphere.yOffset = game.arena.height / 2 - sphere.radius;
+					sphere.x = Math.round(distanceFromCenter * Math.cos(angle * i));
+					sphere.y = Math.round(distanceFromCenter * Math.sin(angle * i));
 				}
+				else  {
+					sphere.x = 0;
+					sphere.y = 0;
+				}
+			}
 		}
 		
 		// the number of ticks at which the players must be interrogated
@@ -180,13 +186,14 @@ package model
 			for (var i:int = 0; i < game.aliveSpheres.length;) 
 			{
 				var sphere:Sphere = Sphere(game.aliveSpheres.getItemAt(i));
-				if (sphere.x*sphere.x + sphere.y*sphere.y > game.arena.squareRadius)
+				if (sphere.x * sphere.x + sphere.y * sphere.y > game.arena.squareRadius)
 				{
 					sphere.isInArena = false;
 					sphere.speedVectorX = 0;
 					sphere.speedVectorY = 0;
 					game.aliveSpheres.removeItem(sphere);
 					if(game.aliveSpheres.length < 2){
+						requestPlayers();
 						finishRound();
 					}
 				} else {
@@ -195,6 +202,9 @@ package model
 			}			
 		}
 		
+		/**
+		 * notifies the players of the round and game winner id
+		 */ 
 		public function finishRound():void
 		{
 			var roundWinnerId:int = -1;
@@ -231,7 +241,7 @@ package model
 		
 		/**
 		 *  
-		 * @param sphere the spehre to be added
+		 * @param sphere the sphere to be added
 		 * @param totalSphereNumber the total numbrer of spheres in this game
 		 * @param distanceFromCenter the initial distance between the sphere and the center of the arena
 		 * @return the number of spheres in the game

@@ -15,7 +15,7 @@
 	<!-- ////////////// Ball configuration /////////// -->
 	<components:Title
 		label="Balls"/>
-	<s:HGroup
+<!--	<s:HGroup
 		verticalAlign="middle"
 		toolTip="The size of the spheres representing the players.">
 		<s:Label 
@@ -27,7 +27,7 @@
 			maximum="100"
 			width="65"
 			value="{sphereConfiguration.radius}"/>
-	</s:HGroup>
+	</s:HGroup>-->
 	<s:HGroup
 		verticalAlign="middle"
 		toolTip="The number of pixels of which the speed vector may be altered, at each turn.">

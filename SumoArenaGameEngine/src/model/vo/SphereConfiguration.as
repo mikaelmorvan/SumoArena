@@ -12,7 +12,7 @@ package model.vo
 		public var radius:uint = 20;
 		
 		// speedVariation in pixels/turn
-		public var speedVariation:uint = 10;
+		public var speedVariation:uint = 30;
 		
 		// initial distance from the arena center, in pixels
 		public var initialDistance:uint = 200;

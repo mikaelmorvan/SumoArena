@@ -15,7 +15,9 @@
 			public override function set data(value:Object):void
 			{
 				_player = value as Player;
-				trace(_player);
+				if(_player && _player.sphere){
+					avatar.source = Bitmap(_player.sphere.image.content).bitmapData.clone();
+				}
 			}
 		]]>
 	</fx:Script>
@@ -23,15 +25,10 @@
 		<s:HorizontalLayout
 			verticalAlign="middle"/>
 	</s:layout>
-	<s:Ellipse
+	<s:BitmapImage
+		id="avatar"
 		height="20"
-		width="20">
-		<s:fill>
-			<s:SolidColor
-				color="{_player.color}"
-				alpha="{_player.sphere.isInArena ? 1 : 0.5}"/>
-		</s:fill>
-	</s:Ellipse>		
+		width="20"/>
 	<s:Label 
 		text="{_player.name}"
 		width="140"/>
