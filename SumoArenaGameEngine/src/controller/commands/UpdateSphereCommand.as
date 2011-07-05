@@ -22,9 +22,11 @@ package controller.commands
 		
 		public override function execute():void
 		{
-			var sphere:Sphere = gameModel.getSphereByPlayer(player);
+			var sphere:Sphere = player.sphere;
 			if(sphere && sphere.isInArena){
 				sphereModel.updateSpeed(sphere, player.requestedDx, player.requestedDy);
+				player.requestedDx = 0;
+				player.requestedDy = 0;
 			}
 		}
 

@@ -27,7 +27,7 @@ package controller.commands
 		
 		public override function execute():void
 		{
-			var sphere:Sphere = gameModel.getSphereByPlayer(player);
+			var sphere:Sphere = player.sphere;
 			if(sphere)
 			{
 				gameModel.removeSphere(sphere);

@@ -2,6 +2,8 @@ package model
 {
 	import controller.signals.UpdateSphereSignal;
 	
+	import flash.utils.setTimeout;
+	
 	import model.vo.Arena;
 	import model.vo.Game;
 	import model.vo.Player;
@@ -60,13 +62,16 @@ package model
 		 */ 
 		private function onClientDisconnected(player:Player):void
 		{
-			var sphere:Sphere = getSphereByPlayer(player);
-			if(sphere)
+			if (player)
 			{
-				removeSphere(sphere);
+				var sphere:Sphere = player.sphere;
+				if(sphere)
+				{
+					removeSphere(sphere);
+				}
+				unselectPlayer(player);
+				removePlayer(player);
 			}
-			unselectPlayer(player);
-			removePlayer(player);
 		}
 		
 		/**
@@ -80,7 +85,7 @@ package model
 			}
 			game.currentRound++;
 			game.currentTick = 0;
-			_nextRequest = 0;
+			_nextRequest = game.stepByTurn;
 			initAliveSphere();
 			
 			for (var i:int = 0; i < game.selectedPlayers.length; i++)
@@ -104,6 +109,8 @@ package model
 				server.send(player, roundDescription);
 			}
 			roundStartedSignal.dispatch();
+			play = true;
+			server.respondedPlayerCount = game.selectedPlayers.length;
 		}
 		
 		/**
@@ -131,16 +138,25 @@ package model
 		// the number of ticks at which the players must be interrogated
 		private var _nextRequest:int;
 		
-		public function update():void
+		private var play:Boolean;
+		
+		
+		public function update():Boolean
 		{
-			game.currentTick++;
-			
+			if (play)
+			{
+				game.currentTick++;
+			}
 			if(game.currentTick >= _nextRequest)
 			{
-				_nextRequest = game.currentTick + Game.REQUEST_INTERVAL_IN_TICKS;
-				
-				requestPlayers();
+				play = game.aliveSpheres.length == server.respondedPlayerCount;
+				if (play)
+				{
+					_nextRequest = game.currentTick + game.stepByTurn;
+					requestPlayers();
+				}	
 			}
+			return play;
 		}
 
 		/**
@@ -194,7 +210,7 @@ package model
 					game.aliveSpheres.removeItem(sphere);
 					if(game.aliveSpheres.length < 2){
 						requestPlayers();
-						finishRound();
+						setTimeout(finishRound, 1000);
 					}
 				} else {
 					i++;
@@ -231,6 +247,7 @@ package model
 					}
 			}
 			server.sendToPlayers(game.selectedPlayers, data);
+			play = false;
 		}
 		
 		public function finishGame():void 
@@ -326,18 +343,6 @@ package model
 		{
 			game.roundDuration = value;
 		}
-		
-		public function getSphereByPlayer(player:Player):Sphere
-		{
-			for (var i:int = 0; i < game.spheres.length; i++)
-			{
-				var sphere:Sphere = game.spheres.getItemAt(i) as Sphere;
-				if(sphere.player == player)
-				{
-					return sphere;
-				}
-			}
-			return null;
-		}
+
 	}
 }

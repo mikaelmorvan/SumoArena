@@ -14,14 +14,15 @@ package service
 	import flash.net.ServerSocket;
 	import flash.net.Socket;
 	import flash.utils.Dictionary;
+	import flash.utils.getTimer;
 	
 	import model.vo.Player;
 	
 	import mx.collections.ArrayList;
 	import mx.collections.IList;
 	
-	import org.robotlegs.mvcs.Actor;
 	import org.osflash.signals.Signal;
+	import org.robotlegs.mvcs.Actor;
 		
 	public class Server extends Actor
 	{
@@ -48,6 +49,8 @@ package service
 		private var serverSocket:ServerSocket;
 		private var clientSockets:Array;
 		
+		public var respondedPlayerCount:int = 0;
+		
 		public function start(port:int):void
 		{
 			if (!serverSocket)
@@ -66,8 +69,10 @@ package service
 			player.responseExpected = expectResponse;
 			try
 			{
-				player.socket.writeUTFBytes(JSON.encode(data) + "\n");
+				var dataToString:String = JSON.encode(data) + "\n";
+				player.socket.writeUTFBytes(dataToString);
 				player.socket.flush();
+				log("SEND: " + getTimer() + dataToString);
 			}
 			catch (error:Error) {
 				log("ERROR: can't write on socket for player " + player.name);
@@ -81,6 +86,10 @@ package service
 		 */ 
 		public function sendToPlayers(players:ArrayList, data:Object, expectResponse:Boolean=false):void
 		{
+			if (expectResponse)
+			{
+				respondedPlayerCount = 0;
+			}
 			for each (var player:Player in players.source) 
 			{
 				send(player, data, expectResponse);
@@ -215,13 +224,13 @@ package service
 		{
 			if(player.responseExpected)
 			{
+				respondedPlayerCount++; 
 				if(player.requestedDx != data.dVx || player.requestedDy != data.dVy)
 				{
 					player.requestedDx = data.dVx;
 					player.requestedDy = data.dVy;
 				}
 				player.responseExpected = false;
-					
 			}
 			else {
 				log("WARNING: unexpected message from client " + player.name);
