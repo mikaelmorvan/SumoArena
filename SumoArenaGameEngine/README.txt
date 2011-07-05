@@ -1,3 +1,11 @@
+-------------------------------------------
+Release 0.9
+
+Model simplification
+corrected issue : bad values returned for x and y
+
+-------------------------------------------
+
 Release 0.8
 
 Added crossdomain policy handling for Flash clients
