@@ -1,6 +1,21 @@
 SumoArena is a game engine for a private coding contest.
 
 -------------------------------------------
+
+Release 1.0
+
+- Added splashscreen
+- Added image for arena skin 
+- Fixed Framerate
+- Pause when waiting for the client response, to allow human clients to play
+- Wait 1 second between two messages send, to avoid some reception problems on client side 
+ 
+Issues corrected
+- turn duration corrected 
+- when a client did not respond, its dVx and dVy remained unchanged instead of being turned to 0
+- the arena shinking started immediatelywhatever was the start value
+
+-------------------------------------------
 Release 0.9
 
 Model simplification

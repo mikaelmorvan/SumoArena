@@ -6,29 +6,14 @@
 	<fx:Declarations>
 		<vo:Arena id="arena"/>
 	</fx:Declarations>
-	<s:Ellipse	
+
+	<mx:Image
 		x="{-arena.radius}"
 		y="{-arena.radius}"
 		height="{arena.radius * 2}"
-		width="{arena.radius * 2}">
-		<s:stroke>
-			<s:SolidColorStroke
-				color="#000000"
-				weight="2"/>
-		</s:stroke>
-	</s:Ellipse>
-	
-	<!-- identify center -->
-	<s:Ellipse	
-		x="-3"
-		y="-3"
-		height="6"
-		width="6">
-		<s:fill>
-			<s:SolidColor
-				color="#666666"/>
-		</s:fill>
-	</s:Ellipse>
+		width="{arena.radius * 2}"
+		source="@Embed('assets/arena.png')"/>
+
 	
 	<s:DataGroup id="dataGroup"
 				 itemRenderer="view.components.SphereRenderer"/>
