@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-public class GameStartInfo
+public class RoundStartInfo
 {
-    public static GameStartInfo CreateFromJsonString(String jsonString)
+    public static RoundStartInfo CreateFromJsonString(String jsonString)
     {
-        return JsonConvert.DeserializeObject<GameStartInfo>(jsonString);
+        return JsonConvert.DeserializeObject<RoundStartInfo>(jsonString);
     }
 
     public int yourIndex { get; set; }
@@ -33,22 +33,22 @@ public class Sphere
     public bool inArena { get; set; }
 }
 
-public class PlaygroundInfo
+public class PlayingdInfo
 {
-    public static PlaygroundInfo CreateFromJsonString(String jsonString)
+    public static PlayingdInfo CreateFromJsonString(String jsonString)
     {
-        return JsonConvert.DeserializeObject<PlaygroundInfo>(jsonString);
+        return JsonConvert.DeserializeObject<PlayingdInfo>(jsonString);
     }
 
     public int arenaRadius { get; set; }
     public List<Sphere> players { get; set; }
 }
 
-public class GameEndInfo
+public class RoundEndInfo
 {
-    public static GameEndInfo CreateFromJsonString(String jsonString)
+    public static RoundEndInfo CreateFromJsonString(String jsonString)
     {
-        return JsonConvert.DeserializeObject<GameEndInfo>(jsonString);
+        return JsonConvert.DeserializeObject<RoundEndInfo>(jsonString);
     }
 
     public int currentRound { get; set; }
@@ -68,14 +68,14 @@ public class Player
         public int dVy;
     }
     
-    GameStartInfo roundInfo = null;
+    RoundStartInfo roundInfo = null;
 
-    public void OnPrepareInformation(GameStartInfo info)
+    public void OnPrepareInformation(RoundStartInfo info)
     {
         roundInfo = info;
     }
 
-    public AccelerationVector OnPlayRequest(PlaygroundInfo info)
+    public AccelerationVector OnPlayRequest(PlayingdInfo info)
     {
         if (null == roundInfo || !info.players[roundInfo.yourIndex].inArena)
         {
@@ -93,7 +93,7 @@ public class Player
         return result;
     }
 
-    private AccelerationVector ChooseAcceleration(PlaygroundInfo info)
+    private AccelerationVector ChooseAcceleration(PlayingdInfo info)
     {
         // Get your own sphere.
         //
@@ -130,7 +130,7 @@ public class Player
         return result;
     }
 
-    public void OnRoundFinished(GameEndInfo info)
+    public void OnRoundFinished(RoundEndInfo info)
     {
         // TODO
     }
@@ -210,13 +210,13 @@ public class GameClient : TcpClient {
     private void OnPrepare(String jsonParamString)
     {
         Console.WriteLine("A round is starting.");
-        GameStartInfo info = GameStartInfo.CreateFromJsonString(jsonParamString);
+        RoundStartInfo info = RoundStartInfo.CreateFromJsonString(jsonParamString);
         player.OnPrepareInformation(info);
     }
 
     private void OnPlay(String jsonParamString)
     {
-        PlaygroundInfo info = PlaygroundInfo.CreateFromJsonString(jsonParamString);
+        PlayingdInfo info = PlayingdInfo.CreateFromJsonString(jsonParamString);
         Player.AccelerationVector v = player.OnPlayRequest(info);
 
         if (null != v)
@@ -229,7 +229,7 @@ public class GameClient : TcpClient {
 
     private void OnFinishRound(String jsonParamString)
     {
-        GameEndInfo info = GameEndInfo.CreateFromJsonString(jsonParamString);
+        RoundEndInfo info = RoundEndInfo.CreateFromJsonString(jsonParamString);
         player.OnRoundFinished(info);
     }
 
