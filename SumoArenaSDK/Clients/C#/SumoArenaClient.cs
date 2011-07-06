@@ -271,9 +271,12 @@ public class GameClient : TcpClient {
         UInt16 serverPort = DEFAULT_GAME_SERVER_PORT;
         if (args.Length > 0)
         {
-            Uri serverUri = new Uri(args[0]);
-            serverPort = (UInt16) serverUri.Port;
+            Uri serverUri = new Uri("http://" + args[0]); // Uri requires a scheme.
             serverName = serverUri.Host;
+            if (serverUri.Port != 80)
+            {
+                serverPort = (UInt16)serverUri.Port;
+            }
         }
 
         GameClient gameClient = new GameClient(serverName, serverPort, clientName, avatarUrl);
