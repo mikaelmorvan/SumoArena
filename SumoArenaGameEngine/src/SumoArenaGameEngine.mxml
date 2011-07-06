@@ -6,13 +6,15 @@
 					   xmlns:local="*"
 					   minHeight="700"
 					   minWidth="1024"
-					   backgroundColor="#CCCCCC"
+					   backgroundColor.start="#000000"
+					   backgroundColor.splashscreen="#000000"
+					   backgroundColor.normal="#CCCCCC"
 					   initialize="initializeHandler(event)"
+					   creationComplete="{_timer.start()}"
 					   >
 	
 	<fx:Declarations>
 		<local:SumoContext id="context" contextView="{this}"/>
-		
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
@@ -26,20 +28,57 @@
 				viewStack.selectedIndex = event.newIndex;
 			}
 			
+			private var _timer:Timer;
 
 			protected function initializeHandler(event:FlexEvent):void
 			{
-				nativeWindow.title = "Sumo Arena 0.9";
+				nativeWindow.title = "Sumo Arena 1.0";
+				_timer = new Timer(2000, 1);
+				_timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
+			}
+
+			private function onTimerComplete(event:TimerEvent):void
+			{
+				currentState='splashscreen';
 			}
 			
 		]]>
 	</fx:Script>
-	<s:layout>
+	<s:states>
+		<s:State name="start"/>
+		<s:State name="splashscreen"/>
+		<s:State name="normal"/>
+	</s:states>
+	<s:transitions>
+		<s:Transition
+			toState="splashscreen">
+			<s:Sequence>
+				<s:Fade
+					target="{logo}"
+					alphaFrom="1.0"
+					alphaTo="0.0"
+					duration="1000"
+					effectEnd="{currentState='normal'}"/>
+			</s:Sequence>
+		</s:Transition>
+	</s:transitions>
+	<s:layout.splashscreen>
+		<s:BasicLayout/>
+	</s:layout.splashscreen>
+	<s:layout.normal>
 		<s:VerticalLayout
 			gap="5"
 			horizontalAlign="center"/>
-	</s:layout>
+	</s:layout.normal>
+	<mx:Image
+		id="logo"
+		horizontalCenter="0"
+		verticalCenter="0"
+		removedEffect="fading"
+		includeInLayout.normal="false"
+		source="@Embed('assets/logo.jpg')"/>
 	<s:TabBar id="tabBar"
+			  includeIn="normal"
 			  change="tabBar_changeHandler(event)">
 		<s:dataProvider>
 			<s:ArrayList source="['Server', 'Configuration', 'Players', 'Game', 'Logs', 'Help']" />
@@ -47,6 +86,7 @@
 	</s:TabBar>
 	<mx:ViewStack
 		id="viewStack"
+		includeIn="normal"
 		creationPolicy="all"
 		width="100%" 
 		height="100%">

@@ -22,7 +22,7 @@
 -->
 <s:Skin 
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
-	xmlns:s="library://ns.adobe.com/flex/spark">
+	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx">
     <fx:Metadata>
     <![CDATA[ 
         /** 
@@ -36,36 +36,12 @@
         <s:State name="normal" />
         <s:State name="disabled" />
     </s:states>
-    
-	<s:Ellipse	
+	
+	<mx:Image
 		x="{-hostComponent.arena.radius}"
 		y="{-hostComponent.arena.radius}"
 		height="{hostComponent.arena.radius * 2}"
-		width="{hostComponent.arena.radius * 2}">
-		<s:stroke>
-			<s:SolidColorStroke
-				color="#000000"
-				weight="2"/>
-		</s:stroke>
-	</s:Ellipse>
-	
-	<!-- identify center -->
-	<s:Ellipse	
-		x="-3"
-		y="-3"
-		height="6"
-		width="6">
-		<s:fill>
-			<s:SolidColor
-				color="#666666"/>
-		</s:fill>
-	</s:Ellipse>
-	
-    <!--
-      Note: setting the minimum size to 0 here so that changes to the host component's
-      size will not be thwarted by this skin part's minimum size.   This is a compromise,
-      more about it here: http://bugs.adobe.com/jira/browse/SDK-21143
-    -->
-    <!--- @copy spark.components.SkinnableDataContainer#dataGroup -->
+		width="{hostComponent.arena.radius * 2}"
+		source="@Embed('assets/arena.png')"/>
     <s:DataGroup id="dataGroup"/>
 </s:Skin>
