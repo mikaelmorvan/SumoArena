@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:SkinnableDataContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 						  xmlns:s="library://ns.adobe.com/flex/spark" 
 						  xmlns:mx="library://ns.adobe.com/flex/mx" 
-						  xmlns:vo="model.vo.*"
-						  skinClass="view.components.ArenaSkin"
-						  itemRenderer="view.components.SphereRenderer">
+						  xmlns:vo="model.vo.*">
 	<fx:Declarations>
 		<vo:Arena id="arena"/>
 	</fx:Declarations>
-</s:SkinnableDataContainer>
+	<s:Ellipse	
+		x="{-arena.radius}"
+		y="{-arena.radius}"
+		height="{arena.radius * 2}"
+		width="{arena.radius * 2}">
+		<s:stroke>
+			<s:SolidColorStroke
+				color="#000000"
+				weight="2"/>
+		</s:stroke>
+	</s:Ellipse>
+	
+	<!-- identify center -->
+	<s:Ellipse	
+		x="-3"
+		y="-3"
+		height="6"
+		width="6">
+		<s:fill>
+			<s:SolidColor
+				color="#666666"/>
+		</s:fill>
+	</s:Ellipse>
+	
+	<s:DataGroup id="dataGroup"
+				 itemRenderer="view.components.SphereRenderer"/>
+</s:Group>

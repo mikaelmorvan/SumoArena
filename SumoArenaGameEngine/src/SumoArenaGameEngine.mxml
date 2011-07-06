@@ -9,6 +9,7 @@
 					   backgroundColor.start="#000000"
 					   backgroundColor.splashscreen="#000000"
 					   backgroundColor.normal="#CCCCCC"
+					   frameRate="50"
 					   initialize="initializeHandler(event)"
 					   creationComplete="{_timer.start()}"
 					   >
