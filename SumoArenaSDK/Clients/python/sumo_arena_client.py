@@ -80,7 +80,7 @@ class EndGameInfo(object):
 
 class Player(object):
 
-    def on_prepare_information(self, startInfo):
+    def on_round_start(self, startInfo):
         
         # Get all the available information.
         self.ownIndex           = startInfo.yourIndex
@@ -160,7 +160,7 @@ class Player(object):
 
         return wanted_acceleration
 
-    def on_round_finished(self, endInfo):
+    def on_round_stop(self, endInfo):
         
         # Get all the available information.
         currentRound     = endInfo.currentRound
@@ -289,7 +289,7 @@ class GameClient(asyncore.dispatcher):
 
     def _on_finish_round(self, json_params):
         info = EndGameInfo(json_params)
-        self._player.on_round_finished(info)
+        self._player.on_round_stop(info)
 
 
 def main(argv=None):
