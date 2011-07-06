@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:view="view.*" xmlns:model="model.*">
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="connected"/>
+	</s:states>
+	<fx:Declarations>
+		<model:Game id="game">
+			<!--<model:arena>
+				<model:Arena radius="250"/>
+			</model:arena>
+			<model:spheres>
+				<s:ArrayList>
+					<model:Sphere x="50" y="50" radius="20" xSpeed="25" ySpeed="25" maxSpeedVariation="30" isPlayer="true" isInArena="true"/>
+					<model:Sphere x="-50" y="-50" radius="20" xSpeed="25" ySpeed="-25" maxSpeedVariation="30" isInArena="true"/>
+					<model:Sphere x="250" y="-50" radius="20" xSpeed="-25" ySpeed="-25" maxSpeedVariation="30" isInArena="false"/>
+				</s:ArrayList>
+			</model:spheres>-->
+		</model:Game>
+		<model:Client id="client" 
+					  log="{log}" 
+					  updateSpheres="{game.updateSpheres}" createSpheres="{game.createSpheres}"
+					  host="{hostInput.text}" port="{int(portInput.text)}" name="{nameInput.text}"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import model.event.UpdateSphereEvent;
+			
+			public function log(message:String):void
+			{
+				logText.text = message + "\n" + logText.text;
+			}
+			
+			protected function connect_clickHandler(event:MouseEvent):void
+			{
+				client.connectToServer();
+				currentState = "connected";
+				logText.text = "";
+			}
+			
+			protected function onUpdate(event:UpdateSphereEvent):void
+			{
+				client.updateSphere(event.x, event.y);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<s:layout>
+		<s:HorizontalLayout/>
+	</s:layout>
+	<s:Group width="600" height="600">
+		<s:Group x="300" y="300">
+			<view:ArenaView arena="{game.arena}"/>
+			<s:DataGroup 
+				dataProvider="{game.spheres}" itemRenderer="{new ClassFactory(SphereView)}"/>
+			<s:DataGroup 
+						 dataProvider="{game.spheres}" itemRenderer="{new ClassFactory(SpeedView)}"
+						 creationComplete="addEventListener(UpdateSphereEvent.UPDATE, onUpdate)"/>
+		</s:Group>
+	</s:Group>
+	<s:VGroup>
+		<s:HGroup>
+			<mx:FormItem label="host">
+				<s:TextInput id="hostInput" width="150" text="r-wxp-wfdn8563"/>
+			</mx:FormItem>
+			<mx:FormItem label="port">
+				<s:TextInput id="portInput" width="50" restrict="0-9" text="9090"/>
+			</mx:FormItem>
+		</s:HGroup>
+		<s:HGroup verticalAlign="middle">
+			<mx:FormItem label="name">
+				<s:TextInput id="nameInput" text="player" width="150"/>
+			</mx:FormItem>
+			<s:Button label="connect" click="connect_clickHandler(event)"/>
+		</s:HGroup>
+		<mx:TextArea width="400" height="600" id="logText"/>
+	</s:VGroup>
+		
+</s:Group>

@@ -51,7 +51,7 @@ package view.mediators
 			gameModel.gameFinishedSignal.add(gameEnded);
 			
 			gameView.arenaView.arena = arenaModel.arena;
-			gameView.arenaView.dataProvider = gameModel.game.spheres;
+			gameView.arenaView.dataGroup.dataProvider = gameModel.game.spheres;
 		}
 		
 		private function cancelRoundClicked(event:MouseEvent):void

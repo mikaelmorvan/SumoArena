@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 implements="mx.core.IDataRenderer"
+		 x="{sphere.x}"
+		 y="{sphere.y}"
+		 alpha="{sphere.isInArena ? 1 : 0.2}"
+		 depth.player="10"
+		 depth.normal="1"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="player"/>
+	</s:states>
+	<fx:Script>
+		<![CDATA[
+			import model.event.UpdateSphereEvent;
+			
+			import model.Sphere;
+			
+			public function get data():Object
+			{
+				return sphere;
+			}
+			
+			public function set data(value:Object):void
+			{
+				sphere = value as Sphere;
+				if (sphere)
+				{
+					currentState = sphere.isPlayer ? 'player' : 'normal';
+				}	
+			}
+			
+			[Bindable]
+			public var sphere:Sphere;
+			
+			protected function clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new UpdateSphereEvent(UpdateSphereEvent.UPDATE, event.localX, event.localY, true));
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Group x="{sphere.xSpeed}" y="{sphere.ySpeed}" visible="{sphere.isInArena}"
+			 click.player="clickHandler(event)"
+			 buttonMode.player="true"
+			 visible.normal="false">
+		<s:Ellipse width="{sphere.maxSpeedVariation*2}" height="{sphere.maxSpeedVariation*2}" x="{-sphere.maxSpeedVariation}" y="{-sphere.maxSpeedVariation}">
+			<s:stroke>
+				<s:SolidColorStroke color="#FF0000" color.player="#00FF00"/>
+			</s:stroke>
+			<s:fill>
+				<s:SolidColor color="#FF0000" color.player="#00FF00" alpha="0.2"/>
+			</s:fill>
+		</s:Ellipse>
+	</s:Group>
+</s:Group>

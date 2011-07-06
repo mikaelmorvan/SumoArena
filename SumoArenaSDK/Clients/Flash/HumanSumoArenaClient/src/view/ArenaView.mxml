@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import model.Arena;
+			
+			[Bindable]
+			public var arena:Arena;
+		]]>
+	</fx:Script>
+	
+	<s:Ellipse width="{arena.radius*2}" height="{arena.radius*2}" x="{-arena.radius}" y="{-arena.radius}">
+		<s:stroke>
+			<s:SolidColorStroke color="#CCCCCC"/>
+		</s:stroke>
+		<s:fill>
+			<s:SolidColor color="#CCCCCC" alpha="0.5"/>
+		</s:fill>
+	</s:Ellipse>
+	<s:Ellipse width="4" height="4" x="0" y="0">
+		<s:stroke>
+			<s:SolidColorStroke color="#444444"/>
+		</s:stroke>
+	</s:Ellipse>
+</s:Group>

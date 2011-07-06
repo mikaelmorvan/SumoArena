@@ -23,11 +23,13 @@ package controller.commands
 		
 		public override function execute():void
 		{
-			gameModel.update();
-			sphereModel.handleCollisions(gameModel.game.aliveSpheres);
-			arenaModel.update(gameModel.game.currentTick, gameModel.game.stepByTurn);
-			sphereModel.updateAllPositions(gameModel.game.aliveSpheres, gameModel.game.stepByTurn);
-			gameModel.checkSpherePosition();
+			if (gameModel.update())
+			{	
+				sphereModel.handleCollisions(gameModel.game.aliveSpheres);
+				arenaModel.update(gameModel.game.currentTick, gameModel.game.stepByTurn);
+				sphereModel.updateAllPositions(gameModel.game.aliveSpheres, gameModel.game.stepByTurn);
+				gameModel.checkSpherePosition();
+			}
 		}
 	}
 }

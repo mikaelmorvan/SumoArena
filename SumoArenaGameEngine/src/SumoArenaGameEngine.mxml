@@ -6,6 +6,7 @@
 					   xmlns:local="*"
 					   minHeight="700"
 					   minWidth="1024"
+					   frameRate="50"
 					   backgroundColor="#CCCCCC"
 					   initialize="initializeHandler(event)"
 					   >
