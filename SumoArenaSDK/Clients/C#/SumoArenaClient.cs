@@ -70,7 +70,7 @@ public class Player
     
     RoundStartInfo roundInfo = null;
 
-    public void OnPrepareInformation(RoundStartInfo info)
+    public void OnRoundStart(RoundStartInfo info)
     {
         roundInfo = info;
     }
@@ -130,7 +130,7 @@ public class Player
         return result;
     }
 
-    public void OnRoundFinished(RoundEndInfo info)
+    public void OnRoundStop(RoundEndInfo info)
     {
         // TODO
     }
@@ -211,7 +211,7 @@ public class GameClient : TcpClient {
     {
         Console.WriteLine("A round is starting.");
         RoundStartInfo info = RoundStartInfo.CreateFromJsonString(jsonParamString);
-        player.OnPrepareInformation(info);
+        player.OnRoundStart(info);
     }
 
     private void OnPlay(String jsonParamString)
@@ -230,7 +230,7 @@ public class GameClient : TcpClient {
     private void OnFinishRound(String jsonParamString)
     {
         RoundEndInfo info = RoundEndInfo.CreateFromJsonString(jsonParamString);
-        player.OnRoundFinished(info);
+        player.OnRoundStop(info);
     }
 
     public static int Main(String[] args) {
