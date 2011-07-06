@@ -73,6 +73,8 @@ public class Player
     public void OnRoundStart(RoundStartInfo info)
     {
         roundInfo = info;
+
+        Console.WriteLine("A round is about to start.");
     }
 
     public AccelerationVector OnPlayRequest(PlayingdInfo info)
@@ -132,7 +134,29 @@ public class Player
 
     public void OnRoundStop(RoundEndInfo info)
     {
-        // TODO
+        if (info.roundWinnerIndex == roundInfo.yourIndex)
+        {
+            Console.WriteLine("I won this round.");
+        }
+        else
+        {
+            Console.WriteLine("I did not win this round.");
+        }
+
+        if (info.gameWinnerIndex < 0)
+        {
+            Console.WriteLine("The game is not over yet.");
+            return;
+        }
+
+        if (info.gameWinnerIndex == roundInfo.yourIndex)
+        {
+            Console.WriteLine("I won this game.");
+        }
+        else
+        {
+            Console.WriteLine("I did not win this game.");
+        }
     }
 }
 
