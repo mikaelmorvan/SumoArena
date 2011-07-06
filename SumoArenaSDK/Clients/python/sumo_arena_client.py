@@ -52,7 +52,7 @@ DEFAULT_GAME_SERVER_HOST = 'localhost'
 DEFAULT_GAME_SERVER_PORT = 9090
 
 
-class StartGameInfo(object):
+class RoundStartInfo(object):
 
     def __init__(self, json_dict):
         self.__dict__.update(json_dict)
@@ -64,7 +64,7 @@ class Sphere(object):
         self.__dict__.update(json_dict)
 
 
-class PlaygroundInformation(object):
+class PlayingInfo(object):
 
     def __init__(self, json_dict):
 
@@ -72,7 +72,7 @@ class PlaygroundInformation(object):
         self.players = [Sphere(data) for data in json_dict["players"]]
 
 
-class EndGameInfo(object):
+class RoundStopInfo(object):
 
     def __init__(self, json_dict):
         self.__dict__.update(json_dict)
@@ -271,11 +271,11 @@ class GameClient(asyncore.dispatcher):
         print "I'm connected as '%s'" % json_params["yourName"]
 
     def _on_prepare(self, json_params):
-        info = StartGameInfo(json_params)
-        self._player.on_prepare_information(info)
+        info = RoundStartInfo(json_params)
+        self._player.on_round_start(info)
 
     def _on_play(self, json_params):
-        info = PlaygroundInformation(json_params)
+        info = PlayingInfo(json_params)
         result = self._player.on_play_request(info)
         if result:
             data = {
@@ -288,7 +288,7 @@ class GameClient(asyncore.dispatcher):
             self._to_send = json.dumps(data)
 
     def _on_finish_round(self, json_params):
-        info = EndGameInfo(json_params)
+        info = RoundStopInfo(json_params)
         self._player.on_round_stop(info)
 
 
