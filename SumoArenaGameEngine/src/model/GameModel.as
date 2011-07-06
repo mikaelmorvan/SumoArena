@@ -16,7 +16,6 @@ package model
 	public class GameModel extends Actor
 	{
 		public static const MAX_PLAYER_COUNT:int = 4;
-		public static const OFFSET:int = 300;
 		
 		[Inject]
 		public var server:Server;
@@ -117,15 +116,14 @@ package model
 			for (var i:int = 0; i < game.spheres.length; i++)
 			{
 				var sphere:Sphere = game.spheres.getItemAt(i) as Sphere;
-				sphere.offset = OFFSET;
 				if (sphereNumber > 1)
 				{
-					sphere.x = OFFSET + Math.round(distanceFromCenter * Math.cos(angle * i));
-					sphere.y = OFFSET + Math.round(distanceFromCenter * Math.sin(angle * i));
+					sphere.x = Math.round(distanceFromCenter * Math.cos(angle * i));
+					sphere.y = Math.round(distanceFromCenter * Math.sin(angle * i));
 				}
 				else  {
-					sphere.x = OFFSET;
-					sphere.y = OFFSET;
+					sphere.x = 0;
+					sphere.y = 0;
 				}
 			}
 		}
@@ -188,15 +186,14 @@ package model
 			for (var i:int = 0; i < game.aliveSpheres.length;) 
 			{
 				var sphere:Sphere = Sphere(game.aliveSpheres.getItemAt(i));
-				var relativeX:int = sphere.x - OFFSET;
-				var relativeY:int = sphere.y - OFFSET;
-				if (relativeX * relativeX + relativeY * relativeY > game.arena.squareRadius)
+				if (sphere.x * sphere.x + sphere.y * sphere.y > game.arena.squareRadius)
 				{
 					sphere.isInArena = false;
 					sphere.speedVectorX = 0;
 					sphere.speedVectorY = 0;
 					game.aliveSpheres.removeItem(sphere);
 					if(game.aliveSpheres.length < 2){
+						requestPlayers();
 						finishRound();
 					}
 				} else {

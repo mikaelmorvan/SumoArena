@@ -29,7 +29,7 @@
 
 			protected function initializeHandler(event:FlexEvent):void
 			{
-				nativeWindow.title = "Sumo Arena 0.7";
+				nativeWindow.title = "Sumo Arena 0.9";
 			}
 			
 		]]>

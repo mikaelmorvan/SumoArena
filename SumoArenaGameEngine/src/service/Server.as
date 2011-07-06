@@ -138,12 +138,20 @@ package service
 				var player:Player = Player(clients[clientSocket]);
 				var playerName:String = player ? player.name : "new player"; 
 				log(">received data from " + playerName  + " = " + s);
-				try {
-					var data:Object = JSON.decode(s);
-					processData(data, clientSocket);
+				if(s == "<policy-file-request/>") 
+				{
+					clientSocket.writeUTFBytes("<cross-domain-policy><allow-access-from domain='*' to-ports='*' secure='false' /></cross-domain-policy>"
+						+ String.fromCharCode(0));
+					clientSocket.flush();
 				}
-				catch (error:Error) {
-					log("ERROR: " + playerName + " response is not a valid Json : " + s); 
+				else {
+					try {
+						var data:Object = JSON.decode(s);
+						processData(data, clientSocket);
+					}
+					catch (error:Error) {
+						log("ERROR: " + playerName + " response is not a valid Json : " + s); 
+					}
 				}
 			}
 		}
@@ -207,7 +215,7 @@ package service
 		{
 			if(player.responseExpected)
 			{
-				if(player.requestedDx != data.dVx && player.requestedDy != data.dVy)
+				if(player.requestedDx != data.dVx || player.requestedDy != data.dVy)
 				{
 					player.requestedDx = data.dVx;
 					player.requestedDy = data.dVy;

@@ -83,8 +83,8 @@ package model
 			for (var i:int = 0; i < spheres.length; i++)
 			{
 				var sphere:Sphere = spheres.getItemAt(i) as Sphere;
-				sphere.x = sphere.offset;
-				sphere.y = sphere.offset;
+				sphere.x = 0;
+				sphere.y = 0;
 				sphere.speedVectorX = 0;
 				sphere.speedVectorY = 0;
 				sphere.isInArena = true;

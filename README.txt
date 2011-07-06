@@ -1,5 +1,16 @@
 SumoArena is a game engine for a private coding contest.
 
+-------------------------------------------
+Release 0.9
+
+Model simplification
+corrected issue : bad values returned for x and y
+
+-------------------------------------------
+Release 0.8
+
+Added crossdomain policy handling for Flash clients
+Corrected issue : the sphere do not move when dVx or dVy is 0
 
 -------------------------------------------
 

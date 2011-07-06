@@ -14,9 +14,6 @@ package model.vo
 		
 		public var y:Number = 0;
 		
-		public var offset:int = 300;
-		
-
 		public function get speedVectorX():int
 		{
 			return _speedVectorX;

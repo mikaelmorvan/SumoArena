@@ -1,3 +1,17 @@
+-------------------------------------------
+Release 0.9
+
+Model simplification
+corrected issue : bad values returned for x and y
+
+-------------------------------------------
+Release 0.8
+
+Added crossdomain policy handling for Flash clients
+Corrected issue : the sphere do not move when dVx or dVy is 0
+
+-------------------------------------------
+
 Release 0.7
 - avatar images are used -instead of colored disks to represent spheres
 - corrected the bug which made two players may have the same graphical representation
