@@ -204,8 +204,9 @@ public class GameClient : TcpClient {
                 byte[] msgBytes = new byte[1024];
                 int byteCount = this.GetStream().Read(msgBytes, 0, msgBytes.Length);
 
-                if (byteCount < 0)
+                if (byteCount == 0)
                 {
+                    Console.WriteLine("Disconnected.");
                     continue;
                 }
 
