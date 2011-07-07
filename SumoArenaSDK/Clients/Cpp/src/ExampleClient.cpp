@@ -6,7 +6,7 @@
 {
 	m_currentRoundInfo = roundInfo;
 
-	std::cout << "Received start message for round: " << roundInfo.getCurrentRound() << std::endl;
+	std::cout << "Round: " << roundInfo.getCurrentRound() << " started." << std::endl;
 }
 
 /*virtual*/ void ExampleClient::onRoundStop(const RoundEndInfo & roundInfo)
@@ -26,11 +26,14 @@ void ExampleClient::playRequest( const PlayingInfo & playingInfo, int & out_dvX,
 	// Retrieve my own sphere
 	const Sphere & me = playingInfo.getSphere(m_currentRoundInfo.getAlgoIndex());
 
-	// Retrieve all sphere list
+	// Retrieve all spheres list
 	const std::vector<Sphere> & sphereList = playingInfo.getSphereList();
 
+	// Retrieve current arena radius (that reduces over time)
+	int arenaRadius = playingInfo.getCurrentArenaRadius();
+
 	// Set an acceleration across X and Y
-	out_dvX = 2;
-	out_dvX = 1;
+	out_dvX = 3;
+	out_dvY = 1;
 
 }
