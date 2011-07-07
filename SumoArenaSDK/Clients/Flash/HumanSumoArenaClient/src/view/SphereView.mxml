@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 implements="mx.core.IDataRenderer"
+		 x="{sphere.x}"
+		 y="{sphere.y}"
+		 alpha="{sphere.isInArena ? 1 : 0.2}"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="player"/>
+	</s:states>
+	<fx:Script>
+		<![CDATA[
+			import model.event.UpdateSphereEvent;
+			
+			import model.Sphere;
+			
+			public function get data():Object
+			{
+				return sphere;
+			}
+			
+			public function set data(value:Object):void
+			{
+				sphere = value as Sphere;
+				if (sphere)
+				{
+					currentState = sphere.isPlayer ? 'player' : 'normal';
+				}	
+			}
+			
+			[Bindable]
+			public var sphere:Sphere;
+
+			
+		]]>
+	</fx:Script>
+	<s:Ellipse width="{sphere.radius*2}" height="{sphere.radius*2}" x="{-sphere.radius}" y="{-sphere.radius}">
+		<s:stroke>
+			<s:SolidColorStroke color="#0000FF" color.player="#FF5500"/>
+		</s:stroke>
+		<s:fill>
+			<s:SolidColor color="#0000FF" color.player="#FF5500" alpha="0.4"/>
+		</s:fill>
+	</s:Ellipse>
+	<s:Line xFrom="0" yFrom="0" xTo="{sphere.xSpeed}" yTo="{sphere.ySpeed}" visible="{sphere.isInArena}">
+		<s:stroke>
+			<s:SolidColorStroke color="#0000FF" color.player="#FF5500" weight="3" alpha="0.8"/>
+		</s:stroke>
+	</s:Line>
+
+</s:Group>

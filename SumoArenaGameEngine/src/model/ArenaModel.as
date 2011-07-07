@@ -23,6 +23,7 @@ package model
 		public function set shrinkingStartTick(value:int):void
 		{
 			arena.shrinkingStartTick = value;
+			arena.nextShrinkingTick = value;
 		}
 		
 		/**

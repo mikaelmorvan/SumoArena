@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:SkinnableDataContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 						  xmlns:s="library://ns.adobe.com/flex/spark" 
 						  xmlns:mx="library://ns.adobe.com/flex/mx" 
-						  xmlns:vo="model.vo.*"
-						  skinClass="view.components.ArenaSkin"
-						  itemRenderer="view.components.SphereRenderer">
+						  xmlns:vo="model.vo.*">
 	<fx:Declarations>
 		<vo:Arena id="arena"/>
 	</fx:Declarations>
-</s:SkinnableDataContainer>
+
+	<mx:Image
+		x="{-arena.radius}"
+		y="{-arena.radius}"
+		height="{arena.radius * 2}"
+		width="{arena.radius * 2}"
+		source="@Embed('assets/arena.png')"/>
+
+	
+	<s:DataGroup id="dataGroup"
+				 itemRenderer="view.components.SphereRenderer"/>
+</s:Group>
